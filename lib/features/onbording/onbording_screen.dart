@@ -2,162 +2,141 @@ import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+class OnBoarding extends StatefulWidget {
+  const OnBoarding({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  State<OnBoarding> createState() => _OnBoardingState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final PageController _controller = PageController();
-  int _currentIndex = 0;
+class _OnBoardingState extends State<OnBoarding> {
+  PageController controller = PageController();
+  int currentPage = 0;
 
-  final List<Map<String, String>> _pages = [
+  List<Map<String, String>> pages = [
     {
-      "image": AppAssets.hello,
       "title": "Welcome to EventHub",
       "desc":
-          "Discover amazing events around you, book tickets, and create unforgettable memories.",
+          '''Discover amazing events around you, book tickets, and create unforgettable memories.''',
+      "image": AppAssets.hello,
     },
     {
-      "image": AppAssets.onboarding,
       "title": "Connect with your community",
       "desc":
-          "Meet like-minded people, share interests, and grow your professional network.",
+          '''Meet like-minded people, share interests, and grow your professional network at the best events.''',
+      "image": AppAssets.onboarding,
     },
     {
+      "title": "Your Personal Event Planner ",
+      "desc":
+          '''Sync events to your device and get real-time reminders. We help you manage your time so you can focus on the experience.''',
       "image": AppAssets.events,
-      "title": "Your Personal Event Planner",
-      "desc": "Sync events to your device and get real-time reminders.",
     },
   ];
-
-  void _nextPage() {
-    if (_currentIndex < _pages.length - 1) {
-      _controller.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      // هنا بعدين هتحط Navigation للـ Login
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.grey,
+      appBar: AppBar(
+        backgroundColor: AppColors.grey,
+        elevation: 0,
+        actions: [],
+      ),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
               child: PageView.builder(
-                controller: _controller,
-                itemCount: _pages.length,
+                controller: controller,
+                itemCount: pages.length,
                 onPageChanged: (index) {
                   setState(() {
-                    _currentIndex = index;
+                    currentPage = index;
                   });
                 },
                 itemBuilder: (context, index) {
-                  final page = _pages[index];
-
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(page["image"]!, height: 250),
-                        const SizedBox(height: 30),
-                        Text(
-                          page["title"]!,
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(pages[index]["image"]!, height: 250),
+                      const SizedBox(height: 20),
+                      Text(
+                        pages[index]["title"]!,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          height: 1.0,
+                          letterSpacing: 0,
+                          color: AppColors.secondary,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Text(
+                          pages[index]["desc"]!,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            height: 1.0,
+                            letterSpacing: 0,
+                            color: AppColors.secondary,
                           ),
                         ),
-                        const SizedBox(height: 15),
-                        Text(
-                          page["desc"]!,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(height: 1.4),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 },
               ),
             ),
-
-            // Indicator
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                _pages.length,
+                pages.length,
                 (index) => Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: _currentIndex == index ? 12 : 8,
+                  margin: const EdgeInsets.all(4),
+                  width: currentPage == index ? 12 : 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: _currentIndex == index
-                        ? AppColors.secondary
-                        : AppColors.secondary,
-                    borderRadius: BorderRadius.circular(4),
+                    color: currentPage == index
+                        ? const Color(0xff05063F)
+                        : const Color(0xffADB5BD),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      _controller.jumpToPage(_pages.length - 1);
-                    },
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.secondary,
-                    ),
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, "welcome"),
                     child: const Text(
                       "Skip",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(color: Color(0xff495057)),
                     ),
                   ),
+                  const Spacer(),
                   TextButton(
-                    onPressed: _nextPage,
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.secondary,
-                    ),
+                    onPressed: () => currentPage == pages.length - 1
+                        ? Navigator.pushReplacementNamed(context, "welcome")
+                        : controller.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          ),
                     child: Text(
-                      _currentIndex == _pages.length - 1
-                          ? "Get Started"
-                          : "Next",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      currentPage == pages.length - 1 ? "Get Started" : "Next",
+                      style: const TextStyle(color: Color(0xff05063F)),
                     ),
                   ),
                 ],
               ),
             ),
-
-            const SizedBox(height: 30),
           ],
         ),
       ),

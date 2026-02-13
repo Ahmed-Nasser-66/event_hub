@@ -1,10 +1,12 @@
 class AppAssets {
   AppAssets._();
   //image
-  static const String event = 'assets/image/event_title.png';
+  static const String event = 'assets/image/event.png';
+  static const String eventTitle = 'assets/image/event_title.png';
   static const String events = 'assets/image/events.png';
   static const String hello = 'assets/image/hello.png';
   static const String hub = 'assets/image/hub.png';
+  static const String logo = 'assets/image/logo.png';
   static const String login = 'assets/image/login.png';
   static const String onboarding = 'assets/image/onboarding.png';
   static const String party = 'assets/image/party.png';

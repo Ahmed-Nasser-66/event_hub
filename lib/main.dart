@@ -1,19 +1,51 @@
+import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/auth/forgotpassword.dart';
+import 'package:event_hub/features/auth/login.dart';
+import 'package:event_hub/features/auth/signup.dart';
+import 'package:event_hub/features/home/homepage.dart';
+import 'package:event_hub/features/onbording/onbording_screen.dart';
+import 'package:event_hub/features/onbording/welcome_screen.dart';
+import 'package:event_hub/features/splash/splach_screen.dart';
+
 import 'package:flutter/material.dart';
 
-import 'features/splash/splach_screen.dart';
-
-void main() {
-  runApp(const MyApp());
+void main() async {
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColors.grey,
+          titleTextStyle: TextStyle(
+            color: AppColors.orange,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(color: Color(0xffFF8500)),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+      routes: {
+        "login": (context) => Login(),
+        "signup": (context) => Signup(),
+        "homepage": (context) => Homepage(),
+        "onboarding": (context) => OnBoarding(),
+        "welcome": (context) => WelcomeScreen(),
+        "forgotpassword": (context) => Forgotpassword(),
+      },
     );
   }
 }
