@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
@@ -30,9 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(AppAssets.event, width: 200, height: 129),
-          ],
+          children: [Image.asset(AppAssets.event, width: 200, height: 129)],
         ),
       ),
     );

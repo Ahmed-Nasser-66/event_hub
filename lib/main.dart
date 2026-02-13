@@ -1,12 +1,12 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/auth/forgotpassword.dart';
 import 'package:event_hub/features/auth/login.dart';
+import 'package:event_hub/features/auth/otp.dart';
 import 'package:event_hub/features/auth/signup.dart';
 import 'package:event_hub/features/home/homepage.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
 import 'package:event_hub/features/splash/splach_screen.dart';
-
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
-          iconTheme: IconThemeData(color: Color(0xffFF8500)),
+          iconTheme: IconThemeData(color: AppColors.orange),
         ),
       ),
       debugShowCheckedModeBanner: false,
@@ -45,6 +45,8 @@ class _MyAppState extends State<MyApp> {
         "onboarding": (context) => OnBoarding(),
         "welcome": (context) => WelcomeScreen(),
         "forgotpassword": (context) => Forgotpassword(),
+        // داخل routes في MaterialApp
+        "verification": (context) => const VerificationScreen(),
       },
     );
   }

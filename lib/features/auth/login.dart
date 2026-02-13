@@ -1,4 +1,5 @@
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/core/theme/app_text_styles.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custombuttonauth.dart';
 import 'package:event_hub/features/widgets/customlogoauth.dart';
@@ -16,193 +17,233 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
-
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
-        backgroundColor: AppColors.grey,
+        backgroundColor: AppColors.grey, // استبدلنا الشفاف بلون الخلفية الموحد
+        elevation: 0,
         leading: CustomBackButton(
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, "welcome");
-          },
+          onPressed: () => Navigator.pushReplacementNamed(context, "welcome"),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-        child: ListView(
-          children: [
-            Form(
-              key: formState,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              SizedBox(height: screenHeight * 0.02),
+              const CustomLogoAuth(),
+              SizedBox(height: screenHeight * 0.03),
+
+              Form(
+                key: formState,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Log in Now",
+                      style: AppTextStyles.headingLarge.copyWith(
+                        color: AppColors.secondary,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "sign in to your account",
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.secondary.withOpacity(0.6),
+                      ),
+                    ),
+
+                    SizedBox(height: screenHeight * 0.04),
+
+                    _buildInputLabel("Email"),
+                    _buildFieldShadow(
+                      child: CustomTextForm(
+                        hinttext: "example@gmail.com",
+                        mycontroller: email,
+                        validator: (val) =>
+                            (val == null || val.isEmpty) ? "Enter email" : null,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    _buildInputLabel("Password"),
+                    _buildFieldShadow(
+                      child: CustomTextForm(
+                        hinttext: "••••••••",
+                        mycontroller: pass,
+                        isPassword: true,
+                        validator: (val) => (val == null || val.isEmpty)
+                            ? "Enter password"
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed("forgotpassword"),
+                  child: Text(
+                    "Forgot Password?",
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: screenHeight * 0.01),
+
+              CustomButtonAuth(
+                title: 'log in',
+                color: AppColors.orange,
+                onPressed: () {
+                  if (formState.currentState!.validate()) {
+                    Navigator.of(context).pushReplacementNamed("homepage");
+                  }
+                },
+              ),
+
+              const SizedBox(height: 15),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomLogoAuth(),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Log in Now",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      height: 1.0,
-                      letterSpacing: 0,
-                      color: AppColors.secondary,
+                  Text(
+                    "Don't have an account? ",
+                    style: AppTextStyles.bodySmall,
+                  ),
+                  InkWell(
+                    onTap: () =>
+                        Navigator.of(context).pushReplacementNamed("signup"),
+                    child: Text(
+                      "Sign up",
+                      style: AppTextStyles.bodySmall.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.orange,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "sign to your account",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
-                      color: AppColors.secondary,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Email",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
-                      color: AppColors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  CustomTextForm(
-                    hinttext: "Enter your email",
-                    mycontroller: email,
-                    validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return "Enter email";
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Password",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
-                      color: AppColors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  CustomTextForm(
-                    hinttext: "Enter password",
-                    mycontroller: pass,
-                    isPassword: true,
-                    validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return "Enter password";
-                      }
-
-                      if (val.length < 8) {
-                        return "Password must be at least 8 characters";
-                      }
-
-                      if (RegExp(r'^[0-9]+$').hasMatch(val)) {
-                        return "Password cannot be numbers only";
-                      }
-
-                      return null;
-                    },
                   ),
                 ],
               ),
+
+              // رفعنا قسم السوشيال ميديا هنا
+              SizedBox(height: screenHeight * 0.03),
+
+              _buildSocialSection(),
+
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ويدجت الظل: سحبنا اللون من AppColors مع Opacity
+  Widget _buildFieldShadow({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.04),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
+  Widget _buildInputLabel(String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8, left: 10),
+      child: Text(
+        label,
+        style: AppTextStyles.bodySmall.copyWith(
+          fontWeight: FontWeight.bold,
+          color: AppColors.secondary,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSocialSection() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Divider(
+                thickness: 1,
+                color: AppColors.secondary.withOpacity(0.1),
+              ),
             ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.of(
-                      context,
-                    ).pushReplacementNamed("forgotpassword");
-                  },
-                  child: const Text(
-                    "Forgot Password ?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            CustomButtonAuth(
-              title: 'Login',
-              color:  AppColors.orange,
-              onPressed: () {
-                if (formState.currentState!.validate()) {
-                  Navigator.of(context).pushReplacementNamed("homepage");
-                }
-              },
-            ),
-            const SizedBox(height: 20),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed("signup");
-              },
-              child: Center(
-                child: Text.rich(
-                  TextSpan(
-                    text: "Don't have an account? ",
-                    children: [
-                      TextSpan(
-                        text: "Sign up",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "Or log in with",
+                style: AppTextStyles.bodySmall.copyWith(
+                  fontSize: 12,
+                  color: AppColors.black.withOpacity(0.5),
                 ),
               ),
             ),
-            SizedBox(height: 50),
-            Text(
-              "__________________  Or log in with  __________________",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                height: 1.0,
-                letterSpacing: 0,
+            Expanded(
+              child: Divider(
+                thickness: 1,
+                color: AppColors.secondary.withOpacity(0.1),
               ),
-            ),
-            SizedBox(height: 60),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  "assets/icon/google.svg",
-                  width: 50,
-                  height: 50,
-                ),
-                SizedBox(width: 20),
-                SvgPicture.asset(
-                  "assets/icon/facebook.svg",
-                  width: 50,
-                  height: 50,
-                ),
-                SizedBox(width: 20),
-                SvgPicture.asset("assets/icon/x.svg", width: 50, height: 50),
-              ],
             ),
           ],
         ),
+        const SizedBox(height: 15), // تقليل المسافة لرفع الأيقونات
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildSocialIconCircle("assets/icon/google.svg"),
+            const SizedBox(width: 25),
+            _buildSocialIconCircle("assets/icon/facebook.svg"),
+            const SizedBox(width: 25),
+            _buildSocialIconCircle("assets/icon/x.svg", isX: true),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialIconCircle(String assetPath, {bool isX = false}) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white, // اللون الأبيض ثابت لأنه خلفية الأيقونة
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
+      child: SvgPicture.asset(assetPath, width: isX ? 35 : 30, height: 30),
     );
   }
 }

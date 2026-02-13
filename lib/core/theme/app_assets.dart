@@ -41,4 +41,5 @@ class AppAssets {
   static const String setting = 'assets/icon/setting.svg';
   static const String tech = 'assets/icon/tech.svg';
   static const String time = 'assets/icon/time.svg';
+  static const String x = 'assets/icon/x.svg';
 }
