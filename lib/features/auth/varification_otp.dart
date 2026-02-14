@@ -75,10 +75,10 @@ class _VarificationOtpState extends State<VarificationOtp> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
-              Padding(padding: EdgeInsets.only(bottom: 10)),
+              const SizedBox(height: 20),
+              Padding(padding: EdgeInsets.only(bottom: 50)),
               CustomButtonAuth(
-                title: 'Go To Rest Password',
+                title: 'Go to reset password',
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {
