@@ -1,0 +1,23 @@
+[33mcommit 0a547ad21f99fa2c8e53c2eae6e137d6886dc7a8[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: eslam20033 <eeslamahmed2003@GMAIL.COM>
+Date:   Sat Feb 14 00:52:57 2026 +0200
+
+    Finished Auth UI and OTP logic with clean architecture
+
+[33mcommit 55f29c9f7ab40f14683cfef0ec716af594e80218[m
+Author: Ahmed-Nasser-66 <ahmedmlegy66@gmail.com>
+Date:   Fri Feb 13 21:06:49 2026 +0200
+
+    update UI
+
+[33mcommit 5257df8a5e6078c3b04c8bbd1a4208b7d42b5220[m
+Author: eslam20033 <eeslamahmed2003@GMAIL.COM>
+Date:   Fri Feb 13 18:43:52 2026 +0200
+
+    Remove unused desktop platforms
+
+[33mcommit 4f100c2482954edd5a623b4543059057282a5452[m
+Author: eslam20033 <eeslamahmed2003@GMAIL.COM>
+Date:   Fri Feb 13 18:39:23 2026 +0200
+
+    Initial commit - Event Hub project setup

@@ -47,8 +47,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
-                      height: 1.0,
-                      letterSpacing: 0,
+
                       color: AppColors.secondary,
                     ),
                   ),
@@ -58,8 +57,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
+
                       color: AppColors.secondary,
                     ),
                   ),
@@ -69,14 +67,13 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
+
                       color: AppColors.black,
                     ),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Enter your email",
+                    hinttext: "example@gmail.com",
                     mycontroller: email,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
@@ -91,8 +88,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
+
                       color: AppColors.black,
                     ),
                   ),
@@ -143,7 +139,7 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 20),
             CustomButtonAuth(
               title: 'Login',
-              color:  AppColors.orange,
+              color: AppColors.orange,
               onPressed: () {
                 if (formState.currentState!.validate()) {
                   Navigator.of(context).pushReplacementNamed("homepage");
@@ -162,7 +158,10 @@ class _LoginState extends State<Login> {
                     children: [
                       TextSpan(
                         text: "Sign up",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
                       ),
                     ],
                   ),
@@ -177,8 +176,6 @@ class _LoginState extends State<Login> {
                 color: AppColors.black,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                height: 1.0,
-                letterSpacing: 0,
               ),
             ),
             SizedBox(height: 60),
@@ -196,7 +193,7 @@ class _LoginState extends State<Login> {
                   width: 50,
                   height: 50,
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: 12),
                 SvgPicture.asset("assets/icon/x.svg", width: 50, height: 50),
               ],
             ),

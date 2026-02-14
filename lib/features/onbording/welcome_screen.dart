@@ -21,21 +21,25 @@ class WelcomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
-          width: 390,
-          height: 722,
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               SizedBox(
-                width: 153,
-                height: 113,
-                child: Image.asset(AppAssets.event, fit: BoxFit.contain),
+                child: Image.asset(
+                  AppAssets.event,
+                  height: 80,
+                  fit: BoxFit.contain,
+                ),
               ),
+              SizedBox(height: 20),
+
               Container(
-                width: 358,
-                height: 358,
                 padding: const EdgeInsets.symmetric(vertical: 29),
-                child: Image.asset(AppAssets.login, fit: BoxFit.contain),
+                child: Image.asset(
+                  AppAssets.login,
+                  height: 250,
+                  fit: BoxFit.contain,
+                ),
               ),
               const Text(
                 "WELCOME!",
@@ -43,8 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w600,
-                  height: 1.0,
-                  letterSpacing: 0,
+
                   color: AppColors.secondary,
                 ),
               ),

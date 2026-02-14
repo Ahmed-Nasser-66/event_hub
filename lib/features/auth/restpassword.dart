@@ -4,20 +4,21 @@ import 'package:event_hub/features/widgets/custombuttonauth.dart';
 import 'package:event_hub/features/widgets/textformfield.dart';
 import 'package:flutter/material.dart';
 
-class Forgotpassword extends StatefulWidget {
-  const Forgotpassword({super.key});
+class RestPassword extends StatefulWidget {
+  const RestPassword({super.key});
 
   @override
-  State<Forgotpassword> createState() => _ForgotpasswordState();
+  State<RestPassword> createState() => _RestPasswordState();
 }
 
-class _ForgotpasswordState extends State<Forgotpassword> {
-  TextEditingController email = TextEditingController();
+class _RestPasswordState extends State<RestPassword> {
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
   GlobalKey<FormState> formState = GlobalKey<FormState>();
-
   @override
   void dispose() {
-    email.dispose();
+    password.dispose();
+    confirmPassword.dispose();
     super.dispose();
   }
 
@@ -43,7 +44,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "Forgot password",
+                    "Create new password",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -52,7 +53,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Enter your email address and we will send you a code to reset your password.",
+                    "Create a strong password to secure your account.",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -63,7 +64,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               ),
               const SizedBox(height: 30),
               const Text(
-                "Email",
+                "New password",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -71,25 +72,66 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   color: AppColors.black,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 8),
+
               CustomTextForm(
-                hinttext: "example@gmail.com",
-                mycontroller: email,
+                hinttext: "Enter password",
+                mycontroller: password,
+                isPassword: true,
+                onChanged: (value) {
+                  formState.currentState!.validate();
+                },
                 validator: (val) {
                   if (val == null || val.isEmpty) {
-                    return "Enter email";
+                    return "Enter password";
                   }
+
+                  if (val.length < 8) {
+                    return "Password must be at least 8 characters";
+                  }
+
+                  if (RegExp(r'^[0-9]+$').hasMatch(val)) {
+                    return "Password cannot be numbers only";
+                  }
+
+                  return null;
+                },
+              ),
+
+              SizedBox(height: 10),
+              const Text(
+                "Confirm password",
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+              ),
+              const SizedBox(height: 5),
+              CustomTextForm(
+                hinttext: "Confirm password",
+                mycontroller: confirmPassword,
+                isPassword: true,
+                onChanged: (value) {
+                  formState.currentState!.validate();
+                },
+
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return "Confirm password";
+                  }
+
+                  if (val != password.text) {
+                    return "Passwords do not match";
+                  }
+
                   return null;
                 },
               ),
               const SizedBox(height: 20),
               Padding(padding: EdgeInsets.only(bottom: 10)),
               CustomButtonAuth(
-                title: 'Send code',
+                title: 'Rest password',
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {
-                    Navigator.of(context).pushReplacementNamed("varification");
+                    Navigator.of(context).pushReplacementNamed("homepage");
                   }
                 },
               ),

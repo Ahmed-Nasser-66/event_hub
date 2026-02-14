@@ -19,6 +19,12 @@ class _SignupState extends State<Signup> {
   TextEditingController confirmpass = TextEditingController();
   bool value = false;
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    pass.dispose();
+    confirmpass.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +48,7 @@ class _SignupState extends State<Signup> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 24,
-                      height: 1.0,
-                      letterSpacing: 0,
+
                       color: AppColors.secondary,
                     ),
                   ),
@@ -53,8 +58,7 @@ class _SignupState extends State<Signup> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      height: 1.0,
-                      letterSpacing: 0,
+
                       color: AppColors.secondary,
                     ),
                   ),
@@ -65,12 +69,7 @@ class _SignupState extends State<Signup> {
                   const SizedBox(height: 20),
                   const Text(
                     "Full Name",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      height: 1.0,
-                      letterSpacing: 0,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
@@ -86,16 +85,11 @@ class _SignupState extends State<Signup> {
                   const SizedBox(height: 10),
                   const Text(
                     "Email",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      height: 1.0,
-                      letterSpacing: 0,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Enter email",
+                    hinttext: "example@gmail.com",
                     mycontroller: email,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
@@ -107,12 +101,7 @@ class _SignupState extends State<Signup> {
                   const SizedBox(height: 10),
                   const Text(
                     "Password",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      height: 1.0,
-                      letterSpacing: 0,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
@@ -120,7 +109,7 @@ class _SignupState extends State<Signup> {
                     mycontroller: pass,
                     isPassword: true,
                     onChanged: (value) {
-                      formState.currentState!.validate(); // يعيد فحص التأكيد
+                      formState.currentState!.validate();
                     },
                     validator: (val) {
                       if (val == null || val.isEmpty) {
@@ -142,18 +131,17 @@ class _SignupState extends State<Signup> {
                   SizedBox(height: 10),
                   const Text(
                     "Confirm password",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      height: 1.0,
-                      letterSpacing: 0,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
                     hinttext: "Confirm password",
                     mycontroller: confirmpass,
                     isPassword: true,
+                    onChanged: (value) {
+                      formState.currentState!.validate();
+                    },
+
                     validator: (val) {
                       if (val == null || val.isEmpty) {
                         return "Confirm password";
@@ -221,8 +209,6 @@ class _SignupState extends State<Signup> {
                 color: AppColors.black,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                height: 1.0,
-                letterSpacing: 0,
               ),
             ),
             SizedBox(height: 20),
@@ -240,7 +226,7 @@ class _SignupState extends State<Signup> {
                   width: 50,
                   height: 50,
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: 12),
                 SvgPicture.asset("assets/icon/x.svg", width: 50, height: 50),
               ],
             ),

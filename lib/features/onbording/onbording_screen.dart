@@ -59,15 +59,14 @@ class _OnBoardingState extends State<OnBoarding> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(pages[index]["image"]!, height: 250),
+                      Image.asset(pages[index]["image"]!, height: 200),
                       const SizedBox(height: 20),
                       Text(
                         pages[index]["title"]!,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
-                          height: 1.0,
-                          letterSpacing: 0,
+
                           color: AppColors.secondary,
                         ),
                       ),
@@ -80,8 +79,7 @@ class _OnBoardingState extends State<OnBoarding> {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            height: 1.0,
-                            letterSpacing: 0,
+
                             color: AppColors.secondary,
                           ),
                         ),

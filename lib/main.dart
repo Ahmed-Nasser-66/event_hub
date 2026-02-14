@@ -1,7 +1,9 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/auth/forgotpassword.dart';
 import 'package:event_hub/features/auth/login.dart';
+import 'package:event_hub/features/auth/restpassword.dart';
 import 'package:event_hub/features/auth/signup.dart';
+import 'package:event_hub/features/auth/varification_otp.dart';
 import 'package:event_hub/features/home/homepage.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
@@ -45,6 +47,8 @@ class _MyAppState extends State<MyApp> {
         "onboarding": (context) => OnBoarding(),
         "welcome": (context) => WelcomeScreen(),
         "forgotpassword": (context) => Forgotpassword(),
+        "varification": (context) => VarificationOtp(),
+        "restpassword": (context) => RestPassword(),
       },
     );
   }
