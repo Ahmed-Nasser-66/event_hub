@@ -27,6 +27,7 @@ flutter:
     - assets/icon/
     - assets/image/
     - assets/font/
+    - assets/image/photo_profile.png
 
   fonts:
     - family: Cairo
