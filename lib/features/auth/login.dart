@@ -47,7 +47,6 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
-
                       color: AppColors.secondary,
                     ),
                   ),
@@ -79,6 +78,13 @@ class _LoginState extends State<Login> {
                       if (val == null || val.isEmpty) {
                         return "Enter email";
                       }
+
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(val)) {
+                        return "Enter a valid email";
+                      }
+
                       return null;
                     },
                   ),

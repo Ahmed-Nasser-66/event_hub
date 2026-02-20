@@ -1,23 +1,25 @@
+import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custombuttonauth.dart';
-import 'package:event_hub/features/widgets/customlogoauth.dart';
 import 'package:event_hub/features/widgets/textformfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _SignupState extends State<Signup> {
+class _EditProfileState extends State<EditProfile> {
   TextEditingController username = TextEditingController();
+  TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController confirmpass = TextEditingController();
   bool value = false;
+
   GlobalKey<FormState> formState = GlobalKey<FormState>();
   @override
   void dispose() {
@@ -30,42 +32,51 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.grey,
-      body: Container(
-        padding: const EdgeInsets.all(20),
+      appBar: AppBar(
+        backgroundColor: AppColors.grey,
+        leading: CustomBackButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, "profile");
+          },
+        ),
+      ),
+      body: SafeArea(
         child: ListView(
+          padding: const EdgeInsets.all(12),
           children: [
             Form(
               key: formState,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 50),
-                  CustomLogoAuth(),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Sign up Now",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 24,
-
-                      color: AppColors.secondary,
-                    ),
-                  ),
                   const SizedBox(height: 10),
                   const Text(
-                    "Create account",
+                    "Edit Profile",
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
                       color: AppColors.secondary,
                     ),
                   ),
-                  const Text(
-                    "Create account",
-                    style: TextStyle(color: Color(0xffE9ECEF)),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 40,
+                        backgroundImage: AssetImage(AppAssets.speaker),
+                      ),
+                      const SizedBox(width: 15),
+                      Text(
+                        "Change Picture",
+                        style: TextStyle(
+                          color: AppColors.orange,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
+
                   const SizedBox(height: 20),
                   const Text(
                     "Full Name",
@@ -73,7 +84,7 @@ class _SignupState extends State<Signup> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Enter full name",
+                    hinttext: "Lama Yousef",
                     mycontroller: username,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
@@ -100,6 +111,27 @@ class _SignupState extends State<Signup> {
                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                       ).hasMatch(val)) {
                         return "Enter a valid email";
+                      }
+
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  const Text(
+                    "Phone Number",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  ),
+                  const SizedBox(height: 5),
+                  CustomTextForm(
+                    hinttext: "Enter phone number",
+                    mycontroller: phone,
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return "Enter phone number";
+                      }
+
+                      if (!RegExp(r'^[0-9]{11}$').hasMatch(val)) {
+                        return "Phone number must be exactly 11 digits";
                       }
 
                       return null;
@@ -137,12 +169,12 @@ class _SignupState extends State<Signup> {
 
                   SizedBox(height: 10),
                   const Text(
-                    "Confirm password",
+                    "Retype Password",
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Confirm password",
+                    hinttext: "Retype Password",
                     mycontroller: confirmpass,
                     isPassword: true,
                     onChanged: (value) {
@@ -151,7 +183,7 @@ class _SignupState extends State<Signup> {
 
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Confirm password";
+                        return "Retype password";
                       }
 
                       if (val != pass.text) {
@@ -161,81 +193,38 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                   ),
-                ],
-              ),
-            ),
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              activeColor: AppColors.orange,
-              contentPadding: EdgeInsets.zero,
-              value: value,
-              title: Text("I agree with privacy & policy"),
-              onChanged: (bool? newValue) {
-                setState(() {
-                  value = newValue!;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            CustomButtonAuth(
-              title: 'Sign Up',
-              color: AppColors.orange,
-              onPressed: () {
-                if (formState.currentState!.validate()) {
-                  Navigator.of(context).pushReplacementNamed("login");
-                }
-              },
-            ),
-            const SizedBox(height: 20),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed("login");
-              },
-              child: Center(
-                child: Text.rich(
-                  TextSpan(
-                    text: "Have an account? ",
+                  SizedBox(height: 40),
+                  Row(
                     children: [
-                      TextSpan(
-                        text: "Login",
-                        style: TextStyle(
+                      Expanded(
+                        child: CustomButtonAuth(
+                          title: 'Cancel',
+                          color: AppColors.grey,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+
+                      SizedBox(width: 15),
+
+                      Expanded(
+                        child: CustomButtonAuth(
+                          title: 'Save',
                           color: AppColors.orange,
-                          fontWeight: FontWeight.bold,
+                          onPressed: () {
+                            if (formState.currentState!.validate()) {
+                              Navigator.of(
+                                context,
+                              ).pushReplacementNamed("profile");
+                            }
+                          },
                         ),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              "__________________  Or log in with  __________________",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  "assets/icon/google.svg",
-                  width: 50,
-                  height: 50,
-                ),
-                SizedBox(width: 20),
-                SvgPicture.asset(
-                  "assets/icon/facebook.svg",
-                  width: 50,
-                  height: 50,
-                ),
-                SizedBox(width: 12),
-                SvgPicture.asset("assets/icon/x.svg", width: 50, height: 50),
-              ],
             ),
           ],
         ),

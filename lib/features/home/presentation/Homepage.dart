@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_color.dart';
 
-
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -27,12 +26,9 @@ class _Homepage extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
-        children: pages,
-      ),
+      body: IndexedStack(index: currentIndex, children: pages),
       bottomNavigationBar: BottomNavigationBar(
-       type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.white,
         selectedItemColor: AppColors.orange,
         unselectedItemColor: AppColors.secondary,
@@ -43,10 +39,7 @@ class _Homepage extends State<Homepage> {
           });
         },
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
             icon: Icon(Icons.confirmation_number),
             label: "Ticket",
@@ -55,10 +48,7 @@ class _Homepage extends State<Homepage> {
             icon: Icon(Icons.favorite),
             label: "Favorite",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );

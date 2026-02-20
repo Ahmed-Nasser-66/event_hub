@@ -1,12 +1,12 @@
-import 'package:event_hub/features/home/presentation/tabs/settingsscreen.dart';
-import 'package:event_hub/features/home/presentation/tabs/termsscreen.dart';
-
+import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/profile/presentation/tabs/settings_screen.dart';
+import 'package:event_hub/features/profile/presentation/tabs/privacy_screen.dart';
+import 'package:event_hub/features/widgets/custombuttonauth.dart';
 import 'package:flutter/material.dart';
-import '../../../auth/signup.dart';
 import '../../../widgets/profile_header.dart';
 import '../../../widgets/profile_option_item.dart';
-import 'helpsupportScreen.dart';
-import 'languagescreen.dart';
+import '../../../profile/presentation/tabs/support_screen.dart' ;
+import '../../../profile/presentation/tabs/language_screen.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
@@ -14,102 +14,90 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 60),
-
-              const Text(
-                "Account",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-
-              const SizedBox(height: 10),
-
-              const ProfileHeader(),
-
-              const SizedBox(height: 10),
-
-              ProfileOptionItem(
-                title: "Settings",
-                icon: Icons.settings_outlined,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const SettingsScreen(),
-                    ),
-                  );
-                },
-              ),
-
-              ProfileOptionItem(
-                title: "Language",
-                icon: Icons.language_outlined,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const LanguageScreen(),
-                    ),
-                  );
-                },
-              ),
-
-              ProfileOptionItem(
-                title: "Help & Support",
-                icon: Icons.headset_mic_outlined,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const HelpSupportScreen(),
-                    ),
-                  );
-                },
-              ),
-
-              ProfileOptionItem(
-                title: "Terms & Privacy",
-                icon: Icons.description_outlined,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const TermsScreen(),
-                    ),
-                  );
-                },
-              ),
-
-              const SizedBox(height: 20),
-
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  minimumSize: const Size(double.infinity, 45),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+      backgroundColor: AppColors.grey,
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  "Account",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.secondary,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => const Signup()),
-                        (route) => false,
-                  );
-                },
-                child: const Text(
-                  "Log out",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
+
+                const SizedBox(height: 10),
+
+                const ProfileHeader(),
+
+                const SizedBox(height: 10),
+
+                ProfileOptionItem(
+                  title: "Settings",
+                  icon: Icons.settings_outlined,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    );
+                  },
                 ),
-              ),
-            ],
+
+                ProfileOptionItem(
+                  title: "Language",
+                  icon: Icons.language_outlined,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LanguageScreen()),
+                    );
+                  },
+                ),
+
+                ProfileOptionItem(
+                  title: "Help & Support",
+                  icon: Icons.headset_mic_outlined,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SupportScreen()),
+                    );
+                  },
+                ),
+
+                ProfileOptionItem(
+                  title: "Terms & Privacy",
+                  icon: Icons.description_outlined,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const PrivacyScreen()),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: CustomButtonAuth(
+                title: 'Log out',
+                color: AppColors.orange,
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed("login");
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

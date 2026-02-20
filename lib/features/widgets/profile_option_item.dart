@@ -1,3 +1,4 @@
+import 'package:event_hub/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ProfileOptionItem extends StatelessWidget {
@@ -15,19 +16,20 @@ class ProfileOptionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: const Color(0xFF1B1B4B)),
+      contentPadding: EdgeInsets.all(1),
+      leading: Icon(icon, color: AppColors.secondary),
       title: Text(
         title,
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
+          color: AppColors.secondary,
         ),
       ),
       trailing: const Icon(
         Icons.arrow_forward_ios,
         size: 16,
-        color: Colors.grey,
+        color: AppColors.secondary,
       ),
       onTap: onTap,
     );
