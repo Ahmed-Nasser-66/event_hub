@@ -63,7 +63,7 @@ class _EditProfileState extends State<EditProfile> {
                     children: [
                       const CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage(AppAssets.speaker),
+                        backgroundImage: AssetImage(AppAssets.lama),
                       ),
                       const SizedBox(width: 15),
                       Text(

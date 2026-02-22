@@ -131,7 +131,7 @@ class _RestPasswordState extends State<RestPassword> {
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {
-                    Navigator.of(context).pushReplacementNamed("homepage");
+                    Navigator.of(context).pushReplacementNamed("login");
                   }
                 },
               ),

@@ -1,3 +1,4 @@
+import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/profile/presentation/tabs/edit_profile.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class ProfileHeader extends StatelessWidget {
         children: [
           const CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage("assets/image/photo_profile.png"),
+            backgroundImage: AssetImage(AppAssets.lama),
           ),
           const SizedBox(height: 15),
 

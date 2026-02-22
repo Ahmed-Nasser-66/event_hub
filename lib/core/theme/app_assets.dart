@@ -7,6 +7,7 @@ class AppAssets {
   static const String hello = 'assets/image/hello.png';
   static const String hub = 'assets/image/hub.png';
   static const String logo = 'assets/image/logo.png';
+  static const String lama = 'assets/image/lama.png';
   static const String login = 'assets/image/login.png';
   static const String onboarding = 'assets/image/onboarding.png';
   static const String party = 'assets/image/party.png';
