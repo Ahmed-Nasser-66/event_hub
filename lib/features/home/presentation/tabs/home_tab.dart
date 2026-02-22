@@ -1,4 +1,5 @@
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/home/presentation/tabs/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -21,7 +22,12 @@ class HomeTab extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: AppColors.white,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Location()),
+                          );
+                        },
                         icon: SvgPicture.asset(
                           'assets/icon/location.svg',
                           width: 20,
