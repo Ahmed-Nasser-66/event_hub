@@ -1,7 +1,8 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
-import 'package:event_hub/features/widgets/custombuttonauth.dart';
-import 'package:event_hub/features/widgets/textformfield.dart';
+import 'package:event_hub/features/widgets/custom_button_auth.dart';
+import 'package:event_hub/features/widgets/text_form_field.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class RestPassword extends StatefulWidget {
@@ -15,6 +16,7 @@ class _RestPasswordState extends State<RestPassword> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
   void dispose() {
     password.dispose();
@@ -24,9 +26,10 @@ class _RestPasswordState extends State<RestPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
-
       appBar: AppBar(
         leading: CustomBackButton(
           onPressed: () {
@@ -42,19 +45,19 @@ class _RestPasswordState extends State<RestPassword> {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    "Create new password",
-                    style: TextStyle(
+                    l10n.createNewPassword,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       color: AppColors.secondary,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    "Create a strong password to secure your account.",
-                    style: TextStyle(
+                    l10n.createStrongPasswordDescription,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: AppColors.secondary,
@@ -62,20 +65,22 @@ class _RestPasswordState extends State<RestPassword> {
                   ),
                 ],
               ),
+
               const SizedBox(height: 30),
-              const Text(
-                "New password",
-                style: TextStyle(
+
+              Text(
+                l10n.newPassword,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-
                   color: AppColors.black,
                 ),
               ),
+
               const SizedBox(height: 8),
 
               CustomTextForm(
-                hinttext: "Enter password",
+                hinttext: l10n.enterPassword,
                 mycontroller: password,
                 isPassword: true,
                 onChanged: (value) {
@@ -83,51 +88,58 @@ class _RestPasswordState extends State<RestPassword> {
                 },
                 validator: (val) {
                   if (val == null || val.isEmpty) {
-                    return "Enter password";
+                    return l10n.enterPassword;
                   }
 
                   if (val.length < 8) {
-                    return "Password must be at least 8 characters";
+                    return l10n.passwordMinLength;
                   }
 
                   if (RegExp(r'^[0-9]+$').hasMatch(val)) {
-                    return "Password cannot be numbers only";
+                    return l10n.passwordNumbersOnly;
                   }
 
                   return null;
                 },
               ),
 
-              SizedBox(height: 10),
-              const Text(
-                "Confirm password",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+              const SizedBox(height: 10),
+
+              Text(
+                l10n.confirmPassword,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
               ),
+
               const SizedBox(height: 5),
+
               CustomTextForm(
-                hinttext: "Confirm password",
+                hinttext: l10n.confirmPassword,
                 mycontroller: confirmPassword,
                 isPassword: true,
                 onChanged: (value) {
                   formState.currentState!.validate();
                 },
-
                 validator: (val) {
                   if (val == null || val.isEmpty) {
-                    return "Confirm password";
+                    return l10n.confirmPassword;
                   }
 
                   if (val != password.text) {
-                    return "Passwords do not match";
+                    return l10n.passwordsDoNotMatch;
                   }
 
                   return null;
                 },
               ),
+
               const SizedBox(height: 20),
-              Padding(padding: EdgeInsets.only(bottom: 10)),
+              const Padding(padding: EdgeInsets.only(bottom: 10)),
+
               CustomButtonAuth(
-                title: 'Rest password',
+                title: l10n.resetPassword,
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {

@@ -1,8 +1,9 @@
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
-import 'package:event_hub/features/widgets/custombuttonauth.dart';
-import 'package:event_hub/features/widgets/textformfield.dart';
+import 'package:event_hub/features/widgets/custom_button_auth.dart';
+import 'package:event_hub/features/widgets/text_form_field.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class EditProfile extends StatefulWidget {
@@ -18,9 +19,9 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController confirmpass = TextEditingController();
-  bool value = false;
 
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
   void dispose() {
     pass.dispose();
@@ -30,6 +31,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
@@ -50,9 +53,9 @@ class _EditProfileState extends State<EditProfile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-                  const Text(
-                    "Edit Profile",
-                    style: TextStyle(
+                  Text(
+                    l10n.editProfileTitle,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       color: AppColors.secondary,
@@ -67,8 +70,8 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       const SizedBox(width: 15),
                       Text(
-                        "Change Picture",
-                        style: TextStyle(
+                        l10n.changePicture,
+                        style: const TextStyle(
                           color: AppColors.orange,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -76,11 +79,14 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 20),
-                  const Text(
-                    "Full Name",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+
+                  Text(
+                    l10n.fullName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
@@ -88,129 +94,127 @@ class _EditProfileState extends State<EditProfile> {
                     mycontroller: username,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Enter full name";
+                        return l10n.enterFullName;
                       }
                       return null;
                     },
                   ),
+
                   const SizedBox(height: 10),
-                  const Text(
-                    "Email",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  Text(
+                    l10n.email,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "example@gmail.com",
+                    hinttext: l10n.emailExample,
                     mycontroller: email,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Enter email";
+                        return l10n.enterEmail;
                       }
-
                       if (!RegExp(
                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                       ).hasMatch(val)) {
-                        return "Enter a valid email";
+                        return l10n.enterValidEmail;
                       }
-
                       return null;
                     },
                   ),
-                  SizedBox(height: 10),
-                  const Text(
-                    "Phone Number",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+
+                  const SizedBox(height: 10),
+                  Text(
+                    l10n.phoneNumber,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Enter phone number",
+                    hinttext: l10n.enterPhoneNumber,
                     mycontroller: phone,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Enter phone number";
+                        return l10n.enterPhoneNumber;
                       }
-
                       if (!RegExp(r'^[0-9]{11}$').hasMatch(val)) {
-                        return "Phone number must be exactly 11 digits";
+                        return l10n.phoneMustBe11Digits;
                       }
-
                       return null;
                     },
                   ),
+
                   const SizedBox(height: 10),
-                  const Text(
-                    "Password",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  Text(
+                    l10n.password,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Enter password",
+                    hinttext: l10n.enterPassword,
                     mycontroller: pass,
                     isPassword: true,
-                    onChanged: (value) {
-                      formState.currentState!.validate();
-                    },
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Enter password";
+                        return l10n.enterPassword;
                       }
-
                       if (val.length < 8) {
-                        return "Password must be at least 8 characters";
+                        return l10n.passwordMinLength;
                       }
-
                       if (RegExp(r'^[0-9]+$').hasMatch(val)) {
-                        return "Password cannot be numbers only";
+                        return l10n.passwordNumbersOnly;
                       }
-
                       return null;
                     },
                   ),
 
-                  SizedBox(height: 10),
-                  const Text(
-                    "Retype Password",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  const SizedBox(height: 10),
+                  Text(
+                    l10n.retypePassword,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Retype Password",
+                    hinttext: l10n.retypePasswordHint,
                     mycontroller: confirmpass,
                     isPassword: true,
-                    onChanged: (value) {
-                      formState.currentState!.validate();
-                    },
-
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Retype password";
+                        return l10n.retypePasswordError;
                       }
-
                       if (val != pass.text) {
-                        return "Passwords do not match";
+                        return l10n.passwordsDoNotMatch;
                       }
-
                       return null;
                     },
                   ),
-                  SizedBox(height: 40),
+
+                  const SizedBox(height: 40),
                   Row(
                     children: [
                       Expanded(
                         child: CustomButtonAuth(
-                          title: 'Cancel',
+                          title: l10n.cancel,
                           color: AppColors.grey,
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                       ),
-
-                      SizedBox(width: 15),
-
+                      const SizedBox(width: 15),
                       Expanded(
                         child: CustomButtonAuth(
-                          title: 'Save',
+                          title: l10n.save,
                           color: AppColors.orange,
                           onPressed: () {
                             if (formState.currentState!.validate()) {

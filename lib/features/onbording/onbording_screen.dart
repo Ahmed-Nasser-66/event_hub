@@ -1,5 +1,6 @@
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class OnBoarding extends StatefulWidget {
@@ -13,36 +14,31 @@ class _OnBoardingState extends State<OnBoarding> {
   PageController controller = PageController();
   int currentPage = 0;
 
-  List<Map<String, String>> pages = [
-    {
-      "title": "Welcome to EventHub",
-      "desc":
-          '''Discover amazing events around you, book tickets, and create unforgettable memories.''',
-      "image": AppAssets.hello,
-    },
-    {
-      "title": "Connect with your community",
-      "desc":
-          '''Meet like-minded people, share interests, and grow your professional network at the best events.''',
-      "image": AppAssets.onboarding,
-    },
-    {
-      "title": "Your Personal Event Planner ",
-      "desc":
-          '''Sync events to your device and get real-time reminders. We help you manage your time so you can focus on the experience.''',
-      "image": AppAssets.events,
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final List<Map<String, String>> pages = [
+      {
+        "title": l10n.welcomeMessage,
+        "desc": l10n.discoverEventsDescription,
+        "image": AppAssets.hello,
+      },
+      {
+        "title": l10n.connectCommunityTitle,
+        "desc": l10n.connectCommunityDescription,
+        "image": AppAssets.onboarding,
+      },
+      {
+        "title": l10n.personalPlannerTitle,
+        "desc": l10n.personalPlannerDescription,
+        "image": AppAssets.events,
+      },
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.grey,
-      appBar: AppBar(
-        backgroundColor: AppColors.grey,
-        elevation: 0,
-        actions: [],
-      ),
+      appBar: AppBar(backgroundColor: AppColors.grey, elevation: 0),
       body: SafeArea(
         child: Column(
           children: [
@@ -66,7 +62,6 @@ class _OnBoardingState extends State<OnBoarding> {
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
-
                           color: AppColors.secondary,
                         ),
                       ),
@@ -79,7 +74,6 @@ class _OnBoardingState extends State<OnBoarding> {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-
                             color: AppColors.secondary,
                           ),
                         ),
@@ -89,6 +83,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 },
               ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -106,7 +101,9 @@ class _OnBoardingState extends State<OnBoarding> {
                 ),
               ),
             ),
+
             const SizedBox(height: 20),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
@@ -114,9 +111,9 @@ class _OnBoardingState extends State<OnBoarding> {
                   TextButton(
                     onPressed: () =>
                         Navigator.pushReplacementNamed(context, "welcome"),
-                    child: const Text(
-                      "Skip",
-                      style: TextStyle(color: Color(0xff495057)),
+                    child: Text(
+                      l10n.skip,
+                      style: const TextStyle(color: Color(0xff495057)),
                     ),
                   ),
                   const Spacer(),
@@ -128,7 +125,9 @@ class _OnBoardingState extends State<OnBoarding> {
                             curve: Curves.ease,
                           ),
                     child: Text(
-                      currentPage == pages.length - 1 ? "Get Started" : "Next",
+                      currentPage == pages.length - 1
+                          ? l10n.getStarted
+                          : l10n.next,
                       style: const TextStyle(color: Color(0xff05063F)),
                     ),
                   ),

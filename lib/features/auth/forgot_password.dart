@@ -1,7 +1,8 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
-import 'package:event_hub/features/widgets/custombuttonauth.dart';
-import 'package:event_hub/features/widgets/textformfield.dart';
+import 'package:event_hub/features/widgets/custom_button_auth.dart';
+import 'package:event_hub/features/widgets/text_form_field.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class Forgotpassword extends StatefulWidget {
@@ -23,9 +24,10 @@ class _ForgotpasswordState extends State<Forgotpassword> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
-
       appBar: AppBar(
         leading: CustomBackButton(
           onPressed: () {
@@ -41,19 +43,19 @@ class _ForgotpasswordState extends State<Forgotpassword> {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    "Forgot password",
-                    style: TextStyle(
+                    l10n.forgotPassword,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       color: AppColors.secondary,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    "Enter your email address and we will send you a code to reset your password.",
-                    style: TextStyle(
+                    l10n.enterEmailDescription,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: AppColors.secondary,
@@ -61,38 +63,43 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   ),
                 ],
               ),
+
               const SizedBox(height: 30),
-              const Text(
-                "Email",
-                style: TextStyle(
+
+              Text(
+                l10n.email,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-
                   color: AppColors.black,
                 ),
               ),
+
               const SizedBox(height: 5),
+
               CustomTextForm(
-                hinttext: "example@gmail.com",
+                hinttext: l10n.emailExample,
                 mycontroller: email,
                 validator: (val) {
                   if (val == null || val.isEmpty) {
-                    return "Enter email";
+                    return l10n.enterEmail;
                   }
 
                   if (!RegExp(
                     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                   ).hasMatch(val)) {
-                    return "Enter a valid email";
+                    return l10n.enterValidEmail;
                   }
 
                   return null;
                 },
               ),
+
               const SizedBox(height: 20),
-              Padding(padding: EdgeInsets.only(bottom: 10)),
+              const Padding(padding: EdgeInsets.only(bottom: 10)),
+
               CustomButtonAuth(
-                title: 'Send code',
+                title: l10n.sendCode,
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {

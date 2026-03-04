@@ -1,7 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
-import 'package:event_hub/features/auth/forgotpassword.dart';
+import 'package:event_hub/features/auth/forgot_password.dart';
 import 'package:event_hub/features/auth/login.dart';
-import 'package:event_hub/features/auth/restpassword.dart';
+import 'package:event_hub/features/auth/rest_password.dart';
 import 'package:event_hub/features/auth/signup.dart';
 import 'package:event_hub/features/auth/varification_otp.dart';
 import 'package:event_hub/features/home/presentation/home_page.dart';
@@ -9,11 +9,18 @@ import 'package:event_hub/features/home/presentation/tabs/profile_tab.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
 import 'package:event_hub/features/splash/splach_screen.dart';
-
+import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/app_language_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppLanguageProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -26,6 +33,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    var languageprovider = Provider.of<AppLanguageProvider>(context);
     return MaterialApp(
       themeMode: ThemeMode.dark,
       theme: ThemeData(
@@ -52,6 +60,9 @@ class _MyAppState extends State<MyApp> {
         "restpassword": (context) => RestPassword(),
         "profile": (context) => ProfileTab(),
       },
+      locale: Locale(languageprovider.appLanguage),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

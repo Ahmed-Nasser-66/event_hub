@@ -1,8 +1,9 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
-import 'package:event_hub/features/widgets/custombuttonauth.dart';
-import 'package:event_hub/features/widgets/customlogoauth.dart';
-import 'package:event_hub/features/widgets/textformfield.dart';
+import 'package:event_hub/features/widgets/custom_button_auth.dart';
+import 'package:event_hub/features/widgets/custom_logo_auth.dart';
+import 'package:event_hub/features/widgets/text_form_field.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -21,6 +22,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
@@ -40,80 +43,88 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomLogoAuth(),
+                  const CustomLogoAuth(),
                   const SizedBox(height: 20),
-                  const Text(
-                    "Log in Now",
-                    style: TextStyle(
+
+                  Text(
+                    l10n.loginNow,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       color: AppColors.secondary,
                     ),
                   ),
+
                   const SizedBox(height: 10),
-                  const Text(
-                    "sign to your account",
-                    style: TextStyle(
+
+                  Text(
+                    l10n.signInToAccount,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-
                       color: AppColors.secondary,
                     ),
                   ),
+
                   const SizedBox(height: 20),
-                  const Text(
-                    "Email",
-                    style: TextStyle(
+
+                  Text(
+                    l10n.email,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-
                       color: AppColors.black,
                     ),
                   ),
+
                   const SizedBox(height: 5),
+
                   CustomTextForm(
-                    hinttext: "example@gmail.com",
+                    hinttext: l10n.emailExample,
                     mycontroller: email,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Enter email";
+                        return l10n.enterEmail;
                       }
 
                       if (!RegExp(
                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                       ).hasMatch(val)) {
-                        return "Enter a valid email";
+                        return l10n.enterValidEmail;
                       }
 
                       return null;
                     },
                   ),
+
                   const SizedBox(height: 10),
-                  const Text(
-                    "Password",
-                    style: TextStyle(
+
+                  Text(
+                    l10n.password,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-
                       color: AppColors.black,
                     ),
                   ),
+
                   const SizedBox(height: 5),
+
                   CustomTextForm(
-                    hinttext: "Enter password",
+                    hinttext: l10n.enterPassword,
                     mycontroller: pass,
                     isPassword: true,
                     validator: (val) {
                       if (val == null || val.isEmpty) {
-                        return "Enter password";
+                        return l10n.enterPassword;
                       }
 
                       if (val.length < 8) {
-                        return "Password must be at least 8 characters";
+                        return l10n.passwordMinLength;
                       }
 
                       if (RegExp(r'^[0-9]+$').hasMatch(val)) {
-                        return "Password cannot be numbers only";
+                        return l10n.passwordNumbersOnly;
                       }
 
                       return null;
@@ -122,7 +133,9 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+
+            const SizedBox(height: 10),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -132,9 +145,9 @@ class _LoginState extends State<Login> {
                       context,
                     ).pushReplacementNamed("forgotpassword");
                   },
-                  child: const Text(
-                    "Forgot Password ?",
-                    style: TextStyle(
+                  child: Text(
+                    l10n.forgotPassword,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: AppColors.black,
                     ),
@@ -142,9 +155,11 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ),
+
             const SizedBox(height: 20),
+
             CustomButtonAuth(
-              title: 'Login',
+              title: l10n.login,
               color: AppColors.orange,
               onPressed: () {
                 if (formState.currentState!.validate()) {
@@ -152,7 +167,9 @@ class _LoginState extends State<Login> {
                 }
               },
             ),
+
             const SizedBox(height: 20),
+
             InkWell(
               onTap: () {
                 Navigator.of(context).pushReplacementNamed("signup");
@@ -160,11 +177,12 @@ class _LoginState extends State<Login> {
               child: Center(
                 child: Text.rich(
                   TextSpan(
-                    text: "Don't have an account? ",
+                    text: "${l10n.noAccount} ",
+                    style: const TextStyle(color: AppColors.secondary),
                     children: [
                       TextSpan(
-                        text: "Sign up",
-                        style: TextStyle(
+                        text: l10n.signup,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.orange,
                         ),
@@ -174,17 +192,21 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+
+            const SizedBox(height: 50),
+
             Text(
-              "__________________  Or log in with  __________________",
+              "__________________  ${l10n.orLoginWith}  __________________",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 60),
+
+            const SizedBox(height: 60),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -193,13 +215,13 @@ class _LoginState extends State<Login> {
                   width: 50,
                   height: 50,
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 SvgPicture.asset(
                   "assets/icon/facebook.svg",
                   width: 50,
                   height: 50,
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 SvgPicture.asset("assets/icon/x.svg", width: 50, height: 50),
               ],
             ),

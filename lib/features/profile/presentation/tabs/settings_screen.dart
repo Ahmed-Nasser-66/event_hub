@@ -1,5 +1,6 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -14,6 +15,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
@@ -28,27 +31,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(12),
         children: [
           Text(
-            "Settings",
-            style: TextStyle(
+            l10n.settingsTitle,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
               color: AppColors.secondary,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
-            '''This is the settings page. Here you can customize your EventHub experience by adjusting various preferences and options. You can enable or disable notifications, and configure other app features to suit your needs.''',
-            style: TextStyle(
+            l10n.settingsDescription,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
               color: AppColors.secondary,
             ),
           ),
-          SizedBox(height: 20),
-
+          const SizedBox(height: 20),
           SwitchListTile(
-            title: const Text("Notifications"),
-            subtitle: const Text("Enable app notifications"),
+            title: Text(l10n.notifications),
+            subtitle: Text(l10n.enableNotifications),
             secondary: const Icon(Icons.notifications_outlined),
             value: notificationsEnabled,
             activeTrackColor: AppColors.orange,

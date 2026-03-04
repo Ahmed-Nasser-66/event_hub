@@ -1,19 +1,20 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/app_language_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class LanguageScreen extends StatefulWidget {
+class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});
 
   @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
-}
-
-class _LanguageScreenState extends State<LanguageScreen> {
-  bool isArabic = false;
-
-  @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<AppLanguageProvider>();
+    final l10n = AppLocalizations.of(context)!;
+
+    final bool isArabic = languageProvider.appLanguage == 'ar';
+
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
@@ -28,28 +29,28 @@ class _LanguageScreenState extends State<LanguageScreen> {
         padding: const EdgeInsets.all(12),
         children: [
           Text(
-            "Language",
-            style: TextStyle(
+            l10n.language,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
               color: AppColors.secondary,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
-            '''This is the language settings page. Here you can select your preferred language for the EventHub app. We currently support English and Arabic.
-Please select your language from the options below.''',
-            style: TextStyle(
+            l10n.languageDescription,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
               color: AppColors.secondary,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
+
           SwitchListTile(
             title: Text(
-              isArabic ? "العربية" : "English",
-              style: TextStyle(
+              isArabic ? l10n.arabic : l10n.english,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
                 color: AppColors.secondary,
@@ -60,9 +61,11 @@ Please select your language from the options below.''',
             inactiveThumbColor: AppColors.white,
             inactiveTrackColor: AppColors.secondary,
             onChanged: (value) {
-              setState(() {
-                isArabic = value;
-              });
+              if (value) {
+                context.read<AppLanguageProvider>().changeLanguage('ar');
+              } else {
+                context.read<AppLanguageProvider>().changeLanguage('en');
+              }
             },
           ),
         ],

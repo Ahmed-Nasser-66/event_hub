@@ -1,0 +1,162 @@
+{
+  "welcomeMessage": "Welcome to EventHub",
+  "discoverEventsDescription": "Discover amazing events around you, book tickets, and create unforgettable memories.",
+
+  "skip": "Skip",
+  "next": "Next",
+
+  "connectCommunityTitle": "Connect with your community",
+  "connectCommunityDescription": "Meet like-minded people, share interests, and grow your professional network at the best events.",
+
+  "personalPlannerTitle": "Your Personal Event Planner",
+  "personalPlannerDescription": "Sync events to your device and get real-time reminders. We help you manage your time so you can focus on the experience.",
+
+  "welcome": "WELCOME!",
+
+  "login": "Log in",
+  "signup": "Sign up",
+  "loginNow": "Log in Now",
+  "signInToAccount": "Sign in to your account",
+
+  "email": "Email",
+  "password": "Password",
+  "emailExample": "example@gmail.com",
+
+  "forgotPassword": "Forgot Password?",
+  "orLoginWith": "Or log in with",
+
+  "enterEmailDescription": "Enter your email address and we will send you a code to reset your password.",
+  "sendCode": "Send Code",
+  "checkEmail": "Please check your email",
+  "codeSentTo": "We have sent code to",
+  "didNotReceiveCode": "Didn’t receive a code?",
+  "resendCode": "Resend Code",
+
+  "createNewPassword": "Create new password",
+  "createStrongPasswordDescription": "Create a strong password to secure your account.",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "resetPassword": "Reset password",
+
+  "signupNow": "Sign up Now",
+  "createAccount": "Create account",
+  "fullName": "Full Name",
+  "agreePrivacyPolicy": "I agree with privacy & policy",
+  "alreadyHaveAccount": "Already have an account?",
+  "orSignupWith": "Or sign up with",
+
+  "findEvent": "Find Event",
+  "categories": "Categories",
+  "seeAll": "See all",
+  "upcomingEvents": "Upcoming Events",
+  "music": "Music",
+
+  "eventTitle": "Event Title",
+  "location": "Location",
+  "dateTime": "Date & Time",
+  "nearbyEvents": "Nearby Events",
+  "priceLabel": "$ price",
+
+  "chooseLocation": "Choose Your Location",
+  "locationDescription": "Find events near you or in a specific city",
+  "useCurrentLocation": "Use Current Location",
+  "gpsDescription": "Uses your device’s GPS",
+  "enterLocationManually": "Or Enter Manually",
+  "searchCityHint": "Search for a city...",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+
+  "notifications": "Notifications",
+  "eventReminder": "Event Reminder",
+  "eventReminderDescription": "Your concert starts in 2 hours at City Stadium! Get your tickets ready.",
+
+  "bookingConfirmedTitle": "Booking Confirmed",
+  "bookingConfirmedDescription": "Booking Confirmed! You can now find your tickets in the Tickets section",
+
+  "specialOfferTitle": "Special Offer",
+  "specialOfferDescription": "Exclusive Offer! Get 20% off on your next booking using code : EVENT20",
+
+  "locationUpdateTitle": "Location Update",
+  "locationUpdateDescription": "Important Update: the Art Workshop has been moved to Hall B",
+
+  "comingSoon": "Coming soon",
+  "history": "History",
+  "bookingCode": "Booking Code",
+
+  "home": "Home",
+  "tickets": "Tickets",
+  "favorite": "Favorite",
+  "profile": "Profile",
+
+  "downloadTicket": "Download Ticket",
+  "bookingId": "Booking ID",
+  "numberOfTickets": "Number of tickets:",
+  "timeLabel": "Time:",
+  "dateLabel": "Date:",
+  "rowLabel": "Row:",
+  "venueLabel": "Venue:",
+  "sectionLabel": "Section:",
+
+  "newCairo": "New Cairo",
+  "favoriteEvents": "Favorite Events",
+
+  "account": "Account",
+  "editProfile": "Edit profile",
+  "settings": "Settings",
+  "language": "Language",
+  "helpSupport": "Help & Support",
+  "termsPrivacy": "Terms & Privacy",
+  "logout": "Log out",
+
+  "changePicture": "Change Picture",
+  "phoneNumber": "Phone Number",
+  "retypePassword": "Retype Password",
+  "save": "Save",
+
+  "aboutEvent": "About Event",
+  "eventDetailsDescription": "Everything you need to know about this event",
+
+  "speakers": "Speakers",
+  "speakerName": "Speaker Name:",
+  "omarTarek": "Omar Tarek",
+  "topic": "Topic:",
+  "science": "Science",
+
+  "gaming": "Gaming",
+  "arts": "Arts",
+  "business": "Business",
+  "tech": "Tech",
+  "fashion": "Fashion",
+"helpSupportTitle": "Help & Support",
+
+  "bookNow": "Book Now",
+  "helpSupportDescription": "We are here to help you at any time. If you experience any issues while using the EventHub app or have any questions or suggestions, please feel free to contact us. Our support team is committed to responding to all inquiries as quickly as possible to ensure the best experience for you.\nYou can reach us via email at:\n\neventhubsupport@eventhub.com"
+,
+"settingsTitle": "Settings",
+"settingsDescription": "This is the settings page. Here you can customize your EventHub experience by adjusting various preferences and options. You can enable or disable notifications, and configure other app features to suit your needs.",
+"enableNotifications": "Enable app notifications",
+"privacyPolicyTitle": "Privacy Policy",
+"privacyPolicyText": "This is the privacy policy of EventHub. We value your privacy and are committed to protecting your personal information. We collect and use your data in accordance with this policy. By using our app, you agree to the terms outlined in this privacy policy.\n\nTerms and Conditions\n\nBy using this application, you agree to the following terms and conditions:\n\n1. Use of the Application\nYou agree to use the application only for lawful purposes and not to misuse any of its services or content.\n\n2. Privacy Policy\nWe respect users' privacy and may collect certain information such as name, email address, or phone number to improve user experience.\n\n3. Data Protection\nWe are committed to protecting user data and will not share personal information with third parties without user consent.\n\n4. User Responsibility\nUsers are responsible for the accuracy of the information they provide within the application.\n\n5. Modifications\nWe reserve the right to modify these terms and conditions at any time. Continued use of the application indicates acceptance of any changes.\n\nIf you have any questions, please contact us via email.",
+"languageDescription": "This is the language settings page. Here you can select your preferred language for the EventHub app. We currently support English and Arabic.\nPlease select your language from the options below.",
+"english": "English",
+"arabic": "Arabic",
+"editProfileTitle": "Edit Profile",
+"enterFullName": "Enter full name",
+"enterEmail": "Enter email",
+"enterValidEmail": "Enter a valid email",
+"enterPhoneNumber": "Enter phone number",
+"phoneMustBe11Digits": "Phone number must be exactly 11 digits",
+"enterPassword": "Enter password",
+"passwordMinLength": "Password must be at least 8 characters",
+"passwordNumbersOnly": "Password cannot be numbers only",
+"retypePasswordHint": "Retype Password",
+"retypePasswordError": "Retype password",
+"passwordsDoNotMatch": "Passwords do not match",
+"goToResetPassword": "Go to reset password",
+"getStarted": "Get Started",
+"haveAccount": "Have an account?",
+"signUpButton": "Sign Up",
+"sports": "sports",
+"education": "education",
+"noAccount": "Don't have an account?"
+}

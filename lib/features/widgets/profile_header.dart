@@ -1,6 +1,7 @@
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/profile/presentation/tabs/edit_profile.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -48,8 +49,8 @@ class ProfileHeader extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text(
-              "Edit profile",
+            child: Text(
+              AppLocalizations.of(context)!.editProfile,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

@@ -1,9 +1,9 @@
 import 'package:event_hub/features/home/presentation/tabs/favorite_tab.dart';
 import 'package:event_hub/features/home/presentation/tabs/home_tab.dart';
-import 'package:event_hub/features/home/presentation/tabs/profile_tab.dart';
 import 'package:event_hub/features/home/presentation/tabs/ticket_tab.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-
+import 'package:event_hub/features/home/presentation/tabs/profile_tab.dart';
 import '../../../core/theme/app_color.dart';
 
 class Homepage extends StatefulWidget {
@@ -16,7 +16,7 @@ class Homepage extends StatefulWidget {
 class _Homepage extends State<Homepage> {
   int currentIndex = 0;
 
-  final List<Widget> pages = const [
+  final List<Widget> pages = [
     HomeTab(),
     TicketTab(),
     FavoriteTab(),
@@ -25,6 +25,8 @@ class _Homepage extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: IndexedStack(index: currentIndex, children: pages),
       bottomNavigationBar: BottomNavigationBar(
@@ -38,17 +40,23 @@ class _Homepage extends State<Homepage> {
             currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_number),
-            label: "Ticket",
+            icon: const Icon(Icons.home),
+            label: l10n.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favorite",
+            icon: const Icon(Icons.confirmation_number),
+            label: l10n.tickets,
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.favorite),
+            label: l10n.favorite,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.person),
+            label: l10n.profile,
+          ),
         ],
       ),
     );

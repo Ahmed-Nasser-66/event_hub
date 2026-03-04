@@ -1,5 +1,6 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SupportScreen extends StatelessWidget {
@@ -7,6 +8,8 @@ class SupportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
@@ -21,20 +24,17 @@ class SupportScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         children: [
           Text(
-            "Help & Support",
-            style: TextStyle(
+            l10n.helpSupportTitle,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
               color: AppColors.secondary,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
-            '''We are here to help you at any time. If you experience any issues while using the EventHub app or have any questions or suggestions, please feel free to contact us. Our support team is committed to responding to all inquiries as quickly as possible to ensure the best experience for you.
-You can reach us via email at:
-
-eventhubsupport@eventhub.com''',
-            style: TextStyle(
+            l10n.helpSupportDescription,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
               color: AppColors.secondary,

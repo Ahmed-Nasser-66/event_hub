@@ -1,6 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
-import 'package:event_hub/features/widgets/custombuttonauth.dart';
+import 'package:event_hub/features/widgets/custom_button_auth.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class VarificationOtp extends StatefulWidget {
@@ -13,11 +14,13 @@ class VarificationOtp extends StatefulWidget {
 class _VarificationOtpState extends State<VarificationOtp> {
   TextEditingController email = TextEditingController();
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.grey,
-
       appBar: AppBar(
         leading: CustomBackButton(
           onPressed: () {
@@ -33,19 +36,19 @@ class _VarificationOtpState extends State<VarificationOtp> {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    "Please check your email",
-                    style: TextStyle(
+                    l10n.checkEmail,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       color: AppColors.secondary,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    "We have sent code to example@gmail.com",
-                    style: TextStyle(
+                    "${l10n.codeSentTo} example@gmail.com",
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: AppColors.secondary,
@@ -53,7 +56,9 @@ class _VarificationOtpState extends State<VarificationOtp> {
                   ),
                 ],
               ),
+
               const SizedBox(height: 30),
+
               InkWell(
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed("varification");
@@ -61,11 +66,12 @@ class _VarificationOtpState extends State<VarificationOtp> {
                 child: Center(
                   child: Text.rich(
                     TextSpan(
-                      text: " Didn’t receive a code? ",
+                      text: " ${l10n.didNotReceiveCode} ",
+                      style: const TextStyle(color: AppColors.secondary),
                       children: [
                         TextSpan(
-                          text: "Resend Code",
-                          style: TextStyle(
+                          text: l10n.resendCode,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: AppColors.orange,
                           ),
@@ -75,10 +81,12 @@ class _VarificationOtpState extends State<VarificationOtp> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 20),
-              Padding(padding: EdgeInsets.only(bottom: 50)),
+              const Padding(padding: EdgeInsets.only(bottom: 50)),
+
               CustomButtonAuth(
-                title: 'Go to reset password',
+                title: l10n.goToResetPassword,
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {
