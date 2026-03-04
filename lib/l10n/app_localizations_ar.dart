@@ -39,6 +39,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get welcome => 'أهلًا بك!';
 
   @override
+  String get helloHome => 'مرحباً،';
+
+  @override
   String get login => 'تسجيل الدخول';
 
   @override
@@ -119,6 +122,89 @@ class AppLocalizationsAr extends AppLocalizations {
   String get orSignupWith => 'أو أنشئ حساب باستخدام';
 
   @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get eventReminder => 'تذكير بالفعالية';
+
+  @override
+  String get concertStartsSoon =>
+      'سيبدأ الحفل بعد ساعتين في ملعب المدينة! جهّز تذاكرك.';
+
+  @override
+  String get minutesAgo7 => 'منذ 7 دقائق';
+
+  @override
+  String get bookingConfirmed => 'تم تأكيد الحجز';
+
+  @override
+  String get bookingConfirmedDescription =>
+      'تم تأكيد الحجز! يمكنك الآن العثور على تذاكرك في قسم التذاكر.';
+
+  @override
+  String get oneHourAgo => 'منذ ساعة';
+
+  @override
+  String get specialOffer => 'عرض خاص';
+
+  @override
+  String get exclusiveOfferDescription =>
+      'عرض حصري! احصل على خصم 20٪ على حجزك القادم باستخدام الكود: EVENT20';
+
+  @override
+  String get sevenHoursAgo => 'منذ 7 ساعات';
+
+  @override
+  String get locationUpdate => 'تحديث الموقع';
+
+  @override
+  String get artWorkshopLocationUpdate =>
+      'تحديث مهم: تم نقل ورشة الفن إلى القاعة B';
+
+  @override
+  String get twelveHoursAgo => 'منذ 12 ساعة';
+
+  @override
+  String get eventCancellation => 'إلغاء الفعالية';
+
+  @override
+  String get eventCancellationDescription =>
+      'للأسف تم إلغاء لقاء التقنية المقرر غدًا. تابعنا لمعرفة التحديثات.';
+
+  @override
+  String get oneDayAgo => 'منذ يوم';
+
+  @override
+  String get newEventAvailable => 'فعالية جديدة متاحة';
+
+  @override
+  String get newEventAvailableDescription =>
+      'تمت إضافة فعالية مهرجان موسيقي جديد. اكتشفها الآن واحجز مكانك!';
+
+  @override
+  String get twoDaysAgo => 'منذ يومين';
+
+  @override
+  String get photoWorkshopReminder => 'تذكير بالفعالية';
+
+  @override
+  String get photoWorkshopReminderDescription =>
+      'لا تنسَ ورشة التصوير التي ستقام في نهاية هذا الأسبوع. المقاعد محدودة.';
+
+  @override
+  String get threeDaysAgo => 'منذ 3 أيام';
+
+  @override
+  String get ticketExpiringSoon => 'انتهاء صلاحية التذكرة قريبًا';
+
+  @override
+  String get ticketExpiringSoonDescription =>
+      'تذكير: التذكرة التي حجزتها ستنتهي صلاحيتها قريبًا. أكمل الحجز قبل أن تصبح غير متاحة.';
+
+  @override
+  String get fourDaysAgo => 'منذ 4 أيام';
+
+  @override
   String get findEvent => 'ابحث عن فعالية';
 
   @override
@@ -174,21 +260,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cancel => 'إلغاء';
 
   @override
-  String get notifications => 'الإشعارات';
-
-  @override
-  String get eventReminder => 'تذكير بالفعالية';
-
-  @override
   String get eventReminderDescription =>
       'حفلتك تبدأ خلال ساعتين في استاد المدينة! جهّز تذاكرك.';
 
   @override
   String get bookingConfirmedTitle => 'تم تأكيد الحجز';
-
-  @override
-  String get bookingConfirmedDescription =>
-      'تم تأكيد الحجز! يمكنك الآن العثور على تذاكرك في قسم التذاكر.';
 
   @override
   String get specialOfferTitle => 'عرض خاص';

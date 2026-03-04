@@ -39,7 +39,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: AppColors.grey,
         leading: CustomBackButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "profile");
+            Navigator.pop(context);
           },
         ),
       ),
@@ -90,7 +90,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextForm(
-                    hinttext: "Lama Yousef",
+                    hinttext: l10n.fullName,
                     mycontroller: username,
                     validator: (val) {
                       if (val == null || val.isEmpty) {

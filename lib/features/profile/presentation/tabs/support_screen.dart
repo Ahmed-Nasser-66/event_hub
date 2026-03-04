@@ -16,7 +16,7 @@ class SupportScreen extends StatelessWidget {
         backgroundColor: AppColors.grey,
         leading: CustomBackButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "profile");
+            Navigator.pop(context);
           },
         ),
       ),

@@ -5,6 +5,6 @@ class Location extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Container(child: Text('data')));
+    return Scaffold(body: Text('data'));
   }
 }

@@ -3,7 +3,9 @@ import 'package:event_hub/features/profile/presentation/tabs/privacy_screen.dart
 import 'package:event_hub/features/profile/presentation/tabs/settings_screen.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../profile/presentation/tabs/language_screen.dart';
 import '../../../profile/presentation/tabs/support_screen.dart';
@@ -16,6 +18,7 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final user = context.watch<UserProvider>();
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -38,7 +41,7 @@ class ProfileTab extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                const ProfileHeader(),
+                ProfileHeader(name: user.name, email: user.email),
 
                 const SizedBox(height: 10),
 

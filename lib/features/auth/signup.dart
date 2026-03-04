@@ -209,6 +209,13 @@ class _SignupState extends State<Signup> {
               title: l10n.signUpButton,
               color: AppColors.orange,
               onPressed: () {
+                if (!value) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.agreePrivacyPolicy)),
+                  );
+                  return;
+                }
+
                 if (formState.currentState!.validate()) {
                   Navigator.of(context).pushReplacementNamed("login");
                 }

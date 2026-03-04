@@ -4,8 +4,10 @@ import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/features/widgets/custom_logo_auth.dart';
 import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -163,6 +165,11 @@ class _LoginState extends State<Login> {
               color: AppColors.orange,
               onPressed: () {
                 if (formState.currentState!.validate()) {
+                  context.read<UserProvider>().setUser(
+                    email.text.split("@")[0], // اسم مؤقت من الإيميل
+                    email.text,
+                  );
+
                   Navigator.of(context).pushReplacementNamed("homepage");
                 }
               },

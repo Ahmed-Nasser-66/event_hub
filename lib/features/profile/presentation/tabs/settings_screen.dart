@@ -23,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: AppColors.grey,
         leading: CustomBackButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "profile");
+            Navigator.pop(context);
           },
         ),
       ),

@@ -17,7 +17,7 @@ class UpcomingEventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: AppColors.black,
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -64,7 +64,7 @@ class UpcomingEventCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    locale.music, 
+                    locale.music,
                     style: const TextStyle(
                       color: AppColors.secondary,
                       fontSize: 11,
@@ -74,9 +74,8 @@ class UpcomingEventCard extends StatelessWidget {
 
                 const SizedBox(height: 8),
 
-               
                 Text(
-                  locale.eventTitle, 
+                  locale.eventTitle,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -120,11 +119,10 @@ class UpcomingEventCard extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    locale.priceLabel, 
+                    locale.priceLabel,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

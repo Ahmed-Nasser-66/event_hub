@@ -18,6 +18,11 @@ class AppAssets {
   static const String splash = 'assets/image/splash_screen.png';
   static const String sponsors = 'assets/image/sponsors.png';
   static const String sponsors1 = 'assets/image/sponsors1.png';
+  static const String ellipse1 = 'assets/image/ellipse1.png';
+  static const String ellipse2 = 'assets/image/ellipse2.png';
+  static const String ellipse3 = 'assets/image/ellipse3.png';
+  static const String ellipse4 = 'assets/image/ellipse4.png';
+
   //icon
   static const String apple = 'assets/icon/apple.svg';
   static const String arts = 'assets/icon/arts.svg';

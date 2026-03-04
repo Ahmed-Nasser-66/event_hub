@@ -39,6 +39,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'WELCOME!';
 
   @override
+  String get helloHome => 'Hello,';
+
+  @override
   String get login => 'Log in';
 
   @override
@@ -119,6 +122,89 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orSignupWith => 'Or sign up with';
 
   @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get eventReminder => 'Event Reminder';
+
+  @override
+  String get concertStartsSoon =>
+      'Your concert starts in 2 hours at City Stadium! Get your tickets ready.';
+
+  @override
+  String get minutesAgo7 => '7 m ago';
+
+  @override
+  String get bookingConfirmed => 'Booking Confirmed';
+
+  @override
+  String get bookingConfirmedDescription =>
+      'Booking Confirmed! You can now find your tickets in the Tickets section';
+
+  @override
+  String get oneHourAgo => '1 h ago';
+
+  @override
+  String get specialOffer => 'Special Offer';
+
+  @override
+  String get exclusiveOfferDescription =>
+      'Exclusive Offer! Get 20% off on your next booking using code: EVENT20';
+
+  @override
+  String get sevenHoursAgo => '7 h ago';
+
+  @override
+  String get locationUpdate => 'Location Update';
+
+  @override
+  String get artWorkshopLocationUpdate =>
+      'Important Update: the Art Workshop has been moved to Hall B';
+
+  @override
+  String get twelveHoursAgo => '12 h ago';
+
+  @override
+  String get eventCancellation => 'Event Cancellation';
+
+  @override
+  String get eventCancellationDescription =>
+      'Unfortunately, the Tech Meetup scheduled for tomorrow has been cancelled. Stay tuned for updates.';
+
+  @override
+  String get oneDayAgo => '1 day ago';
+
+  @override
+  String get newEventAvailable => 'New Event Available';
+
+  @override
+  String get newEventAvailableDescription =>
+      'A new Music Festival event has been added. Check it out and reserve your spot now!';
+
+  @override
+  String get twoDaysAgo => '2 days ago';
+
+  @override
+  String get photoWorkshopReminder => 'Event Reminder';
+
+  @override
+  String get photoWorkshopReminderDescription =>
+      'Don\'t forget the Photography Workshop happening this weekend. Limited seats available.';
+
+  @override
+  String get threeDaysAgo => '3 days ago';
+
+  @override
+  String get ticketExpiringSoon => 'Ticket Expiring Soon';
+
+  @override
+  String get ticketExpiringSoonDescription =>
+      'Reminder: Your reserved ticket will expire soon. Complete your booking before it becomes unavailable.';
+
+  @override
+  String get fourDaysAgo => '4 days ago';
+
+  @override
   String get findEvent => 'Find Event';
 
   @override
@@ -174,21 +260,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
-  String get notifications => 'Notifications';
-
-  @override
-  String get eventReminder => 'Event Reminder';
-
-  @override
   String get eventReminderDescription =>
       'Your concert starts in 2 hours at City Stadium! Get your tickets ready.';
 
   @override
   String get bookingConfirmedTitle => 'Booking Confirmed';
-
-  @override
-  String get bookingConfirmedDescription =>
-      'Booking Confirmed! You can now find your tickets in the Tickets section';
 
   @override
   String get specialOfferTitle => 'Special Offer';

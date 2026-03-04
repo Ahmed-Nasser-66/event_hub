@@ -5,7 +5,10 @@ import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
+  final String name;
+  final String email;
+
+  const ProfileHeader({super.key, required this.name, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +19,21 @@ class ProfileHeader extends StatelessWidget {
             radius: 50,
             backgroundImage: AssetImage(AppAssets.lama),
           ),
+
           const SizedBox(height: 15),
 
-          const Text(
-            "Lama Yousef",
-            style: TextStyle(
+          Text(
+            name,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
               color: AppColors.secondary,
             ),
           ),
-          const Text(
-            "example@gmail.com",
-            style: TextStyle(
+
+          Text(
+            email,
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColors.secondary,
@@ -51,7 +56,7 @@ class ProfileHeader extends StatelessWidget {
             ),
             child: Text(
               AppLocalizations.of(context)!.editProfile,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 color: AppColors.secondary,

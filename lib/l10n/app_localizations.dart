@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'WELCOME!'**
   String get welcome;
 
+  /// No description provided for @helloHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,'**
+  String get helloHome;
+
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
@@ -308,6 +314,156 @@ abstract class AppLocalizations {
   /// **'Or sign up with'**
   String get orSignupWith;
 
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @eventReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Reminder'**
+  String get eventReminder;
+
+  /// No description provided for @concertStartsSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Your concert starts in 2 hours at City Stadium! Get your tickets ready.'**
+  String get concertStartsSoon;
+
+  /// No description provided for @minutesAgo7.
+  ///
+  /// In en, this message translates to:
+  /// **'7 m ago'**
+  String get minutesAgo7;
+
+  /// No description provided for @bookingConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Confirmed'**
+  String get bookingConfirmed;
+
+  /// No description provided for @bookingConfirmedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Confirmed! You can now find your tickets in the Tickets section'**
+  String get bookingConfirmedDescription;
+
+  /// No description provided for @oneHourAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'1 h ago'**
+  String get oneHourAgo;
+
+  /// No description provided for @specialOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Offer'**
+  String get specialOffer;
+
+  /// No description provided for @exclusiveOfferDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclusive Offer! Get 20% off on your next booking using code: EVENT20'**
+  String get exclusiveOfferDescription;
+
+  /// No description provided for @sevenHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'7 h ago'**
+  String get sevenHoursAgo;
+
+  /// No description provided for @locationUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Update'**
+  String get locationUpdate;
+
+  /// No description provided for @artWorkshopLocationUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Important Update: the Art Workshop has been moved to Hall B'**
+  String get artWorkshopLocationUpdate;
+
+  /// No description provided for @twelveHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'12 h ago'**
+  String get twelveHoursAgo;
+
+  /// No description provided for @eventCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Cancellation'**
+  String get eventCancellation;
+
+  /// No description provided for @eventCancellationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfortunately, the Tech Meetup scheduled for tomorrow has been cancelled. Stay tuned for updates.'**
+  String get eventCancellationDescription;
+
+  /// No description provided for @oneDayAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'1 day ago'**
+  String get oneDayAgo;
+
+  /// No description provided for @newEventAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'New Event Available'**
+  String get newEventAvailable;
+
+  /// No description provided for @newEventAvailableDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A new Music Festival event has been added. Check it out and reserve your spot now!'**
+  String get newEventAvailableDescription;
+
+  /// No description provided for @twoDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'2 days ago'**
+  String get twoDaysAgo;
+
+  /// No description provided for @photoWorkshopReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Reminder'**
+  String get photoWorkshopReminder;
+
+  /// No description provided for @photoWorkshopReminderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget the Photography Workshop happening this weekend. Limited seats available.'**
+  String get photoWorkshopReminderDescription;
+
+  /// No description provided for @threeDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'3 days ago'**
+  String get threeDaysAgo;
+
+  /// No description provided for @ticketExpiringSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket Expiring Soon'**
+  String get ticketExpiringSoon;
+
+  /// No description provided for @ticketExpiringSoonDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder: Your reserved ticket will expire soon. Complete your booking before it becomes unavailable.'**
+  String get ticketExpiringSoonDescription;
+
+  /// No description provided for @fourDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'4 days ago'**
+  String get fourDaysAgo;
+
   /// No description provided for @findEvent.
   ///
   /// In en, this message translates to:
@@ -416,18 +572,6 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
-  /// No description provided for @notifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
-
-  /// No description provided for @eventReminder.
-  ///
-  /// In en, this message translates to:
-  /// **'Event Reminder'**
-  String get eventReminder;
-
   /// No description provided for @eventReminderDescription.
   ///
   /// In en, this message translates to:
@@ -439,12 +583,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking Confirmed'**
   String get bookingConfirmedTitle;
-
-  /// No description provided for @bookingConfirmedDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Booking Confirmed! You can now find your tickets in the Tickets section'**
-  String get bookingConfirmedDescription;
 
   /// No description provided for @specialOfferTitle.
   ///

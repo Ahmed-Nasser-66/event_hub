@@ -5,19 +5,24 @@ import 'package:event_hub/features/auth/rest_password.dart';
 import 'package:event_hub/features/auth/signup.dart';
 import 'package:event_hub/features/auth/varification_otp.dart';
 import 'package:event_hub/features/home/presentation/home_page.dart';
+import 'package:event_hub/features/home/presentation/tabs/notification_screen.dart';
 import 'package:event_hub/features/home/presentation/tabs/profile_tab.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
 import 'package:event_hub/features/splash/splach_screen.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/app_language_provider.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AppLanguageProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppLanguageProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
       child: MyApp(),
     ),
   );
@@ -59,6 +64,7 @@ class _MyAppState extends State<MyApp> {
         "varification": (context) => VarificationOtp(),
         "restpassword": (context) => RestPassword(),
         "profile": (context) => ProfileTab(),
+        "notifications": (context) => NotificationScreen(),
       },
       locale: Locale(languageprovider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

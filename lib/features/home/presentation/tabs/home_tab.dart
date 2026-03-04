@@ -1,13 +1,16 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/location.dart';
+import 'package:event_hub/features/home/presentation/tabs/notification_screen.dart';
 import 'package:event_hub/features/widgets/category.dart';
 import 'package:event_hub/features/widgets/filter_button.dart';
 import 'package:event_hub/features/widgets/nearby_event_card.dart';
 import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/features/widgets/upcoming_event_card.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -16,6 +19,7 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     // اختصار عشان الكود يبقى أنضف واحنا بننادي الترجمة
     final locale = AppLocalizations.of(context)!;
+    final user = context.watch<UserProvider>();
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -54,7 +58,7 @@ class HomeTab extends StatelessWidget {
                         const SizedBox(width: 10),
                         Text(
                           // تم استبدال النص الثابت بالترجمة (لو مش موجودة في الـ JSON ضيف "hello": "Hello,")
-                          '${locale.welcome} Eslam Ahmed',
+                          '${locale.helloHome} ${user.name}',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -63,9 +67,16 @@ class HomeTab extends StatelessWidget {
                       ],
                     ),
                     CircleAvatar(
-                      backgroundColor: AppColors.white,
+                      backgroundColor: AppColors.grey,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationScreen(),
+                            ),
+                          );
+                        },
                         icon: SvgPicture.asset(
                           'assets/icon/bell.svg',
                           width: 20,

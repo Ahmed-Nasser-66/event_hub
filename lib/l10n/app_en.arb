@@ -12,6 +12,9 @@
   "personalPlannerDescription": "Sync events to your device and get real-time reminders. We help you manage your time so you can focus on the experience.",
 
   "welcome": "WELCOME!",
+  "helloHome": "Hello,",
+
+
 
   "login": "Log in",
   "signup": "Sign up",
@@ -44,6 +47,32 @@
   "agreePrivacyPolicy": "I agree with privacy & policy",
   "alreadyHaveAccount": "Already have an account?",
   "orSignupWith": "Or sign up with",
+
+   "notifications": "Notifications",
+   "eventReminder": "Event Reminder",
+   "concertStartsSoon": "Your concert starts in 2 hours at City Stadium! Get your tickets ready.",
+   "minutesAgo7": "7 m ago",
+   "bookingConfirmed": "Booking Confirmed",
+   "bookingConfirmedDescription": "Booking Confirmed! You can now find your tickets in the Tickets section",
+   "oneHourAgo": "1 h ago",
+   "specialOffer": "Special Offer",
+   "exclusiveOfferDescription": "Exclusive Offer! Get 20% off on your next booking using code: EVENT20",
+   "sevenHoursAgo": "7 h ago",
+   "locationUpdate": "Location Update",
+   "artWorkshopLocationUpdate": "Important Update: the Art Workshop has been moved to Hall B",
+   "twelveHoursAgo": "12 h ago",
+   "eventCancellation": "Event Cancellation",
+   "eventCancellationDescription": "Unfortunately, the Tech Meetup scheduled for tomorrow has been cancelled. Stay tuned for updates.",
+   "oneDayAgo": "1 day ago",
+   "newEventAvailable": "New Event Available",
+  "newEventAvailableDescription": "A new Music Festival event has been added. Check it out and reserve your spot now!",
+  "twoDaysAgo": "2 days ago",
+  "photoWorkshopReminder": "Event Reminder",
+  "photoWorkshopReminderDescription": "Don't forget the Photography Workshop happening this weekend. Limited seats available.",
+  "threeDaysAgo": "3 days ago",
+  "ticketExpiringSoon": "Ticket Expiring Soon",
+  "ticketExpiringSoonDescription": "Reminder: Your reserved ticket will expire soon. Complete your booking before it becomes unavailable.",
+  "fourDaysAgo": "4 days ago",
 
   "findEvent": "Find Event",
   "categories": "Categories",
