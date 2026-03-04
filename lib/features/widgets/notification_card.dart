@@ -6,6 +6,7 @@ class NotificationCard extends StatelessWidget {
   final String description;
   final String time;
   final String image;
+  final bool isHighlighted;
 
   const NotificationCard({
     super.key,
@@ -13,6 +14,7 @@ class NotificationCard extends StatelessWidget {
     required this.description,
     required this.time,
     required this.image,
+    this.isHighlighted = false,
   });
 
   @override
@@ -21,13 +23,16 @@ class NotificationCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: isHighlighted ? AppColors.orange : AppColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 25,
+            backgroundColor: isHighlighted
+                ? AppColors.orange
+                : Colors.transparent,
             child: CircleAvatar(radius: 22, backgroundImage: AssetImage(image)),
           ),
 
@@ -42,13 +47,14 @@ class NotificationCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.orange,
+                        color: isHighlighted
+                            ? AppColors.orange
+                            : AppColors.secondary,
                         fontSize: 16,
                       ),
                     ),
-
                     Text(
                       time,
                       style: const TextStyle(
@@ -64,7 +70,7 @@ class NotificationCard extends StatelessWidget {
 
                 Text(
                   description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
                     color: AppColors.lightGrey,

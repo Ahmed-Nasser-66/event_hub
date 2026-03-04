@@ -409,7 +409,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpSupportDescription =>
-      'We are here to help you at any time. If you experience any issues while using the EventHub app or have any questions or suggestions, please feel free to contact us. Our support team is committed to responding to all inquiries as quickly as possible to ensure the best experience for you.\nYou can reach us via email at:\n\neventhubsupport@eventhub.com';
+      'We are here to help you at any time. If you experience any issues while using the EventHub app or have any questions or suggestions, please feel free to contact us. Our support team is committed to responding to all inquiries as quickly as possible to ensure the best experience for you.\nYou can reach us via email at:\n\neventhub.support138@gmail.com';
 
   @override
   String get settingsTitle => 'Settings';
