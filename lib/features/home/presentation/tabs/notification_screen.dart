@@ -68,7 +68,6 @@ class NotificationScreen extends StatelessWidget {
                 description: l10n.locationUpdateDescription,
                 time: l10n.twelveHoursAgo,
                 image: AppAssets.ellipse4,
-                isHighlighted: true,
               ),
               NotificationCard(
                 title: l10n.eventCancellation,
@@ -81,7 +80,6 @@ class NotificationScreen extends StatelessWidget {
                 description: l10n.newEventAvailableDescription,
                 time: l10n.twoDaysAgo,
                 image: AppAssets.ellipse3,
-                isHighlighted: true,
               ),
               NotificationCard(
                 title: l10n.eventReminder,

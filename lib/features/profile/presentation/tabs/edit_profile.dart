@@ -4,7 +4,9 @@ import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -207,7 +209,7 @@ class _EditProfileState extends State<EditProfile> {
                           title: l10n.cancel,
                           color: AppColors.grey,
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                           },
                         ),
                       ),
@@ -218,9 +220,11 @@ class _EditProfileState extends State<EditProfile> {
                           color: AppColors.orange,
                           onPressed: () {
                             if (formState.currentState!.validate()) {
-                              Navigator.of(
-                                context,
-                              ).pushReplacementNamed("profile");
+                              context.read<UserProvider>().setUser(
+                                username.text,
+                                email.text,
+                              );
+                              Navigator.pop(context);
                             }
                           },
                         ),
