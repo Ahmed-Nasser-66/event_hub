@@ -1,13 +1,20 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:event_hub/core/theme/app_color.dart';
-import 'package:event_hub/l10n/app_localizations.dart'; 
+import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/favorite_provider.dart'; 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; 
 
 class NearbyEventCard extends StatelessWidget {
-  const NearbyEventCard({super.key});
+  final EventModel event;
+
+  const NearbyEventCard({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
-    final locale = AppLocalizations.of(context)!;
+    final favoriteProvider = context.watch<FavoriteProvider>();
+    final bool isFavorite = favoriteProvider.isExist(event);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -15,6 +22,13 @@ class NearbyEventCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -23,16 +37,32 @@ class NearbyEventCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.asset(
-                  'assets/image/party1.png',
+                  event.imagepath,
                   height: 100,
                   width: 120,
                   fit: BoxFit.cover,
                 ),
               ),
-              const Positioned(
+              Positioned(
                 top: 5,
                 left: 5,
-                child: Icon(Icons.favorite, color: AppColors.white, size: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    favoriteProvider.toggleFavorite(event);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AppColors.white.withOpacity(0.7),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : AppColors.secondary,
+                      size: 18,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -51,20 +81,23 @@ class NearbyEventCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    locale.music, 
-                    style: const TextStyle(fontSize: 10),
+                    event.category,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: AppColors.secondary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  locale.eventTitle, 
+                  event.title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: AppColors.black,
                   ),
                 ),
                 const SizedBox(height: 4),
-
                 Row(
                   children: [
                     const Icon(
@@ -72,21 +105,30 @@ class NearbyEventCard extends StatelessWidget {
                       size: 12,
                       color: AppColors.secondary,
                     ),
-                    Text(
-                      ' ${locale.location}', 
-                      style: const TextStyle(
-                        color: AppColors.secondary,
-                        fontSize: 11,
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        event.location,
+                        style: const TextStyle(
+                          color: AppColors.secondary,
+                          fontSize: 11,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const Spacer(),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
                     const Icon(
                       Icons.access_time,
                       size: 12,
                       color: AppColors.secondary,
                     ),
+                    const SizedBox(width: 4),
                     Text(
-                      ' ${locale.dateTime}', 
+                      event.datetime,
                       style: const TextStyle(
                         color: AppColors.secondary,
                         fontSize: 11,
@@ -94,14 +136,16 @@ class NearbyEventCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 8),
-
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    locale.priceLabel, 
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    "\$${event.price}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors
+                          .orange, 
+                    ),
                   ),
                 ),
               ],

@@ -12,6 +12,8 @@ import 'package:event_hub/features/onbording/welcome_screen.dart';
 import 'package:event_hub/features/splash/splach_screen.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/app_language_provider.dart';
+import 'package:event_hub/providers/event_provider.dart';
+import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AppLanguageProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => EventProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
       ],
       child: MyApp(),
     ),

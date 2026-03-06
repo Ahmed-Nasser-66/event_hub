@@ -3,36 +3,31 @@ import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class Searchbarwidget extends StatelessWidget {
-  /// TextEditingController => بستخدمه في
-  /// 1- تخزين الكلام ==> Controller.text
-  /// 2- يمسح الكلمه ==> Controller.Clear();
-  /// 3-  او التحقق من الادخال بيبحث علطول عن طريق ==> Controller.addListener((){print(Controller.text);});
   final TextEditingController controller;
 
-  /// required this.controller => بستخدمه عشان
-  /// 1- استقبل الكنترولر
-  const Searchbarwidget({super.key, required this.controller});
+  final Function(String)? onChanged;
+
+  const Searchbarwidget({
+    super.key,
+    required this.controller,
+    this.onChanged, 
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      /// BoxDecoration ==> الشكل من برا
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(30),
       ),
-
-      /// عشان اربط الكنترولر
       child: TextField(
         controller: controller,
-
-        /// BoxDecoration ==> بتحكم في الخواص اللي جوة
+        onChanged: onChanged,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.findEvent,
-
-          border: InputBorder.none, // لاني متحكم فشكله فوق اصلا
-          suffixIcon: Icon(Icons.search),
-          contentPadding: EdgeInsets.only(left: 15, top: 10),
+          border: InputBorder.none,
+          suffixIcon: const Icon(Icons.search),
+          contentPadding: const EdgeInsets.only(left: 20, top: 12),
         ),
       ),
     );

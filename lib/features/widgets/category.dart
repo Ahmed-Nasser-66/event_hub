@@ -1,12 +1,17 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class Category extends StatelessWidget {
   const Category({super.key});
 
   final List<Map<String, String>> _categories = const [
+    {"image": "assets/icon/all.svg", "name": "all"},
     {"image": "assets/icon/games.svg", "name": "gaming"},
     {"image": "assets/icon/tech.svg", "name": "tech"},
     {"image": "assets/icon/business.svg", "name": "business"},
@@ -18,8 +23,9 @@ class Category extends StatelessWidget {
 
   String _getCategoryName(BuildContext context, String key) {
     final l10n = AppLocalizations.of(context)!;
-
     switch (key) {
+      case 'all':
+        return "All";
       case 'gaming':
         return l10n.gaming;
       case 'arts':
@@ -39,8 +45,31 @@ class Category extends StatelessWidget {
     }
   }
 
+  String _getRawName(String key) {
+    switch (key) {
+      case 'gaming':
+        return 'Gaming';
+      case 'tech':
+        return 'Tech';
+      case 'business':
+        return 'Business';
+      case 'education':
+        return 'Education';
+      case 'arts':
+        return 'Arts';
+      case 'sports':
+        return 'Sports';
+      case 'fashion':
+        return 'Fashion';
+      default:
+        return 'All';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final eventProvider = context.watch<EventProvider>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,7 +78,7 @@ class Category extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.categories,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             TextButton(
               onPressed: () {},
@@ -65,46 +94,84 @@ class Category extends StatelessWidget {
             ),
           ],
         ),
-
         const SizedBox(height: 5),
-
         SizedBox(
-          height: 100,
+          height: 105,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: _categories.length,
             itemBuilder: (context, index) {
               final category = _categories[index];
+              final rawName = _getRawName(category["name"]!);
+              bool isSelected = eventProvider.selectedCategory == rawName;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: AppColors.white,
-                      child: SvgPicture.asset(category["image"]!, width: 28),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      _getCategoryName(context, category["name"]!),
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    eventProvider.setCategory(rawName);
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isSelected
+                              ? AppColors.orange
+                              : AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 4,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child:
+                              (category["name"] == "all" &&
+                                  category["image"] == "")
+                              ? Icon(
+                                  Icons.grid_view_rounded,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Colors.grey,
+                                )
+                              : SvgPicture.asset(
+                                  category["image"]!,
+                                  width: 30,
+                                ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _getCategoryName(context, category["name"]!),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                          color: isSelected
+                              ? AppColors.orange
+                              : AppColors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
           ),
         ),
-
         const SizedBox(height: 5),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               AppLocalizations.of(context)!.upcomingEvents,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             TextButton(
               onPressed: () {},

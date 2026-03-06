@@ -7,19 +7,36 @@ import 'package:event_hub/features/widgets/nearby_event_card.dart';
 import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/features/widgets/upcoming_event_card.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // اختصار عشان الكود يبقى أنضف واحنا بننادي الترجمة
     final locale = AppLocalizations.of(context)!;
     final user = context.watch<UserProvider>();
+
+    final eventProvider = context.watch<EventProvider>();
+    final List<EventModel> displayedEvents = eventProvider.filteredEvents;
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -32,7 +49,6 @@ class HomeTab extends StatelessWidget {
               children: [
                 const SizedBox(height: 10),
 
-                // --- 1. Header (Location + Greeting) ---
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,7 +73,6 @@ class HomeTab extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          // تم استبدال النص الثابت بالترجمة (لو مش موجودة في الـ JSON ضيف "hello": "Hello,")
                           '${locale.helloHome} ${user.name}',
                           style: const TextStyle(
                             fontSize: 18,
@@ -88,11 +103,15 @@ class HomeTab extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                // --- 2. Search + Filter ---
                 Row(
                   children: [
                     Expanded(
-                      child: Searchbarwidget(controller: SearchController()),
+                      child: Searchbarwidget(
+                        controller: searchController,
+                        onChanged: (value) {
+                          eventProvider.setSearchQuery(value);
+                        },
+                      ),
                     ),
                     const SizedBox(width: 10),
                     const Filterbutton(),
@@ -100,28 +119,34 @@ class HomeTab extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 5),
+                // Categories Filter
                 const Category(),
                 const SizedBox(height: 5),
 
-                // --- 3. Upcoming Events Cards ---
                 SizedBox(
-                  height: 310,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) => const UpcomingEventCard(),
-                  ),
+                  height: 340,
+                  child: displayedEvents.isEmpty
+                      ? const Center(child: Text("No Events Found"))
+                      : ListView.builder(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: displayedEvents.length,
+                          itemBuilder: (context, index) {
+                            return UpcomingEventCard(
+                              event: displayedEvents[index],
+                            );
+                          },
+                        ),
                 ),
 
                 const SizedBox(height: 5),
 
-                // --- 5. Nearby Events Section ---
+                // Nearby Events
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      locale.nearbyEvents, // استخدام Key من الـ JSON
+                      locale.nearbyEvents,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -130,11 +155,10 @@ class HomeTab extends StatelessWidget {
                     TextButton(
                       onPressed: () {},
                       child: Text(
-                        locale.seeAll, // استخدام Key من الـ JSON
+                        locale.seeAll,
                         style: const TextStyle(
                           fontSize: 16,
                           color: AppColors.orange,
-                          decorationColor: AppColors.orange,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -142,12 +166,13 @@ class HomeTab extends StatelessWidget {
                   ],
                 ),
 
-                // القائمة الرأسية (Nearby)
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (context, index) => const NearbyEventCard(),
+                  itemCount: displayedEvents.length,
+                  itemBuilder: (context, index) {
+                    return NearbyEventCard(event: displayedEvents[index]);
+                  },
                 ),
 
                 const SizedBox(height: 5),
