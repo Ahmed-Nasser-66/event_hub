@@ -1,6 +1,6 @@
 import 'package:event_hub/features/home/presentation/tabs/favorite_tab.dart';
 import 'package:event_hub/features/home/presentation/tabs/home_tab.dart';
-import 'package:event_hub/features/home/presentation/tabs/ticket_tab.dart';
+import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:event_hub/features/home/presentation/tabs/profile_tab.dart';

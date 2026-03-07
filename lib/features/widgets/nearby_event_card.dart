@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/favorite_provider.dart'; 
@@ -24,7 +22,7 @@ class NearbyEventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color:AppColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -53,7 +51,7 @@ class NearbyEventCard extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.7),
+                      color: AppColors.white.withValues(alpha: 0.05),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

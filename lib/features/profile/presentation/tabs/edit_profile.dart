@@ -1,4 +1,4 @@
-import 'package:event_hub/core/theme/app_assets.dart';
+import 'dart:io';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
@@ -6,6 +6,7 @@ import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
@@ -31,6 +32,8 @@ class _EditProfileState extends State<EditProfile> {
     super.dispose();
   }
 
+  File? _image;
+  final ImagePicker picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -66,23 +69,56 @@ class _EditProfileState extends State<EditProfile> {
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      const CircleAvatar(
-                        radius: 40,
-                        backgroundImage: AssetImage(AppAssets.lama),
+                      Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: pickImageFromGallery,
+                            child: CircleAvatar(
+                              radius: 40,
+                              backgroundImage: _image != null
+                                  ? FileImage(_image!)
+                                  : null,
+                              child: _image == null
+                                  ? const Icon(Icons.person, size: 35)
+                                  : null,
+                            ),
+                          ),
+
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: pickImageFromCamera,
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.orange,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  size: 18,
+                                  color:AppColors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(width: 15),
-                      Text(
-                        l10n.changePicture,
-                        style: const TextStyle(
-                          color: AppColors.orange,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                      GestureDetector(
+                        onTap: pickImageFromGallery,
+                        child: Text(
+                          l10n.changePicture,
+                          style: const TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   Text(
                     l10n.fullName,
                     style: const TextStyle(
@@ -223,6 +259,7 @@ class _EditProfileState extends State<EditProfile> {
                               context.read<UserProvider>().setUser(
                                 username.text,
                                 email.text,
+                                newImage: _image,
                               );
                               Navigator.pop(context);
                             }
@@ -238,5 +275,25 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  void pickImageFromGallery() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+      });
+    }
+  }
+
+  void pickImageFromCamera() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+      });
+    }
   }
 }

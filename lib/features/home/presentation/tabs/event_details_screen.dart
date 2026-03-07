@@ -32,7 +32,7 @@ class EventDetailsScreen extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: const CircleAvatar(
-                          backgroundColor: Colors.white,
+                          backgroundColor: AppColors.white,
                           child: Center(
                             child: Icon(
                               Icons.arrow_back,
@@ -47,12 +47,12 @@ class EventDetailsScreen extends StatelessWidget {
                       top: 25,
                       right: 20,
                       child: CircleAvatar(
-                        backgroundColor: Colors.white,
+                        backgroundColor:AppColors.white,
                         child: Icon(
                           event.isFavorite
                               ? Icons.favorite
                               : Icons.favorite_border,
-                          color: event.isFavorite ? Colors.red : Colors.black,
+                          color: event.isFavorite ? Colors.red : AppColors.black,
                         ),
                       ),
                     ),
@@ -69,13 +69,13 @@ class EventDetailsScreen extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(color: AppColors.black),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           event.category.toLowerCase(),
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: AppColors.black,
                             fontSize: 12,
                           ),
                         ),
@@ -125,7 +125,7 @@ class EventDetailsScreen extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         locale.eventDetailsDescription,
-                        style: TextStyle(color: Colors.black, height: 1.5),
+                        style: TextStyle(color: AppColors.black, height: 1.5),
                       ),
                       const SizedBox(height: 25),
                     ],

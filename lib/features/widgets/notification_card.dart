@@ -32,7 +32,7 @@ class NotificationCard extends StatelessWidget {
             radius: 25,
             backgroundColor: isHighlighted
                 ? AppColors.orange
-                : Colors.transparent,
+                : AppColors.secondary,
             child: CircleAvatar(radius: 22, backgroundImage: AssetImage(image)),
           ),
 

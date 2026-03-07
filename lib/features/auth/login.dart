@@ -165,12 +165,19 @@ class _LoginState extends State<Login> {
               color: AppColors.orange,
               onPressed: () {
                 if (formState.currentState!.validate()) {
-                  context.read<UserProvider>().setUser(
-                    email.text.split("@")[0], // اسم مؤقت من الإيميل
+                  bool success = context.read<UserProvider>().login(
                     email.text,
+                    pass.text,
                   );
-
-                  Navigator.of(context).pushReplacementNamed("homepage");
+                  if (success) {
+                    Navigator.of(context).pushReplacementNamed("homepage");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Email or password incorrect"),
+                      ),
+                    );
+                  }
                 }
               },
             ),

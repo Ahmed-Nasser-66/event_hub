@@ -40,7 +40,7 @@ class FavoriteTab extends StatelessWidget {
                     const Icon(
                       Icons.favorite_border,
                       size: 80,
-                      color: Colors.grey,
+                      color: AppColors.grey,
                     ),
                     const SizedBox(height: 10),
                     Text(

@@ -1,0 +1,126 @@
+import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/ticket/presentation/tabs/ticket_details_screen.dart';
+import 'package:event_hub/features/widgets/search_bar_widget.dart';
+import 'package:event_hub/features/ticket/presentation/widget/ticket_card.dart';
+import 'package:event_hub/providers/event_provider.dart';
+import 'package:event_hub/providers/ticket_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class TicketTab extends StatefulWidget {
+  const TicketTab({super.key});
+
+  @override
+  State<TicketTab> createState() => _TicketTabState();
+}
+
+class _TicketTabState extends State<TicketTab> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final eventProvider = context.watch<EventProvider>();
+    final ticketProvider = context.watch<TicketProvider>();
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: AppColors.grey,
+        body: SafeArea(
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Searchbarwidget(
+                            controller: searchController,
+                            onChanged: (value) {
+                              eventProvider.setSearchQuery(value);
+                              ticketProvider.setSearchQuery(value);
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+
+                    Container(
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TabBar(
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        indicator: BoxDecoration(
+                          color: AppColors.orange,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        labelColor: AppColors.secondary,
+                        unselectedLabelColor: AppColors.lightGrey,
+
+                        onTap: (index) {
+                          context.read<TicketProvider>().changeTab(index);
+                        },
+
+                        tabs: const [
+                          Tab(text: "Coming soon"),
+                          Tab(text: "History"),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    Consumer<TicketProvider>(
+                      builder: (context, provider, child) {
+                        final events = provider.selectedTab == 0
+                            ? provider.comingSoonEvents
+                            : provider.historyEvents;
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: events.length,
+                          itemBuilder: (context, index) {
+                            final event = events[index];
+                            return TicketCard(
+                              title: event.title,
+                              date: event.date,
+                              location: event.location,
+                              price: event.price,
+                              tickets: "${event.ticketsCount} Tickets",
+                              image: event.image,
+                              bookingId: event.bookingId,
+
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        TicketDetailsScreen(ticket: event),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

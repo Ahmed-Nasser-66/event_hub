@@ -118,13 +118,13 @@ class _HomeTabState extends State<HomeTab> {
                   ],
                 ),
 
-                const SizedBox(height: 5),
-                // Categories Filter
+                const SizedBox(height: 10),
+
+                /// Categories Filter
                 const Category(),
                 const SizedBox(height: 5),
-
                 SizedBox(
-                  height: 340,
+                  height: 300,
                   child: displayedEvents.isEmpty
                       ? const Center(child: Text("No Events Found"))
                       : ListView.builder(
@@ -141,7 +141,7 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 5),
 
-                // Nearby Events
+                /// Nearby Events
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

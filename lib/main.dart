@@ -10,10 +10,12 @@ import 'package:event_hub/features/home/presentation/tabs/profile_tab.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
 import 'package:event_hub/features/splash/splach_screen.dart';
+import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/app_language_provider.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
+import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +28,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+        ChangeNotifierProvider(create: (_) => TicketProvider()),
       ],
       child: MyApp(),
     ),
@@ -69,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         "restpassword": (context) => RestPassword(),
         "profile": (context) => ProfileTab(),
         "notifications": (context) => NotificationScreen(),
+        "tickets": (context) => TicketTab(),
       },
       locale: Locale(languageprovider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

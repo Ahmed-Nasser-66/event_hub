@@ -1,11 +1,10 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/model/event_model.dart';
-import 'package:event_hub/providers/favorite_provider.dart'; 
+import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; 
-import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart'; 
+import 'package:provider/provider.dart';
+import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart';
+
 class UpcomingEventCard extends StatelessWidget {
   final EventModel event;
 
@@ -32,7 +31,7 @@ class UpcomingEventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withOpacity(0.1),
+              color: AppColors.black.withValues(alpha: 0.1),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -68,7 +67,7 @@ class UpcomingEventCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.7),
+                        color: AppColors.white.withValues(alpha: 0.7),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(

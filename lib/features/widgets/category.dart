@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
@@ -80,21 +79,9 @@ class Category extends StatelessWidget {
               AppLocalizations.of(context)!.categories,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                AppLocalizations.of(context)!.seeAll,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.orange,
-                  decoration: TextDecoration.underline,
-                  decorationColor: AppColors.orange,
-                ),
-              ),
-            ),
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         SizedBox(
           height: 105,
           child: ListView.builder(
@@ -123,7 +110,7 @@ class Category extends StatelessWidget {
                               : AppColors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
+                              color: AppColors.black.withValues(alpha: 0.05),
                               blurRadius: 4,
                               spreadRadius: 1,
                             ),
@@ -136,13 +123,10 @@ class Category extends StatelessWidget {
                               ? Icon(
                                   Icons.grid_view_rounded,
                                   color: isSelected
-                                      ? Colors.white
-                                      : Colors.grey,
+                                      ? AppColors.white
+                                      : AppColors.grey,
                                 )
-                              : SvgPicture.asset(
-                                  category["image"]!,
-                                  width: 30,
-                                ),
+                              : SvgPicture.asset(category["image"]!, width: 30),
                         ),
                       ),
                       const SizedBox(height: 8),

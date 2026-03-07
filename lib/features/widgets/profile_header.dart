@@ -1,8 +1,9 @@
-import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/profile/presentation/tabs/edit_profile.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileHeader extends StatelessWidget {
   final String name;
@@ -15,9 +16,15 @@ class ProfileHeader extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          const CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage(AppAssets.lama),
+          Consumer<UserProvider>(
+            builder: (context, user, child) {
+              return CircleAvatar(
+                radius: 40,
+                backgroundImage: user.image != null
+                    ? FileImage(user.image!)
+                    : null,
+              );
+            },
           ),
 
           const SizedBox(height: 15),
