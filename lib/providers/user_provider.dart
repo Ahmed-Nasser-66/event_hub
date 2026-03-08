@@ -21,15 +21,20 @@ class UserProvider extends ChangeNotifier {
   bool login(String email, String password) {
     return _email == email && _password == password;
   }
+void setUser(
+  String name,
+  String email,
+  String password, {
+  File? newImage,
+}) {
+  _name = name;
+  _email = email;
+  _password = password;
 
-  void setUser(String name, String email, {File? newImage}) {
-    _name = name;
-    _email = email;
-
-    if (newImage != null) {
-      _image = newImage;
-    }
-
-    notifyListeners();
+  if (newImage != null) {
+    _image = newImage;
   }
+
+  notifyListeners();
+}
 }

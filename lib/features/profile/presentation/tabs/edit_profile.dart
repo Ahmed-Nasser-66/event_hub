@@ -98,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
                                 child: const Icon(
                                   Icons.camera_alt,
                                   size: 18,
-                                  color:AppColors.white,
+                                  color: AppColors.white,
                                 ),
                               ),
                             ),
@@ -259,6 +259,7 @@ class _EditProfileState extends State<EditProfile> {
                               context.read<UserProvider>().setUser(
                                 username.text,
                                 email.text,
+                                pass.text,
                                 newImage: _image,
                               );
                               Navigator.pop(context);
