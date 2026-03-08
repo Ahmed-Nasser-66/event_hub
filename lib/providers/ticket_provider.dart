@@ -1,6 +1,6 @@
 import 'package:event_hub/core/theme/app_assets.dart';
-import 'package:flutter/material.dart';
 import 'package:event_hub/model/ticket_model.dart';
+import 'package:flutter/material.dart';
 
 class TicketProvider extends ChangeNotifier {
   int _selectedTab = 0;
@@ -86,7 +86,7 @@ class TicketProvider extends ChangeNotifier {
       isUpcoming: true,
       bookingId: "334455667",
       location: "New Capital",
-      image: AppAssets.setting,
+      image: AppAssets.party1,
       section: "20",
       row: "4",
       time: "05:00 PM",

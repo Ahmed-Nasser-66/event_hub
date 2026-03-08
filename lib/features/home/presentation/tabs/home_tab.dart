@@ -1,5 +1,6 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/location.dart';
+import 'package:event_hub/features/home/presentation/tabs/nearby_events_screen.dart';
 import 'package:event_hub/features/home/presentation/tabs/notification_screen.dart';
 import 'package:event_hub/features/widgets/category.dart';
 import 'package:event_hub/features/widgets/filter_button.dart';
@@ -30,11 +31,20 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
+  
+  void goToAllEvents(List<EventModel> events) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NearbyEventsScreen(allEvents: events),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
     final user = context.watch<UserProvider>();
-
     final eventProvider = context.watch<EventProvider>();
     final List<EventModel> displayedEvents = eventProvider.filteredEvents;
 
@@ -49,6 +59,7 @@ class _HomeTabState extends State<HomeTab> {
               children: [
                 const SizedBox(height: 10),
 
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -103,6 +114,7 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 10),
 
+                
                 Row(
                   children: [
                     Expanded(
@@ -120,40 +132,24 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 10),
 
-                /// Categories Filter
+                
                 const Category(),
-                const SizedBox(height: 5),
-                SizedBox(
-                  height: 300,
-                  child: displayedEvents.isEmpty
-                      ? const Center(child: Text("No Events Found"))
-                      : ListView.builder(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: displayedEvents.length,
-                          itemBuilder: (context, index) {
-                            return UpcomingEventCard(
-                              event: displayedEvents[index],
-                            );
-                          },
-                        ),
-                ),
 
-                const SizedBox(height: 5),
+                const SizedBox(height: 15),
 
-                /// Nearby Events
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      locale.nearbyEvents,
+                      locale.upcomingEvents,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => goToAllEvents(displayedEvents),
                       child: Text(
                         locale.seeAll,
                         style: const TextStyle(
@@ -166,6 +162,54 @@ class _HomeTabState extends State<HomeTab> {
                   ],
                 ),
 
+                const SizedBox(height: 10),
+
+                
+                SizedBox(
+                  height: 300,
+                  child: displayedEvents.isEmpty
+                      ? const Center(child: Text("No Events Found"))
+                      : ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: displayedEvents.length,
+                          itemBuilder: (context, index) {
+                            return UpcomingEventCard(
+                              event: displayedEvents[index],
+                            );
+                          },
+                        ),
+                ),
+
+                const SizedBox(height: 15),
+
+                
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      locale.nearbyEvents,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => goToAllEvents(displayedEvents),
+                      child: Text(
+                        locale.seeAll,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppColors.orange,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 10),
+
+                
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -175,7 +219,7 @@ class _HomeTabState extends State<HomeTab> {
                   },
                 ),
 
-                const SizedBox(height: 5),
+                const SizedBox(height: 20),
               ],
             ),
           ),

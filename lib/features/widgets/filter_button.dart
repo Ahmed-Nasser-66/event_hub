@@ -1,19 +1,72 @@
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/providers/event_provider.dart'; 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Filterbutton extends StatelessWidget {
   const Filterbutton({super.key});
 
-  // ignore: non_constant_identifier_names
-  void _tapSheet(BuildContext Context) {
+  
+  void _tapSheet(BuildContext context) {
     showModalBottomSheet(
-      context: Context,
-      builder: (_) => _buildBottomSheetContent(),
+      context: context,
+      backgroundColor: Colors.white,
+      
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (_) => _buildBottomSheetContent(context),
     );
   }
 
-  Widget _buildBottomSheetContent() {
-    return Container();
+  Widget _buildBottomSheetContent(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      height: 250, 
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          
+          Center(
+            child: Container(
+              width: 50,
+              height: 5,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            "Sort & Filter",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+
+          
+          ListTile(
+            leading: const Icon(Icons.sort_by_alpha, color: AppColors.orange),
+            title: const Text("Price: Low to High"),
+            onTap: () {
+              
+              context.read<EventProvider>().sortByPriceLowToHigh();
+              Navigator.pop(context); 
+            },
+          ),
+
+          
+          ListTile(
+            leading: const Icon(Icons.refresh, color: Colors.grey),
+            title: const Text("Reset to Default"),
+            onTap: () {
+              context.read<EventProvider>().resetSort();
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -22,13 +75,18 @@ class Filterbutton extends StatelessWidget {
       width: 45,
       height: 45,
       child: MaterialButton(
+        elevation: 0,
         color: AppColors.white,
         shape: const CircleBorder(),
         onPressed: () => _tapSheet(context),
-
         child: Transform.translate(
-          offset: const Offset(-5, 0),
-          child: const Icon(Icons.tune),
+          offset: const Offset(
+            -1,
+            0,
+          ), 
+          child: Center(
+            child: const Icon(Icons.tune, size: 22, color: AppColors.black),
+          ),
         ),
       ),
     );

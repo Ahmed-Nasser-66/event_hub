@@ -1,4 +1,3 @@
-
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/event_provider.dart';
@@ -150,27 +149,6 @@ class Category extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.upcomingEvents,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                AppLocalizations.of(context)!.seeAll,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.orange,
-                  decorationColor: AppColors.orange,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

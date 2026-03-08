@@ -2,10 +2,10 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/model/ticket_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:flutter/services.dart';
 
 class TicketDetailsScreen extends StatelessWidget {
   TicketDetailsScreen({super.key, required this.ticket});

@@ -2,7 +2,7 @@ class EventModel {
   final String title;
   final String location;
   final String datetime;
-  final String price;
+  final double price;
   final String imagepath;
   final String category;
   bool isFavorite;
