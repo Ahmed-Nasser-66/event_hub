@@ -116,6 +116,20 @@
   "tickets": "Tickets",
   "favorite": "Favorite",
   "profile": "Profile",
+  
+  "comingSoon": "Coming soon",
+  "history": "History",
+  "tickets": "Tickets",
+  "bookingCode": "Booking Code",
+"venue": "Venue:",
+  "section": "Section:",
+  "row": "Row:",
+  "date": "Date:",
+  "time": "Time:",
+  "numberOfTickets": "Number of tickets:",
+  "bookingId": "Booking ID:",
+  "downloadTicket": "Download Ticket",
+
 
   "downloadTicket": "Download Ticket",
   "bookingId": "Booking ID",

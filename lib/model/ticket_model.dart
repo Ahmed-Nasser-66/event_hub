@@ -9,8 +9,8 @@ class TicketModel {
   final String section;
   final String row;
   final String time;
-  final int ticketsCount;
   final String price;
+  int ticketsCount;
 
   TicketModel({
     required this.title,

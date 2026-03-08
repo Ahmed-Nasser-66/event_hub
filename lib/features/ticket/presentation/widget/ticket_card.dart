@@ -1,4 +1,5 @@
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -26,6 +27,8 @@ class TicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -100,7 +103,7 @@ class TicketCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        tickets,
+                        "${l10n.tickets} $tickets",
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -127,8 +130,8 @@ class TicketCard extends StatelessWidget {
 
             Row(
               children: [
-                const Text(
-                  "Booking Code",
+                Text(
+                  l10n.bookingCode,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,

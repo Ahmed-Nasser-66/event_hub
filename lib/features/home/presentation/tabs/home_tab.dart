@@ -31,12 +31,12 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
-  
-  void goToAllEvents(List<EventModel> events) {
+  void goToAllEvents(List<EventModel> events, String title) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NearbyEventsScreen(allEvents: events),
+        builder: (context) =>
+            NearbyEventsScreen(allEvents: events, title: title),
       ),
     );
   }
@@ -46,8 +46,10 @@ class _HomeTabState extends State<HomeTab> {
     final locale = AppLocalizations.of(context)!;
     final user = context.watch<UserProvider>();
     final eventProvider = context.watch<EventProvider>();
-    final List<EventModel> displayedEvents = eventProvider.filteredEvents;
+    final events = eventProvider.filteredEvents;
 
+    final upcomingEvents = events.take(5).toList();
+    final nearbyEvents = events;
     return Scaffold(
       backgroundColor: AppColors.grey,
       body: SafeArea(
@@ -59,7 +61,6 @@ class _HomeTabState extends State<HomeTab> {
               children: [
                 const SizedBox(height: 10),
 
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -114,7 +115,6 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 10),
 
-                
                 Row(
                   children: [
                     Expanded(
@@ -132,12 +132,10 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 10),
 
-                
                 const Category(),
 
                 const SizedBox(height: 15),
 
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -149,7 +147,8 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => goToAllEvents(displayedEvents),
+                      onPressed: () =>
+                          goToAllEvents(upcomingEvents, locale.upcomingEvents),
                       child: Text(
                         locale.seeAll,
                         style: const TextStyle(
@@ -164,17 +163,16 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 10),
 
-                
                 SizedBox(
                   height: 300,
-                  child: displayedEvents.isEmpty
+                  child: upcomingEvents.isEmpty
                       ? const Center(child: Text("No Events Found"))
                       : ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: displayedEvents.length,
+                          itemCount: upcomingEvents.length,
                           itemBuilder: (context, index) {
                             return UpcomingEventCard(
-                              event: displayedEvents[index],
+                              event: upcomingEvents[index],
                             );
                           },
                         ),
@@ -182,7 +180,6 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 15),
 
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -194,7 +191,8 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => goToAllEvents(displayedEvents),
+                      onPressed: () =>
+                          goToAllEvents(nearbyEvents, locale.nearbyEvents),
                       child: Text(
                         locale.seeAll,
                         style: const TextStyle(
@@ -209,13 +207,12 @@ class _HomeTabState extends State<HomeTab> {
 
                 const SizedBox(height: 10),
 
-                
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: displayedEvents.length,
+                  itemCount: nearbyEvents.length,
                   itemBuilder: (context, index) {
-                    return NearbyEventCard(event: displayedEvents[index]);
+                    return NearbyEventCard(event: nearbyEvents[index]);
                   },
                 ),
 

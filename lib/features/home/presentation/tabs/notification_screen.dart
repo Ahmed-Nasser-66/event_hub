@@ -19,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
         elevation: 0,
         leading: CustomBackButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "homepage");
+            Navigator.pop(context);
           },
         ),
       ),

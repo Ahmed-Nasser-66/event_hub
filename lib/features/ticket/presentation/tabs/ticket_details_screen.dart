@@ -1,5 +1,6 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/ticket_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ class TicketDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Screenshot(
       controller: screenshotController,
       child: Scaffold(
@@ -24,7 +26,7 @@ class TicketDetailsScreen extends StatelessWidget {
           elevation: 0,
           leading: CustomBackButton(
             onPressed: () {
-              Navigator.pop(context, "tickets");
+              Navigator.pop(context);
             },
           ),
         ),
@@ -69,8 +71,8 @@ class TicketDetailsScreen extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
-                const Text(
-                  "venue:",
+                Text(
+                  l10n.venue,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 22,
@@ -97,7 +99,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Section:",
+                          l10n.section,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 22,
@@ -120,7 +122,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Row:",
+                          l10n.row,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 22,
@@ -149,8 +151,8 @@ class TicketDetailsScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Date:",
+                        Text(
+                          l10n.date,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 22,
@@ -173,7 +175,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Time:",
+                          l10n.time,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 22,
@@ -196,8 +198,8 @@ class TicketDetailsScreen extends StatelessWidget {
 
                 const SizedBox(height: 15),
 
-                const Text(
-                  "Number of tickets:",
+                Text(
+                  l10n.numberOfTickets,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 22,
@@ -220,8 +222,8 @@ class TicketDetailsScreen extends StatelessWidget {
 
                 Row(
                   children: [
-                    const Text(
-                      "Booking ID",
+                    Text(
+                      l10n.bookingId,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 22,
@@ -308,8 +310,8 @@ class TicketDetailsScreen extends StatelessWidget {
                         );
                       }
                     },
-                    child: const Text(
-                      "Download Ticket",
+                    child: Text(
+                      l10n.downloadTicket,
                       style: TextStyle(color: AppColors.secondary),
                     ),
                   ),

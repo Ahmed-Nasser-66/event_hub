@@ -302,13 +302,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile => 'Profile';
 
   @override
-  String get downloadTicket => 'Download Ticket';
+  String get venue => 'Venue:';
+
+  @override
+  String get section => 'Section:';
+
+  @override
+  String get row => 'Row:';
+
+  @override
+  String get date => 'Date:';
+
+  @override
+  String get time => 'Time:';
+
+  @override
+  String get numberOfTickets => 'Number of tickets:';
 
   @override
   String get bookingId => 'Booking ID';
 
   @override
-  String get numberOfTickets => 'Number of tickets:';
+  String get downloadTicket => 'Download Ticket';
 
   @override
   String get timeLabel => 'Time:';

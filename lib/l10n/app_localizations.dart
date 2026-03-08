@@ -650,11 +650,41 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get profile;
 
-  /// No description provided for @downloadTicket.
+  /// No description provided for @venue.
   ///
   /// In en, this message translates to:
-  /// **'Download Ticket'**
-  String get downloadTicket;
+  /// **'Venue:'**
+  String get venue;
+
+  /// No description provided for @section.
+  ///
+  /// In en, this message translates to:
+  /// **'Section:'**
+  String get section;
+
+  /// No description provided for @row.
+  ///
+  /// In en, this message translates to:
+  /// **'Row:'**
+  String get row;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date:'**
+  String get date;
+
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time:'**
+  String get time;
+
+  /// No description provided for @numberOfTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of tickets:'**
+  String get numberOfTickets;
 
   /// No description provided for @bookingId.
   ///
@@ -662,11 +692,11 @@ abstract class AppLocalizations {
   /// **'Booking ID'**
   String get bookingId;
 
-  /// No description provided for @numberOfTickets.
+  /// No description provided for @downloadTicket.
   ///
   /// In en, this message translates to:
-  /// **'Number of tickets:'**
-  String get numberOfTickets;
+  /// **'Download Ticket'**
+  String get downloadTicket;
 
   /// No description provided for @timeLabel.
   ///

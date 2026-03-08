@@ -1,9 +1,9 @@
-
-
+import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
-import 'package:event_hub/providers/favorite_provider.dart'; 
+import 'package:event_hub/providers/favorite_provider.dart';
+import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +16,7 @@ class EventDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
 
-    
-    final lightGreyColor = AppColors.cardGrey.withOpacity(0.5);
+    final lightGreyColor = AppColors.cardGrey.withValues(alpha: 0.5);
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -27,7 +26,6 @@ class EventDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Stack(
                   children: [
                     Image.asset(
@@ -37,7 +35,6 @@ class EventDetailsScreen extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
 
-                    
                     Positioned(
                       top: 40,
                       left: 20,
@@ -54,23 +51,21 @@ class EventDetailsScreen extends StatelessWidget {
                       ),
                     ),
 
-                    
                     Positioned(
                       top: 40,
                       right: 20,
                       child: Consumer<FavoriteProvider>(
                         builder: (context, favProvider, child) {
-                          
                           bool isFav = favProvider.isExist(event);
 
                           return GestureDetector(
                             onTap: () {
                               favProvider.toggleFavorite(event);
-                              
-                              
                             },
                             child: CircleAvatar(
-                              backgroundColor: AppColors.white.withOpacity(0.9),
+                              backgroundColor: AppColors.white.withValues(
+                                alpha: 0.9,
+                              ),
                               child: Icon(
                                 isFav ? Icons.favorite : Icons.favorite_border,
                                 color: isFav ? Colors.red : AppColors.black,
@@ -85,7 +80,6 @@ class EventDetailsScreen extends StatelessWidget {
 
                 const SizedBox(height: 12),
 
-                
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
@@ -133,7 +127,11 @@ class EventDetailsScreen extends StatelessWidget {
                             const SizedBox(width: 5),
                             Text(
                               event.location,
-                              style: const TextStyle(color: AppColors.black),
+                              style: const TextStyle(
+                                color: AppColors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                             const Spacer(),
                             const Icon(
@@ -153,7 +151,7 @@ class EventDetailsScreen extends StatelessWidget {
                           locale.aboutEvent,
                           style: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -174,11 +172,10 @@ class EventDetailsScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Text(
                     'Speakers',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
 
-                
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   padding: const EdgeInsets.all(15),
@@ -191,14 +188,10 @@ class EventDetailsScreen extends StatelessWidget {
                       buildSpeakerCard(
                         "Omar Tarek",
                         "Science",
-                        "assets/image/speaker.png",
+                        AppAssets.speaker,
                       ),
                       const SizedBox(height: 15),
-                      buildSpeakerCard(
-                        "Majd",
-                        "Science",
-                        "assets/image/speaker1.png",
-                      ),
+                      buildSpeakerCard("Majd", "Science", AppAssets.speaker1),
                     ],
                   ),
                 ),
@@ -208,11 +201,10 @@ class EventDetailsScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Text(
                     'Sponsors',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
 
-                
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   padding: const EdgeInsets.all(15),
@@ -224,32 +216,31 @@ class EventDetailsScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        buildSponsorImage("assets/image/sponsors.png"),
+                        buildSponsorImage(AppAssets.sponsors),
                         const SizedBox(width: 15),
-                        buildSponsorImage("assets/image/sponsors1.png"),
+                        buildSponsorImage(AppAssets.sponsors1),
                         const SizedBox(width: 15),
-                        buildSponsorImage("assets/image/sponsors.png"),
+                        buildSponsorImage(AppAssets.sponsors),
                         const SizedBox(width: 15),
-                        buildSponsorImage("assets/image/sponsors1.png"),
+                        buildSponsorImage(AppAssets.sponsors1),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 120), 
+                const SizedBox(height: 120),
               ],
             ),
           ),
         ],
       ),
 
-      
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: AppColors.black.withValues(alpha: 0.5),
               blurRadius: 10,
               spreadRadius: 2,
             ),
@@ -259,19 +250,27 @@ class EventDetailsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "\$${event.price}", 
+              "\$${event.price}",
               style: const TextStyle(
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF0D0E40),
+                fontWeight: FontWeight.w500,
+                color: AppColors.secondary,
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                
-              },
+         ElevatedButton(
+  onPressed: () {
+
+    context.read<TicketProvider>().addTicketFromEvent(event);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Ticket booked successfully"),
+      ),
+    );
+
+  },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: AppColors.orange,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
                   vertical: 15,
@@ -283,9 +282,9 @@ class EventDetailsScreen extends StatelessWidget {
               child: const Text(
                 "Book Now",
                 style: TextStyle(
-                  color: Color(0xFF0D0E40),
+                  color: AppColors.secondary,
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

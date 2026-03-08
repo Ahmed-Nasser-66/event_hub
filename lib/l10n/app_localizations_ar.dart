@@ -287,7 +287,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get history => 'السجل';
 
   @override
-  String get bookingCode => 'رمز الحجز';
+  String get bookingCode => 'كود الحجز';
 
   @override
   String get home => 'الرئيسية';
@@ -302,13 +302,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile => 'الملف الشخصي';
 
   @override
-  String get downloadTicket => 'تحميل التذكرة';
+  String get venue => 'المكان:';
+
+  @override
+  String get section => 'القسم:';
+
+  @override
+  String get row => 'الصف:';
+
+  @override
+  String get date => 'التاريخ:';
+
+  @override
+  String get time => 'الوقت:';
+
+  @override
+  String get numberOfTickets => 'عدد التذاكر:';
 
   @override
   String get bookingId => 'رقم الحجز';
 
   @override
-  String get numberOfTickets => 'عدد التذاكر:';
+  String get downloadTicket => 'تحميل التذكرة';
 
   @override
   String get timeLabel => 'الوقت:';

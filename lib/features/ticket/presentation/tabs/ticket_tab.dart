@@ -2,6 +2,7 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/ticket/presentation/tabs/ticket_details_screen.dart';
 import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/features/ticket/presentation/widget/ticket_card.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class _TicketTabState extends State<TicketTab> {
   Widget build(BuildContext context) {
     final eventProvider = context.watch<EventProvider>();
     final ticketProvider = context.watch<TicketProvider>();
+    final l10n = AppLocalizations.of(context)!;
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -71,9 +74,9 @@ class _TicketTabState extends State<TicketTab> {
                           context.read<TicketProvider>().changeTab(index);
                         },
 
-                        tabs: const [
-                          Tab(text: "Coming soon"),
-                          Tab(text: "History"),
+                        tabs: [
+                          Tab(text: l10n.comingSoon),
+                          Tab(text: l10n.history),
                         ],
                       ),
                     ),
@@ -96,7 +99,7 @@ class _TicketTabState extends State<TicketTab> {
                               date: event.date,
                               location: event.location,
                               price: event.price,
-                              tickets: "${event.ticketsCount} Tickets",
+                              tickets: event.ticketsCount.toString(),
                               image: event.image,
                               bookingId: event.bookingId,
 

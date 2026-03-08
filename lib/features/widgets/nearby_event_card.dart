@@ -1,5 +1,3 @@
-
-
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart';
 import 'package:event_hub/model/event_model.dart';
@@ -14,13 +12,11 @@ class NearbyEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final favoriteProvider = context.read<FavoriteProvider>();
-    
+
     final bool isFavorite = context.watch<FavoriteProvider>().isExist(event);
 
     return GestureDetector(
-      
       onTap: () {
         Navigator.push(
           context,
@@ -37,7 +33,7 @@ class NearbyEventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withOpacity(0.05),
+              color: AppColors.black.withValues(alpha: 0.5),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -66,9 +62,7 @@ class NearbyEventCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(
-                          0.7,
-                        ), 
+                        color: AppColors.white.withValues(alpha: 0.7),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(

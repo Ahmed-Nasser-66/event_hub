@@ -7,10 +7,10 @@ import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../profile/presentation/tabs/language_screen.dart';
-import '../../../profile/presentation/tabs/support_screen.dart';
-import '../../../widgets/profile_header.dart';
-import '../../../widgets/profile_option_item.dart';
+import 'presentation/tabs/language_screen.dart';
+import 'presentation/tabs/support_screen.dart';
+import 'presentation/widget/profile_header.dart';
+import 'presentation/widget/profile_option_item.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
