@@ -1,5 +1,6 @@
+import 'package:event_hub/model/event_model11.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Location extends StatefulWidget {
@@ -10,59 +11,76 @@ class Location extends StatefulWidget {
 }
 
 class _LocationState extends State<Location> {
-  GoogleMapController? mapController;
+  String? _style;
+  late GoogleMapController _controller;
+  Future<void> _loadmapStyle() async {
+    final style = await rootBundle.loadString(
+      'assets/map_style/map_style.json',
+    );
+    setState(() {
+      _style = style;
+    });
+  }
 
-  // إحداثيات مبدئية (القاهرة مثلاً) لحد ما نحدد مكانه
-  static const LatLng _center = LatLng(30.0444, 31.2357);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadmapStyle();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Event Locations'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
       body: GoogleMap(
-        onMapCreated: (controller) => mapController = controller,
-        initialCameraPosition: const CameraPosition(
-          target: _center,
-          zoom: 11.0,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(30.04470424153187, 31.234431758699028),
+          zoom: 10,
         ),
-        myLocationEnabled: true, // بيظهر النقطة الزرقاء مكان المستخدم
-        myLocationButtonEnabled: true, // الزرار اللي بيرجعك لمكانك
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _determinePosition,
-        label: const Text('Get Current Location'),
-        icon: const Icon(Icons.location_searching),
-        backgroundColor: Colors.orange,
+        mapType: MapType.normal,
+        onMapCreated: (controller) {
+          _controller = controller;
+        },
+        style: _style,
+        // هي الخط الازرق
+        polylines: {
+          Polyline(
+            polylineId: const PolylineId('1'),
+            color: Colors.blue,
+            width: 5,
+            points: const [
+              LatLng(30.0444, 31.2357), // Cairo
+              LatLng(30.1700, 30.9500), // 6th of October area
+              LatLng(30.5000, 30.3000), // Banha area
+              LatLng(30.8000, 30.0000), // Tanta area
+              LatLng(31.0000, 29.8000), // Damanhour area
+              LatLng(31.2001, 29.9187), // Alexandria
+            ],
+          ),
+        },
+        // الدبوس
+        markers: Event11.egyptEvents11
+            .map(
+              (event) => Marker(
+                onTap: () {
+                  _updateCameraPosition(
+                    LatLng(event.latitude, event.longitude),
+                  );
+                },
+                infoWindow: InfoWindow(title: event.title),
+                markerId: MarkerId(event.id),
+                position: LatLng(event.latitude, event.longitude),
+              ),
+            )
+            .toSet(),
       ),
     );
   }
 
-  // الفانكشن اللي بتجيب اللوكيشن الفعلي وتتحرك له
-  Future<void> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // تشيك هل الـ GPS شغال أصلاً؟
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) return;
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) return;
-    }
-
-    // جلب الإحداثيات الحالية
-    Position position = await Geolocator.getCurrentPosition();
-
-    // تحريك كاميرا الخريطة لمكان المستخدم
-    mapController?.animateCamera(
-      CameraUpdate.newLatLng(LatLng(position.latitude, position.longitude)),
+  Future<void> _updateCameraPosition(LatLng latLng) async {
+    await _controller.animateCamera(
+      duration: Duration(milliseconds: 500),
+      CameraUpdate.newCameraPosition(CameraPosition(target: latLng, zoom: 14)),
     );
   }
 }

@@ -24,7 +24,7 @@ dependencies:
   screenshot: ^3.0.0
   permission_handler: ^12.0.1
   gal: ^2.3.2
-  google_maps_flutter: ^2.5.3
+  google_maps_flutter: ^2.15.0
   geolocator: ^10.1.0
 
 dev_dependencies:
@@ -42,6 +42,7 @@ flutter:
     - assets/image/
     - assets/font/
     - assets/image/photo_profile.png
+    - assets/map_style/
 
   fonts:
     - family: Cairo

@@ -1,7 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/ticket/presentation/tabs/ticket_details_screen.dart';
-import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/features/ticket/presentation/widget/ticket_card.dart';
+import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
@@ -88,6 +88,22 @@ class _TicketTabState extends State<TicketTab> {
                             ? provider.comingSoonEvents
                             : provider.historyEvents;
 
+                        if (events.isEmpty) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 300),
+                              child: Text(
+                                "No Tickets yet!",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.lightGrey,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+
                         return ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -102,7 +118,6 @@ class _TicketTabState extends State<TicketTab> {
                               tickets: event.ticketsCount.toString(),
                               image: event.image,
                               bookingId: event.bookingId,
-
                               onTap: () {
                                 Navigator.push(
                                   context,
