@@ -93,52 +93,59 @@ class TicketDetailsScreen extends StatelessWidget {
                 const SizedBox(height: 15),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.section,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 22,
-                            color: AppColors.secondary,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.section,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          ticket.section,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          SizedBox(height: 4),
+                          Text(
+                            ticket.section,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.row,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 22,
-                            color: AppColors.secondary,
+                    SizedBox(width: 50),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.row,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          ticket.row,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          SizedBox(height: 4),
+                          Text(
+                            ticket.row,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -146,106 +153,120 @@ class TicketDetailsScreen extends StatelessWidget {
                 const SizedBox(height: 15),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.date,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 22,
-                            color: AppColors.secondary,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.date,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          ticket.date,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          SizedBox(height: 4),
+                          Text(
+                            ticket.date,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.time,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 22,
-                            color: AppColors.secondary,
+                    SizedBox(width: 50),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.time,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          ticket.time,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          SizedBox(height: 4),
+                          Text(
+                            ticket.time,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 15),
+
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.numberOfTickets,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 22,
-                            color: AppColors.secondary,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.numberOfTickets,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
 
-                        const SizedBox(height: 4),
+                          const SizedBox(height: 4),
 
-                        Text(
-                          "${ticket.ticketsCount}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          Text(
+                            "${ticket.ticketsCount}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.price,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 22,
-                            color: AppColors.secondary,
+                    SizedBox(width: 50),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.price,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          ticket.price,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          const SizedBox(height: 4),
+                          Text(
+                            ticket.price,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -290,9 +311,9 @@ class TicketDetailsScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 const Divider(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Center(
                   child: QrImageView(
                     data:
@@ -308,13 +329,13 @@ class TicketDetailsScreen extends StatelessWidget {
                         "category": "${ticket.category}",
                         "bookingId": "${ticket.bookingId}"
                         }''',
-                    size: 180,
+                    size: 190,
                     backgroundColor: AppColors.white,
                     version: QrVersions.auto,
                   ),
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 15),
 
                 Center(
                   child: ElevatedButton(

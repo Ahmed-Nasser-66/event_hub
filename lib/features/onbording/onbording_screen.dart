@@ -55,7 +55,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(pages[index]["image"]!, height: 200),
+                      Image.asset(pages[index]["image"]!, height: 180),
                       const SizedBox(height: 20),
                       Text(
                         pages[index]["title"]!,
@@ -64,6 +64,9 @@ class _OnBoardingState extends State<OnBoarding> {
                           fontWeight: FontWeight.w600,
                           color: AppColors.secondary,
                         ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 10),
                       Padding(

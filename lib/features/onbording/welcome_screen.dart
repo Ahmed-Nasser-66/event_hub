@@ -40,88 +40,88 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Image.asset(AppAssets.event, height: 80, fit: BoxFit.contain),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Image.asset(AppAssets.event, height: 80, fit: BoxFit.contain),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 29),
-                child: Image.asset(
-                  AppAssets.login,
-                  height: 250,
-                  fit: BoxFit.contain,
-                ),
-              ),
-
-              Text(
-                l10n.welcome,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
-              CustomButtonAuth(
-                title: l10n.login,
-                color: AppColors.orange,
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed("login");
-                },
-              ),
-
-              const SizedBox(height: 12),
-
-              CustomButtonAuth(
-                title: l10n.signup,
-                color: AppColors.grey,
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed("signup");
-                },
-              ),
-
-              const Spacer(),
-
-              Center(
-                child: AnimatedToggleSwitch<String>.rolling(
-                  current: languageProvider.appLanguage,
-                  values: const ['en', 'ar'],
-                  iconList: [
-                    _buildFlagCircle('assets/icon/LR.svg'),
-                    _buildFlagCircle('assets/icon/EG.svg'),
-                  ],
-                  onChanged: (newVal) {
-                    languageProvider.changeLanguage(newVal);
-                  },
-                  style: const ToggleStyle(
-                    backgroundColor: Colors.white10,
-                    borderColor: AppColors.orange,
-                    indicatorColor: AppColors.orange,
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 29),
+                  child: Image.asset(
+                    AppAssets.login,
+                    height: 250,
+                    fit: BoxFit.contain,
                   ),
-                  height: 45,
-                  indicatorSize: const Size(40, 40),
                 ),
-              ),
 
-              const SizedBox(height: 10),
+                Text(
+                  l10n.welcome,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.secondary,
+                  ),
+                ),
 
-              ///        متنساش تمسحو
-              CustomButtonAuth(
-                title: l10n.home,
-                color: const Color.fromARGB(255, 248, 207, 0),
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed("homepage");
-                },
-              ),
-              //     لحد هنا
-            ],
+                const SizedBox(height: 30),
+
+                CustomButtonAuth(
+                  title: l10n.login,
+                  color: AppColors.orange,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed("login");
+                  },
+                ),
+
+                const SizedBox(height: 12),
+
+                CustomButtonAuth(
+                  title: l10n.signup,
+                  color: AppColors.grey,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed("signup");
+                  },
+                ),
+
+                Center(
+                  child: AnimatedToggleSwitch<String>.rolling(
+                    current: languageProvider.appLanguage,
+                    values: const ['en', 'ar'],
+                    iconList: [
+                      _buildFlagCircle('assets/icon/LR.svg'),
+                      _buildFlagCircle('assets/icon/EG.svg'),
+                    ],
+                    onChanged: (newVal) {
+                      languageProvider.changeLanguage(newVal);
+                    },
+                    style: const ToggleStyle(
+                      backgroundColor: Colors.white10,
+                      borderColor: AppColors.orange,
+                      indicatorColor: AppColors.orange,
+                    ),
+                    height: 45,
+                    indicatorSize: const Size(40, 40),
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                ///        متنساش تمسحو
+                CustomButtonAuth(
+                  title: l10n.home,
+                  color: const Color.fromARGB(255, 248, 207, 0),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed("homepage");
+                  },
+                ),
+                //     لحد هنا
+              ],
+            ),
           ),
         ),
       ),
