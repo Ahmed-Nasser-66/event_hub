@@ -317,6 +317,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get time => 'الوقت:';
 
   @override
+  String get price => 'السعر:';
+
+  @override
   String get numberOfTickets => 'عدد التذاكر:';
 
   @override

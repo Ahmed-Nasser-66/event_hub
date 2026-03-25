@@ -317,6 +317,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get time => 'Time:';
 
   @override
+  String get price => 'Price:';
+
+  @override
   String get numberOfTickets => 'Number of tickets:';
 
   @override

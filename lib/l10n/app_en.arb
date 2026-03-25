@@ -126,6 +126,7 @@
   "row": "Row:",
   "date": "Date:",
   "time": "Time:",
+  "price": "Price:",
   "numberOfTickets": "Number of tickets:",
   "bookingId": "Booking ID:",
   "downloadTicket": "Download Ticket",

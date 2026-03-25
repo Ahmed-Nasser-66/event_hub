@@ -680,6 +680,12 @@ abstract class AppLocalizations {
   /// **'Time:'**
   String get time;
 
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price:'**
+  String get price;
+
   /// No description provided for @numberOfTickets.
   ///
   /// In en, this message translates to:

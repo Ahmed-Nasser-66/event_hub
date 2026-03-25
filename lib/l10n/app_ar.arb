@@ -128,6 +128,7 @@
   "row": "الصف:",
   "date": "التاريخ:",
   "time": "الوقت:",
+  "price": "السعر:",
   "numberOfTickets": "عدد التذاكر:",
   "bookingId": "رقم الحجز:",
   "downloadTicket": "تحميل التذكرة",

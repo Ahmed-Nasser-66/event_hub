@@ -197,25 +197,57 @@ class TicketDetailsScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.numberOfTickets,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22,
+                            color: AppColors.secondary,
+                          ),
+                        ),
 
-                Text(
-                  l10n.numberOfTickets,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 22,
-                    color: AppColors.secondary,
-                  ),
-                ),
+                        const SizedBox(height: 4),
 
-                const SizedBox(height: 4),
+                        Text(
+                          "${ticket.ticketsCount}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ],
+                    ),
 
-                Text(
-                  "${ticket.ticketsCount}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    color: AppColors.black,
-                  ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.price,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22,
+                            color: AppColors.secondary,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          ticket.price,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 15),
@@ -269,13 +301,14 @@ class TicketDetailsScreen extends StatelessWidget {
                         "date": "${ticket.date}",
                         "time": "${ticket.time}",
                         "location": "${ticket.location}",
+                        "price": "${ticket.price}",
                         "section": "${ticket.section}",
                         "row": "${ticket.row}",
                         "tickets": "${ticket.ticketsCount}",
                         "category": "${ticket.category}",
                         "bookingId": "${ticket.bookingId}"
                         }''',
-                    size: 150,
+                    size: 180,
                     backgroundColor: AppColors.white,
                     version: QrVersions.auto,
                   ),
