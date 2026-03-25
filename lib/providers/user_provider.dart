@@ -10,6 +10,7 @@ class UserProvider extends ChangeNotifier {
   String get name => _name;
   String get email => _email;
   File? get image => _image;
+  String get password => _password;
 
   void registerUser(String name, String email, String password) {
     _name = name;
@@ -21,20 +22,16 @@ class UserProvider extends ChangeNotifier {
   bool login(String email, String password) {
     return _email == email && _password == password;
   }
-void setUser(
-  String name,
-  String email,
-  String password, {
-  File? newImage,
-}) {
-  _name = name;
-  _email = email;
-  _password = password;
 
-  if (newImage != null) {
-    _image = newImage;
+  void setUser(String name, String email, String password, {File? newImage}) {
+    _name = name;
+    _email = email;
+    _password = password;
+
+    if (newImage != null) {
+      _image = newImage;
+    }
+
+    notifyListeners();
   }
-
-  notifyListeners();
-}
 }

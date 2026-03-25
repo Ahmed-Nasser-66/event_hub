@@ -6,7 +6,7 @@ import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/app_language_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -94,8 +94,8 @@ class WelcomeScreen extends StatelessWidget {
                   current: languageProvider.appLanguage,
                   values: const ['en', 'ar'],
                   iconList: [
-                    _buildFlagCircle('assets/icon/LR.svg'), 
-                    _buildFlagCircle('assets/icon/EG.svg'), 
+                    _buildFlagCircle('assets/icon/LR.svg'),
+                    _buildFlagCircle('assets/icon/EG.svg'),
                   ],
                   onChanged: (newVal) {
                     languageProvider.changeLanguage(newVal);
@@ -111,6 +111,16 @@ class WelcomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 10),
+
+              ///        متنساش تمسحو
+              CustomButtonAuth(
+                title: l10n.home,
+                color: const Color.fromARGB(255, 248, 207, 0),
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed("homepage");
+                },
+              ),
+              //     لحد هنا
             ],
           ),
         ),

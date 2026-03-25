@@ -32,6 +32,16 @@ class _EditProfileState extends State<EditProfile> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+    final user = context.read<UserProvider>();
+
+    username.text = user.name;
+    email.text = user.email;
+  }
+
   File? _image;
   final ImagePicker picker = ImagePicker();
   @override
@@ -77,8 +87,15 @@ class _EditProfileState extends State<EditProfile> {
                               radius: 40,
                               backgroundImage: _image != null
                                   ? FileImage(_image!)
-                                  : null,
-                              child: _image == null
+                                  : (context.read<UserProvider>().image != null
+                                        ? FileImage(
+                                            context.read<UserProvider>().image!,
+                                          )
+                                        : null),
+                              child:
+                                  (_image == null &&
+                                      context.read<UserProvider>().image ==
+                                          null)
                                   ? const Icon(Icons.person, size: 35)
                                   : null,
                             ),
@@ -131,8 +148,8 @@ class _EditProfileState extends State<EditProfile> {
                     hinttext: l10n.fullName,
                     mycontroller: username,
                     validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return l10n.enterFullName;
+                      if (val != null && val.isNotEmpty && val.length < 3) {
+                        return "Name too short";
                       }
                       return null;
                     },
@@ -151,13 +168,12 @@ class _EditProfileState extends State<EditProfile> {
                     hinttext: l10n.emailExample,
                     mycontroller: email,
                     validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return l10n.enterEmail;
-                      }
-                      if (!RegExp(
-                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                      ).hasMatch(val)) {
-                        return l10n.enterValidEmail;
+                      if (val != null && val.isNotEmpty) {
+                        if (!RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        ).hasMatch(val)) {
+                          return l10n.enterValidEmail;
+                        }
                       }
                       return null;
                     },
@@ -176,11 +192,10 @@ class _EditProfileState extends State<EditProfile> {
                     hinttext: l10n.enterPhoneNumber,
                     mycontroller: phone,
                     validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return l10n.enterPhoneNumber;
-                      }
-                      if (!RegExp(r'^[0-9]{11}$').hasMatch(val)) {
-                        return l10n.phoneMustBe11Digits;
+                      if (val != null && val.isNotEmpty) {
+                        if (!RegExp(r'^[0-9]{11}$').hasMatch(val)) {
+                          return l10n.phoneMustBe11Digits;
+                        }
                       }
                       return null;
                     },
@@ -200,14 +215,10 @@ class _EditProfileState extends State<EditProfile> {
                     mycontroller: pass,
                     isPassword: true,
                     validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return l10n.enterPassword;
-                      }
-                      if (val.length < 8) {
-                        return l10n.passwordMinLength;
-                      }
-                      if (RegExp(r'^[0-9]+$').hasMatch(val)) {
-                        return l10n.passwordNumbersOnly;
+                      if (val != null && val.isNotEmpty) {
+                        if (val.length < 8) {
+                          return l10n.passwordMinLength;
+                        }
                       }
                       return null;
                     },
@@ -227,10 +238,7 @@ class _EditProfileState extends State<EditProfile> {
                     mycontroller: confirmpass,
                     isPassword: true,
                     validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return l10n.retypePasswordError;
-                      }
-                      if (val != pass.text) {
+                      if (val != null && val.isNotEmpty && val != pass.text) {
                         return l10n.passwordsDoNotMatch;
                       }
                       return null;
@@ -256,12 +264,17 @@ class _EditProfileState extends State<EditProfile> {
                           color: AppColors.orange,
                           onPressed: () {
                             if (formState.currentState!.validate()) {
+                              final user = context.read<UserProvider>();
+
                               context.read<UserProvider>().setUser(
-                                username.text,
-                                email.text,
-                                pass.text,
-                                newImage: _image,
+                                username.text.isEmpty
+                                    ? user.name
+                                    : username.text,
+                                email.text.isEmpty ? user.email : email.text,
+                                pass.text.isEmpty ? user.password : pass.text,
+                                newImage: _image ?? user.image,
                               );
+
                               Navigator.pop(context);
                             }
                           },

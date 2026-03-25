@@ -37,11 +37,24 @@ class TicketProvider extends ChangeNotifier {
 
   final List<TicketModel> _tickets = [];
 
-  void addTicketFromEvent(EventModel event) {
+  void addTicketFromEvent(EventModel event, int count) {
     int index = _tickets.indexWhere((t) => t.title == event.title);
 
     if (index != -1) {
-      _tickets[index].ticketsCount++;
+      _tickets[index] = TicketModel(
+        title: event.title,
+        date: event.datetime,
+        category: event.category,
+        isUpcoming: true,
+        bookingId: _tickets[index].bookingId,
+        location: event.location,
+        image: event.imagepath,
+        section: _tickets[index].section,
+        row: _tickets[index].row,
+        time: _tickets[index].time,
+        ticketsCount: count,
+        price: "\$${event.price * count}",
+      );
     } else {
       final random = Random();
 
@@ -58,8 +71,8 @@ class TicketProvider extends ChangeNotifier {
         row: (random.nextInt(15) + 1).toString(),
 
         time: _generateRandomTime(),
-        ticketsCount: 1,
-        price: "\$${event.price}",
+        ticketsCount: count,
+        price: "\$${event.price * count}",
       );
 
       _tickets.insert(0, newTicket);

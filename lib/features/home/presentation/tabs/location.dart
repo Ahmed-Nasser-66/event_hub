@@ -24,7 +24,6 @@ class _LocationState extends State<Location> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadmapStyle();
   }

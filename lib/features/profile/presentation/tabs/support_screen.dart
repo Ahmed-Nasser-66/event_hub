@@ -2,6 +2,7 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -39,6 +40,32 @@ class SupportScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: AppColors.secondary,
             ),
+          ),
+          SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "eventhub.support138@gmail.com",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.secondary,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.copy, size: 18),
+                onPressed: () {
+                  Clipboard.setData(
+                    const ClipboardData(text: "eventhub.support138@gmail.com"),
+                  );
+
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text("Email copied")));
+                },
+              ),
+            ],
           ),
         ],
       ),

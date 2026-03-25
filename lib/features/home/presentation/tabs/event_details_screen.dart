@@ -7,14 +7,22 @@ import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EventDetailsScreen extends StatelessWidget {
+class EventDetailsScreen extends StatefulWidget {
   final EventModel event;
 
   const EventDetailsScreen({super.key, required this.event});
 
   @override
+  State<EventDetailsScreen> createState() => _EventDetailsScreenState();
+}
+
+class _EventDetailsScreenState extends State<EventDetailsScreen> {
+  int ticketCount = 1;
+
+  @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
+  double totalPrice = widget.event.price * ticketCount;
 
     final lightGreyColor = AppColors.cardGrey.withValues(alpha: 0.5);
 
@@ -29,7 +37,7 @@ class EventDetailsScreen extends StatelessWidget {
                 Stack(
                   children: [
                     Image.asset(
-                      event.imagepath,
+                      widget.event.imagepath,
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.35,
                       fit: BoxFit.cover,
@@ -56,11 +64,11 @@ class EventDetailsScreen extends StatelessWidget {
                       right: 20,
                       child: Consumer<FavoriteProvider>(
                         builder: (context, favProvider, child) {
-                          bool isFav = favProvider.isExist(event);
+                          bool isFav = favProvider.isExist(widget.event);
 
                           return GestureDetector(
                             onTap: () {
-                              favProvider.toggleFavorite(event);
+                              favProvider.toggleFavorite(widget.event);
                             },
                             child: CircleAvatar(
                               backgroundColor: AppColors.white.withValues(
@@ -101,7 +109,7 @@ class EventDetailsScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            event.category.toLowerCase(),
+                            widget.event.category.toLowerCase(),
                             style: const TextStyle(
                               color: AppColors.black,
                               fontSize: 12,
@@ -110,7 +118,7 @@ class EventDetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          event.title,
+                          widget.event.title,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -126,7 +134,7 @@ class EventDetailsScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              event.location,
+                              widget.event.location,
                               style: const TextStyle(
                                 color: AppColors.black,
                                 fontSize: 14,
@@ -141,7 +149,7 @@ class EventDetailsScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              event.datetime,
+                              widget.event.datetime,
                               style: const TextStyle(color: AppColors.black),
                             ),
                           ],
@@ -247,45 +255,114 @@ class EventDetailsScreen extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "\$${event.price}",
+              "\$${totalPrice.toStringAsFixed(2)}",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
                 color: AppColors.secondary,
               ),
             ),
-         ElevatedButton(
-  onPressed: () {
 
-    context.read<TicketProvider>().addTicketFromEvent(event);
+            const SizedBox(width: 10),
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Ticket booked successfully"),
-      ),
-    );
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // العداد
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 1,
+                      vertical: 1,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.orange),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          constraints: const BoxConstraints(),
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            if (ticketCount > 1) {
+                              setState(() => ticketCount--);
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.remove,
+                            size: 20,
+                            color: AppColors.secondary,
+                          ),
+                        ),
 
-  },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.orange,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 15,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              child: const Text(
-                "Book Now",
-                style: TextStyle(
-                  color: AppColors.secondary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: Text(
+                            "$ticketCount",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.secondary,
+                            ),
+                          ),
+                        ),
+
+                        IconButton(
+                          constraints: const BoxConstraints(),
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            setState(() => ticketCount++);
+                          },
+                          icon: const Icon(
+                            Icons.add,
+                            size: 20,
+                            color: AppColors.secondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(width: 10),
+
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<TicketProvider>().addTicketFromEvent(
+                          widget.event,
+                          ticketCount,
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Booked $ticketCount tickets"),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.orange, // 🔥 اللون الصح
+                        foregroundColor: AppColors.secondary, // لون النص
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            16,
+                          ), // نفس الديزاين
+                        ),
+                      ),
+                      child: const Text(
+                        "Book Now",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
