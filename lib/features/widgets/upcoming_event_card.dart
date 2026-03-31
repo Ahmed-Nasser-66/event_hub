@@ -55,13 +55,12 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 Positioned(
                   top: 20,
                   right: 20,
                   child: GestureDetector(
                     onTap: () {
-                      
                       favoriteProvider.toggleFavorite(event);
                     },
                     child: Container(
@@ -71,7 +70,6 @@ class UpcomingEventCard extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        
                         isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: isFavorite ? AppColors.red : AppColors.secondary,
                         size: 22,
@@ -86,7 +84,6 @@ class UpcomingEventCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -105,7 +102,7 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  
+
                   Text(
                     event.title,
                     style: const TextStyle(
@@ -115,7 +112,7 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
-                  
+
                   Row(
                     children: [
                       const Icon(
@@ -124,20 +121,27 @@ class UpcomingEventCard extends StatelessWidget {
                         color: AppColors.secondary,
                       ),
                       const SizedBox(width: 4),
-                      Text(
-                        event.location,
-                        style: const TextStyle(
-                          color: AppColors.secondary,
-                          fontSize: 12,
+
+                      Expanded(
+                        child: Text(
+                          event.location,
+                          style: const TextStyle(
+                            color: AppColors.secondary,
+                            fontSize: 12,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const Spacer(),
+
+                      const SizedBox(width: 6),
+
                       const Icon(
                         Icons.access_time,
                         size: 14,
                         color: AppColors.secondary,
                       ),
                       const SizedBox(width: 4),
+
                       Text(
                         event.datetime,
                         style: const TextStyle(
@@ -148,7 +152,7 @@ class UpcomingEventCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  
+
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(

@@ -52,36 +52,70 @@ class _OnBoardingState extends State<OnBoarding> {
                   });
                 },
                 itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(pages[index]["image"]!, height: 180),
-                      const SizedBox(height: 20),
-                      Text(
-                        pages[index]["title"]!,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.secondary,
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Text(
-                          pages[index]["desc"]!,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.secondary,
+                  final isLandscape =
+                      MediaQuery.of(context).orientation ==
+                      Orientation.landscape;
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                          ),
+                          child: IntrinsicHeight(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Spacer(),
+
+                                Image.asset(
+                                  pages[index]["image"]!,
+                                  height: isLandscape
+                                      ? MediaQuery.of(context).size.height * 0.5
+                                      : MediaQuery.of(context).size.height *
+                                            0.25,
+                                  fit: BoxFit.contain,
+                                ),
+
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: Text(
+                                    pages[index]["title"]!,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.secondary,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10),
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 40,
+                                  ),
+                                  child: Text(
+                                    pages[index]["desc"]!,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.secondary,
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   );
                 },
               ),
@@ -97,8 +131,8 @@ class _OnBoardingState extends State<OnBoarding> {
                   height: 8,
                   decoration: BoxDecoration(
                     color: currentPage == index
-                        ? const Color(0xff05063F)
-                        : const Color(0xffADB5BD),
+                        ? AppColors.secondary
+                        : AppColors.lightGrey,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
@@ -116,7 +150,7 @@ class _OnBoardingState extends State<OnBoarding> {
                         Navigator.pushReplacementNamed(context, "welcome"),
                     child: Text(
                       l10n.skip,
-                      style: const TextStyle(color: Color(0xff495057)),
+                      style: const TextStyle(color: AppColors.lightGrey),
                     ),
                   ),
                   const Spacer(),
@@ -131,7 +165,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       currentPage == pages.length - 1
                           ? l10n.getStarted
                           : l10n.next,
-                      style: const TextStyle(color: Color(0xff05063F)),
+                      style: const TextStyle(color: AppColors.secondary),
                     ),
                   ),
                 ],

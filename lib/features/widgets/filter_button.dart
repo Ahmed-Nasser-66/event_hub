@@ -19,47 +19,49 @@ class Filterbutton extends StatelessWidget {
   }
 
   Widget _buildBottomSheetContent(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-      height: 250,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 50,
-              height: 5,
-              decoration: BoxDecoration(
-                color: AppColors.grey,
-                borderRadius: BorderRadius.circular(10),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 50,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: AppColors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            "Sort & Filter",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
+            const Text(
+              "Sort & Filter",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
 
-          ListTile(
-            leading: const Icon(Icons.sort_by_alpha, color: AppColors.orange),
-            title: const Text("Price: Low to High"),
-            onTap: () {
-              context.read<EventProvider>().sortByPriceLowToHigh();
-              Navigator.pop(context);
-            },
-          ),
+            ListTile(
+              leading: const Icon(Icons.sort_by_alpha, color: AppColors.orange),
+              title: const Text("Price: Low to High"),
+              onTap: () {
+                context.read<EventProvider>().sortByPriceLowToHigh();
+                Navigator.pop(context);
+              },
+            ),
 
-          ListTile(
-            leading: const Icon(Icons.refresh, color: AppColors.secondary),
-            title: const Text("Reset to Default"),
-            onTap: () {
-              context.read<EventProvider>().resetSort();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            ListTile(
+              leading: const Icon(Icons.refresh, color: AppColors.secondary),
+              title: const Text("Reset to Default"),
+              onTap: () {
+                context.read<EventProvider>().resetSort();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

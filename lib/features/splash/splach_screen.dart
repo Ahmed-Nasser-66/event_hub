@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.of(
         context,
       ).pushReplacement(MaterialPageRoute(builder: (context) => OnBoarding()));
@@ -30,9 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(AppAssets.event, width: 200, height: 129),
-          ],
+          children: [Image.asset(AppAssets.event, width: 200, height: 129)],
         ),
       ),
     );
