@@ -55,13 +55,13 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // 4. بخلي القلب في تفاعل باستخدام GestureDetector
+                
                 Positioned(
                   top: 20,
                   right: 20,
                   child: GestureDetector(
                     onTap: () {
-                      // نداء دالة التبديل عند الضغط
+                      
                       favoriteProvider.toggleFavorite(event);
                     },
                     child: Container(
@@ -71,9 +71,9 @@ class UpcomingEventCard extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        // تغيير الأيقونة واللون بناءً على حالة البروفايدر
+                        
                         isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorite ? Colors.red : AppColors.secondary,
+                        color: isFavorite ? AppColors.red : AppColors.secondary,
                         size: 22,
                       ),
                     ),
@@ -86,7 +86,7 @@ class UpcomingEventCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // الكاتوجري
+                  
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -105,7 +105,7 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // العنوان
+                  
                   Text(
                     event.title,
                     style: const TextStyle(
@@ -115,7 +115,7 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
-                  // اللوكيشن والوقت
+                  
                   Row(
                     children: [
                       const Icon(
@@ -148,7 +148,7 @@ class UpcomingEventCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  // السعر
+                  
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(

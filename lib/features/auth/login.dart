@@ -173,8 +173,15 @@ class _LoginState extends State<Login> {
                     Navigator.of(context).pushReplacementNamed("homepage");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Email or password incorrect"),
+                      SnackBar(
+                        content: Text(
+                          l10n.invalidEmailOrPassword,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        backgroundColor: AppColors.red,
                       ),
                     );
                   }
@@ -209,14 +216,28 @@ class _LoginState extends State<Login> {
 
             const SizedBox(height: 50),
 
-            Text(
-              "__________________  ${l10n.orLoginWith}  __________________",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.black,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
+            Row(
+              children: [
+                const Expanded(
+                  child: Divider(color: AppColors.black, thickness: 1),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    l10n.orLoginWith,
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+
+                const Expanded(
+                  child: Divider(color: AppColors.black, thickness: 1),
+                ),
+              ],
             ),
 
             const SizedBox(height: 60),

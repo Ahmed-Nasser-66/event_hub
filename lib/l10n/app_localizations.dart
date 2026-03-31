@@ -182,6 +182,48 @@ abstract class AppLocalizations {
   /// **'Sign in to your account'**
   String get signInToAccount;
 
+  /// No description provided for @accountCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully, please login to continue'**
+  String get accountCreated;
+
+  /// No description provided for @iAgree.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to'**
+  String get iAgree;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @policyPoint1.
+  ///
+  /// In en, this message translates to:
+  /// **'We store your name and email'**
+  String get policyPoint1;
+
+  /// No description provided for @policyPoint2.
+  ///
+  /// In en, this message translates to:
+  /// **'We use data to improve your experience'**
+  String get policyPoint2;
+
+  /// No description provided for @policyPoint3.
+  ///
+  /// In en, this message translates to:
+  /// **'We do NOT share your data'**
+  String get policyPoint3;
+
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
@@ -199,6 +241,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'example@gmail.com'**
   String get emailExample;
+
+  /// No description provided for @invalidEmailOrPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or password incorrect'**
+  String get invalidEmailOrPassword;
 
   /// No description provided for @forgotPassword.
   ///
@@ -649,6 +697,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
+
+  /// No description provided for @changeLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Language'**
+  String get changeLanguage;
+
+  /// No description provided for @fullNameMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get fullNameMinLength;
 
   /// No description provided for @venue.
   ///

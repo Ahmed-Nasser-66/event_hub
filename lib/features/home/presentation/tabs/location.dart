@@ -1,3 +1,4 @@
+import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/model/event_model11.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,7 +46,7 @@ class _LocationState extends State<Location> {
         polylines: {
           Polyline(
             polylineId: const PolylineId('1'),
-            color: Colors.blue,
+            color: AppColors.blue,
             width: 5,
             points: const [
               LatLng(30.0444, 31.2357), // Cairo

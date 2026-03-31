@@ -54,6 +54,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signInToAccount => 'سجّل الدخول إلى حسابك';
 
   @override
+  String get accountCreated => 'تم إنشاء الحساب بنجاح، برجاء تسجيل الدخول';
+
+  @override
+  String get iAgree => 'أوافق على';
+
+  @override
+  String get privacyPolicy => 'سياسة الخصوصية';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get policyPoint1 => 'نقوم بحفظ اسمك وبريدك الإلكتروني';
+
+  @override
+  String get policyPoint2 => 'نستخدم بياناتك لتحسين تجربتك';
+
+  @override
+  String get policyPoint3 => 'لا نقوم بمشاركة بياناتك مع أي طرف ثالث';
+
+  @override
   String get email => 'البريد الإلكتروني';
 
   @override
@@ -61,6 +82,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get emailExample => 'example@gmail.com';
+
+  @override
+  String get invalidEmailOrPassword =>
+      'البريد الإلكتروني أو كلمة المرور غير صحيحة';
 
   @override
   String get forgotPassword => 'هل نسيت كلمة المرور؟';
@@ -300,6 +325,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profile => 'الملف الشخصي';
+
+  @override
+  String get changeLanguage => 'تغيير اللغة';
+
+  @override
+  String get fullNameMinLength => 'يجب أن يكون الاسم 3 أحرف على الأقل';
 
   @override
   String get venue => 'المكان:';

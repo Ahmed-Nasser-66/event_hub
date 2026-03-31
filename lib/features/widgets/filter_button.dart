@@ -1,17 +1,16 @@
 import 'package:event_hub/core/theme/app_color.dart';
-import 'package:event_hub/providers/event_provider.dart'; 
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Filterbutton extends StatelessWidget {
   const Filterbutton({super.key});
 
-  
   void _tapSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
-      
+      backgroundColor: AppColors.white,
+
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
@@ -22,17 +21,16 @@ class Filterbutton extends StatelessWidget {
   Widget _buildBottomSheetContent(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-      height: 250, 
+      height: 250,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           Center(
             child: Container(
               width: 50,
               height: 5,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: AppColors.grey,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -44,20 +42,17 @@ class Filterbutton extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
-          
           ListTile(
             leading: const Icon(Icons.sort_by_alpha, color: AppColors.orange),
             title: const Text("Price: Low to High"),
             onTap: () {
-              
               context.read<EventProvider>().sortByPriceLowToHigh();
-              Navigator.pop(context); 
+              Navigator.pop(context);
             },
           ),
 
-          
           ListTile(
-            leading: const Icon(Icons.refresh, color: Colors.grey),
+            leading: const Icon(Icons.refresh, color: AppColors.secondary),
             title: const Text("Reset to Default"),
             onTap: () {
               context.read<EventProvider>().resetSort();
@@ -80,10 +75,7 @@ class Filterbutton extends StatelessWidget {
         shape: const CircleBorder(),
         onPressed: () => _tapSheet(context),
         child: Transform.translate(
-          offset: const Offset(
-            -1,
-            0,
-          ), 
+          offset: const Offset(-1, 0),
           child: Center(
             child: const Icon(Icons.tune, size: 22, color: AppColors.black),
           ),

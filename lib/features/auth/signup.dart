@@ -7,6 +7,7 @@ import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/gestures.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -89,6 +90,9 @@ class _SignupState extends State<Signup> {
                     validator: (val) {
                       if (val == null || val.isEmpty) {
                         return l10n.enterFullName;
+                      }
+                      if (val.length < 3) {
+                        return l10n.fullNameMinLength;
                       }
                       return null;
                     },
@@ -197,12 +201,94 @@ class _SignupState extends State<Signup> {
               activeColor: AppColors.orange,
               contentPadding: EdgeInsets.zero,
               value: value,
-              title: Text(l10n.agreePrivacyPolicy),
               onChanged: (bool? newValue) {
                 setState(() {
                   value = newValue!;
                 });
               },
+              title: RichText(
+                text: TextSpan(
+                  style: const TextStyle(color: AppColors.black),
+                  children: [
+                    TextSpan(
+                      text: "${l10n.iAgree} ",
+                      style: const TextStyle(
+                        color: AppColors.secondary,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
+                    ),
+                    TextSpan(
+                      text: l10n.privacyPolicy,
+                      style: const TextStyle(
+                        color: AppColors.orange,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                  l10n.privacyPolicy,
+                                  style: const TextStyle(
+                                    color: AppColors.orange,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "• ${l10n.policyPoint1}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "• ${l10n.policyPoint2}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "• ${l10n.policyPoint3}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text(
+                                      l10n.close,
+                                      style: const TextStyle(
+                                        color: AppColors.secondary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                    ),
+                  ],
+                ),
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -225,6 +311,19 @@ class _SignupState extends State<Signup> {
                     pass.text,
                   );
 
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        l10n.accountCreated,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: AppColors.green,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
                   Navigator.of(context).pushReplacementNamed("login");
                 }
               },
@@ -256,19 +355,30 @@ class _SignupState extends State<Signup> {
             ),
 
             const SizedBox(height: 20),
+            Row(
+              children: [
+                const Expanded(
+                  child: Divider(color: AppColors.black, thickness: 1),
+                ),
 
-            Text(
-              "__________________  ${l10n.orLoginWith}  __________________",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.black,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    l10n.orLoginWith,
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+
+                const Expanded(
+                  child: Divider(color: AppColors.black, thickness: 1),
+                ),
+              ],
             ),
-
             const SizedBox(height: 20),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -76,7 +76,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               ),
                               child: Icon(
                                 isFav ? Icons.favorite : Icons.favorite_border,
-                                color: isFav ? Colors.red : AppColors.black,
+                                color: isFav ? AppColors.red : AppColors.black,
                               ),
                             ),
                           );
@@ -375,7 +375,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
@@ -415,7 +415,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        color: Colors.white,
+        color: AppColors.white,
         child: Image.asset(
           imagePath,
           width: 70,

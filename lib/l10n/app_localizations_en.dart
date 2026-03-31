@@ -54,6 +54,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInToAccount => 'Sign in to your account';
 
   @override
+  String get accountCreated =>
+      'Account created successfully, please login to continue';
+
+  @override
+  String get iAgree => 'I agree to';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get policyPoint1 => 'We store your name and email';
+
+  @override
+  String get policyPoint2 => 'We use data to improve your experience';
+
+  @override
+  String get policyPoint3 => 'We do NOT share your data';
+
+  @override
   String get email => 'Email';
 
   @override
@@ -61,6 +83,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emailExample => 'example@gmail.com';
+
+  @override
+  String get invalidEmailOrPassword => 'Email or password incorrect';
 
   @override
   String get forgotPassword => 'Forgot Password?';
@@ -300,6 +325,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile => 'Profile';
+
+  @override
+  String get changeLanguage => 'Change Language';
+
+  @override
+  String get fullNameMinLength => 'Name must be at least 3 characters';
 
   @override
   String get venue => 'Venue:';

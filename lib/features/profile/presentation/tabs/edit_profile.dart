@@ -149,7 +149,7 @@ class _EditProfileState extends State<EditProfile> {
                     mycontroller: username,
                     validator: (val) {
                       if (val != null && val.isNotEmpty && val.length < 3) {
-                        return "Name too short";
+                        return l10n.fullNameMinLength;
                       }
                       return null;
                     },

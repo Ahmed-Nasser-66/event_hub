@@ -67,7 +67,7 @@ class NearbyEventCard extends StatelessWidget {
                       ),
                       child: Icon(
                         isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorite ? Colors.red : AppColors.secondary,
+                        color: isFavorite ? AppColors.red : AppColors.secondary,
                         size: 18,
                       ),
                     ),

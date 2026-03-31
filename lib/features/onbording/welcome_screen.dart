@@ -87,7 +87,7 @@ class WelcomeScreen extends StatelessWidget {
                     Navigator.of(context).pushReplacementNamed("signup");
                   },
                 ),
-
+                const SizedBox(height: 12),
                 Center(
                   child: AnimatedToggleSwitch<String>.rolling(
                     current: languageProvider.appLanguage,
@@ -100,7 +100,7 @@ class WelcomeScreen extends StatelessWidget {
                       languageProvider.changeLanguage(newVal);
                     },
                     style: const ToggleStyle(
-                      backgroundColor: Colors.white10,
+                      backgroundColor: AppColors.white10,
                       borderColor: AppColors.orange,
                       indicatorColor: AppColors.orange,
                     ),

@@ -20,11 +20,20 @@
   "signup": "Sign up",
   "loginNow": "Log in Now",
   "signInToAccount": "Sign in to your account",
+  "accountCreated": "Account created successfully, please login to continue",
+
+  "iAgree": "I agree to",
+  "privacyPolicy": "Privacy Policy",
+  "close": "Close",
+  
+  "policyPoint1": "We store your name and email",
+  "policyPoint2": "We use data to improve your experience",
+  "policyPoint3": "We do NOT share your data",
 
   "email": "Email",
   "password": "Password",
   "emailExample": "example@gmail.com",
-
+  "invalidEmailOrPassword": "Email or password incorrect",
   "forgotPassword": "Forgot Password?",
   "orLoginWith": "Or log in with",
 
@@ -121,6 +130,9 @@
   "history": "History",
   "tickets": "Tickets",
   "bookingCode": "Booking Code",
+  
+  "changeLanguage": "Change Language",
+"fullNameMinLength": "Name must be at least 3 characters",
 "venue": "Venue:",
   "section": "Section:",
   "row": "Row:",
