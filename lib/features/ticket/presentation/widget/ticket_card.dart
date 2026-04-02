@@ -153,7 +153,10 @@ class TicketCard extends StatelessWidget {
                     Clipboard.setData(ClipboardData(text: bookingId));
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Booking code copied")),
+                      SnackBar(
+                        content: Text(l10n.bookingIdCopied),
+                        backgroundColor: AppColors.green,
+                      ),
                     );
                   },
                   child: const Icon(Icons.copy, size: 16),

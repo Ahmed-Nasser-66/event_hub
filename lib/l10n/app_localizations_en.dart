@@ -129,6 +129,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetPassword => 'Reset password';
 
   @override
+  String get enterFullCode => 'Please enter the full code';
+
+  @override
+  String get invalidOtp => 'Invalid OTP';
+
+  @override
+  String get otpResentSuccess => 'OTP resent successfully';
+
+  @override
+  String get otpResendFailed => 'Failed to resend OTP';
+
+  @override
   String get signupNow => 'Sign up Now';
 
   @override
@@ -358,6 +370,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloadTicket => 'Download Ticket';
+
+  @override
+  String get ticketSavedToGallery => 'Ticket saved to gallery';
+
+  @override
+  String get bookingIdCopied => 'Booking ID copied';
 
   @override
   String get timeLabel => 'Time:';

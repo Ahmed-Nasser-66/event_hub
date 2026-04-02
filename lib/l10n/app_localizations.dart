@@ -326,6 +326,30 @@ abstract class AppLocalizations {
   /// **'Reset password'**
   String get resetPassword;
 
+  /// No description provided for @enterFullCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the full code'**
+  String get enterFullCode;
+
+  /// No description provided for @invalidOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid OTP'**
+  String get invalidOtp;
+
+  /// No description provided for @otpResentSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP resent successfully'**
+  String get otpResentSuccess;
+
+  /// No description provided for @otpResendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to resend OTP'**
+  String get otpResendFailed;
+
   /// No description provided for @signupNow.
   ///
   /// In en, this message translates to:
@@ -763,6 +787,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download Ticket'**
   String get downloadTicket;
+
+  /// No description provided for @ticketSavedToGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket saved to gallery'**
+  String get ticketSavedToGallery;
+
+  /// No description provided for @bookingIdCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking ID copied'**
+  String get bookingIdCopied;
 
   /// No description provided for @timeLabel.
   ///

@@ -129,6 +129,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get resetPassword => 'إعادة تعيين كلمة المرور';
 
   @override
+  String get enterFullCode => 'من فضلك أدخل الكود بالكامل';
+
+  @override
+  String get invalidOtp => 'رمز التحقق غير صحيح';
+
+  @override
+  String get otpResentSuccess => 'تم إعادة إرسال رمز التحقق بنجاح';
+
+  @override
+  String get otpResendFailed => 'فشل في إعادة إرسال رمز التحقق';
+
+  @override
   String get signupNow => 'أنشئ حساب الآن';
 
   @override
@@ -358,6 +370,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get downloadTicket => 'تحميل التذكرة';
+
+  @override
+  String get ticketSavedToGallery => 'تم حفظ التذكرة في المعرض';
+
+  @override
+  String get bookingIdCopied => 'تم نسخ رقم الحجز';
 
   @override
   String get timeLabel => 'الوقت:';

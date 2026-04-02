@@ -48,6 +48,10 @@
   "newPassword": "كلمة المرور الجديدة",
   "confirmPassword": "تأكيد كلمة المرور",
   "resetPassword": "إعادة تعيين كلمة المرور",
+  "enterFullCode": "من فضلك أدخل الكود بالكامل",
+  "invalidOtp": "رمز التحقق غير صحيح",
+    "otpResentSuccess": "تم إعادة إرسال رمز التحقق بنجاح",
+  "otpResendFailed": "فشل في إعادة إرسال رمز التحقق",
 
   "signupNow": "أنشئ حساب الآن",
   "createAccount": "إنشاء حساب",
@@ -142,6 +146,8 @@
   "numberOfTickets": "عدد التذاكر:",
   "bookingId": "رقم الحجز:",
   "downloadTicket": "تحميل التذكرة",
+  "ticketSavedToGallery": "تم حفظ التذكرة في المعرض",
+  "bookingIdCopied": "تم نسخ رقم الحجز",
   
   "downloadTicket": "تحميل التذكرة",
   "bookingId": "رقم الحجز",

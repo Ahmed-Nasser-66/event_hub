@@ -49,6 +49,10 @@
   "newPassword": "New password",
   "confirmPassword": "Confirm password",
   "resetPassword": "Reset password",
+  "enterFullCode": "Please enter the full code",
+  "invalidOtp": "Invalid OTP",
+    "otpResentSuccess": "OTP resent successfully",
+  "otpResendFailed": "Failed to resend OTP",
 
   "signupNow": "Sign up Now",
   "createAccount": "Create account",
@@ -142,6 +146,8 @@
   "numberOfTickets": "Number of tickets:",
   "bookingId": "Booking ID:",
   "downloadTicket": "Download Ticket",
+  "ticketSavedToGallery": "Ticket saved to gallery",
+  "bookingIdCopied": "Booking ID copied",
 
 
   "downloadTicket": "Download Ticket",

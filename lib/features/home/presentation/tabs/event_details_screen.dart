@@ -22,7 +22,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
-  double totalPrice = widget.event.price * ticketCount;
+    double totalPrice = widget.event.price * ticketCount;
 
     final lightGreyColor = AppColors.cardGrey.withValues(alpha: 0.5);
 
