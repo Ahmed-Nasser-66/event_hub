@@ -42,7 +42,8 @@
   "codeSentTo": "تم إرسال الرمز إلى",
   "didNotReceiveCode": "لم تستلم الرمز؟",
   "resendCode": "إعادة إرسال الرمز",
-
+  "passwordUpdatedSuccessfully": "تم تحديث كلمة المرور بنجاح",
+  "invalidName": "يجب أن يحتوي الاسم على حروف فقط",
   "createNewPassword": "إنشاء كلمة مرور جديدة",
   "createStrongPasswordDescription": "أنشئ كلمة مرور قوية لحماية حسابك.",
   "newPassword": "كلمة المرور الجديدة",

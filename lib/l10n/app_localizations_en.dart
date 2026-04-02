@@ -113,6 +113,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resendCode => 'Resend Code';
 
   @override
+  String get passwordUpdatedSuccessfully => 'Password updated successfully';
+
+  @override
+  String get invalidName => 'Name can only contain letters';
+
+  @override
   String get createNewPassword => 'Create new password';
 
   @override

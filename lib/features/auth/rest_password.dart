@@ -3,7 +3,9 @@ import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RestPassword extends StatefulWidget {
   const RestPassword({super.key});
@@ -143,7 +145,16 @@ class _RestPasswordState extends State<RestPassword> {
                 color: AppColors.orange,
                 onPressed: () {
                   if (formState.currentState!.validate()) {
-                    Navigator.of(context).pushReplacementNamed("login");
+                    context.read<UserProvider>().updatePassword(password.text);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.passwordUpdatedSuccessfully),
+                        backgroundColor: AppColors.green,
+                      ),
+                    );
+
+                    Navigator.of(context).pop("login");
                   }
                 },
               ),

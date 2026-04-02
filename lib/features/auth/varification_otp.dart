@@ -164,6 +164,7 @@ class _VarificationOtpState extends State<VarificationOtp> {
               CustomButtonAuth(
                 title: l10n.goToResetPassword,
                 color: AppColors.orange,
+
                 onPressed: isLoading
                     ? null
                     : () async {

@@ -43,7 +43,8 @@
   "codeSentTo": "We have sent code to",
   "didNotReceiveCode": "Didn’t receive a code?",
   "resendCode": "Resend Code",
-
+  "passwordUpdatedSuccessfully": "Password updated successfully",
+  "invalidName": "Name can only contain letters",
   "createNewPassword": "Create new password",
   "createStrongPasswordDescription": "Create a strong password to secure your account.",
   "newPassword": "New password",

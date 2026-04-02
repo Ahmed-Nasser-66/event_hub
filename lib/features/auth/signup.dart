@@ -88,11 +88,18 @@ class _SignupState extends State<Signup> {
                     hinttext: l10n.enterFullName,
                     mycontroller: username,
                     validator: (val) {
+                      final value = val?.trim() ?? "";
+
                       if (val == null || val.isEmpty) {
                         return l10n.enterFullName;
                       }
                       if (val.length < 3) {
                         return l10n.fullNameMinLength;
+                      }
+                      if (!RegExp(
+                        r'^[a-zA-Z\u0600-\u06FF\s]+$',
+                      ).hasMatch(value)) {
+                        return l10n.invalidName;
                       }
                       return null;
                     },

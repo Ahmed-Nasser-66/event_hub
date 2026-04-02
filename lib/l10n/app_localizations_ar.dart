@@ -113,6 +113,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get resendCode => 'إعادة إرسال الرمز';
 
   @override
+  String get passwordUpdatedSuccessfully => 'تم تحديث كلمة المرور بنجاح';
+
+  @override
+  String get invalidName => 'يجب أن يحتوي الاسم على حروف فقط';
+
+  @override
   String get createNewPassword => 'إنشاء كلمة مرور جديدة';
 
   @override

@@ -19,6 +19,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updatePassword(String newPassword) {
+    _password = newPassword;
+    notifyListeners();
+  }
+
   bool login(String email, String password) {
     return _email == email && _password == password;
   }

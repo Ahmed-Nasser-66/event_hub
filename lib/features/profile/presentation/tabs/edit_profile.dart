@@ -148,8 +148,15 @@ class _EditProfileState extends State<EditProfile> {
                     hinttext: l10n.fullName,
                     mycontroller: username,
                     validator: (val) {
+                      final value = val?.trim() ?? "";
+
                       if (val != null && val.isNotEmpty && val.length < 3) {
                         return l10n.fullNameMinLength;
+                      }
+                      if (!RegExp(
+                        r'^[a-zA-Z\u0600-\u06FF\s]+$',
+                      ).hasMatch(value)) {
+                        return l10n.invalidName;
                       }
                       return null;
                     },
