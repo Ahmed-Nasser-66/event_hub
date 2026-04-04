@@ -5,7 +5,7 @@ import 'package:event_hub/features/auth/rest_password.dart';
 import 'package:event_hub/features/auth/signup.dart';
 import 'package:event_hub/features/auth/varification_otp.dart';
 import 'package:event_hub/features/home/presentation/home_page.dart';
-import 'package:event_hub/features/home/presentation/tabs/notification_screen.dart';
+import 'package:event_hub/features/home/presentation/notification/notification_screen.dart';
 import 'package:event_hub/features/profile/profile_tab.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
@@ -14,6 +14,7 @@ import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/app_language_provider.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
+import 'package:event_hub/providers/map_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),
+        ChangeNotifierProvider(create: (_) => MapProvider()..initializeMap()),
       ],
       child: MyApp(),
     ),

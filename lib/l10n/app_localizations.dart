@@ -63,7 +63,7 @@ import 'app_localizations_en.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -86,16 +86,16 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
-    Locale('en'),
+    Locale('en')
   ];
 
   /// No description provided for @welcomeMessage.
@@ -791,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingId.
   ///
   /// In en, this message translates to:
-  /// **'Booking ID'**
+  /// **'Booking ID:'**
   String get bookingId;
 
   /// No description provided for @downloadTicket.
@@ -1037,13 +1037,13 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyText.
   ///
   /// In en, this message translates to:
-  /// **'This is the privacy policy of EventHub. We value your privacy and are committed to protecting your personal information. We collect and use your data in accordance with this policy. By using our app, you agree to the terms outlined in this privacy policy.\n\nTerms and Conditions\n\nBy using this application, you agree to the following terms and conditions:\n\n1. Use of the Application\nYou agree to use the application only for lawful purposes and not to misuse any of its services or content.\n\n2. Privacy Policy\nWe respect users\' privacy and may collect certain information such as name, email address, or phone number to improve user experience.\n\n3. Data Protection\nWe are committed to protecting user data and will not share personal information with third parties without user consent.\n\n4. User Responsibility\nUsers are responsible for the accuracy of the information they provide within the application.\n\n5. Modifications\nWe reserve the right to modify these terms and conditions at any time. Continued use of the application indicates acceptance of any changes.\n\nIf you have any questions, please contact us via email.'**
+  /// **'This is the privacy policy of EventHub...'**
   String get privacyPolicyText;
 
   /// No description provided for @languageDescription.
   ///
   /// In en, this message translates to:
-  /// **'This is the language settings page. Here you can select your preferred language for the EventHub app. We currently support English and Arabic.\nPlease select your language from the options below.'**
+  /// **'This is the language settings page...'**
   String get languageDescription;
 
   /// No description provided for @english.
@@ -1171,6 +1171,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t have an account?'**
   String get noAccount;
+
+  /// No description provided for @selectTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Tickets'**
+  String get selectTickets;
+
+  /// No description provided for @confirmAndBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm & Buy'**
+  String get confirmAndBuy;
+
+  /// No description provided for @noFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'No Favorites yet!'**
+  String get noFavorites;
 }
 
 class _AppLocalizationsDelegate
@@ -1200,9 +1218,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
-  );
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

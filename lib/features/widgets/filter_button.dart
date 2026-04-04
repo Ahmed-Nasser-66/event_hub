@@ -9,58 +9,185 @@ class Filterbutton extends StatelessWidget {
   void _tapSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppColors.white,
-
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-      ),
+      backgroundColor: Colors.transparent, // لجعل الحواف دائرية خلف الحاوية
+      isScrollControlled: true,
       builder: (_) => _buildBottomSheetContent(context),
     );
   }
 
   Widget _buildBottomSheetContent(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 50,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: AppColors.grey,
-                  borderRadius: BorderRadius.circular(10),
-                ),
+    return Container(
+      margin: const EdgeInsets.all(16), // شيت "طاير" لشكل أفخم
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(35),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(26),
+            blurRadius: 20,
+            offset: const Offset(0, -5),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // مقبض السحب
+          Center(
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.grey.withAlpha(77),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-            const SizedBox(height: 20),
-            const Text(
-              "Sort & Filter",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
+          ),
+          const SizedBox(height: 30),
 
-            ListTile(
-              leading: const Icon(Icons.sort_by_alpha, color: AppColors.orange),
-              title: const Text("Price: Low to High"),
-              onTap: () {
-                context.read<EventProvider>().sortByPriceLowToHigh();
-                Navigator.pop(context);
-              },
+          const Center(
+            child: Text(
+              "Refine Events",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: AppColors.secondary,
+                letterSpacing: 1.2,
+              ),
             ),
+          ),
+          const SizedBox(height: 35),
 
-            ListTile(
-              leading: const Icon(Icons.refresh, color: AppColors.secondary),
-              title: const Text("Reset to Default"),
-              onTap: () {
+          // 1. خيار الترتيب الذكي (التعديل الجديد)
+          _buildLuxuryOption(
+            context,
+            icon: Icons.auto_awesome_rounded, // أيقونة توحي بالذكاء/التميز
+            title: "Combining the two",
+            subtitle: "Earliest dates with the lowest prices",
+            onTap: () {
+              context.read<EventProvider>().sortBySmartChoice();
+              Navigator.pop(context);
+            },
+          ),
+
+          // 2. خيار الترتيب بالتاريخ
+          _buildLuxuryOption(
+            context,
+            icon: Icons.calendar_today_rounded,
+            title: "Earliest dates",
+            subtitle: "See events happening soonest",
+            onTap: () {
+              context.read<EventProvider>().sortByDate();
+              Navigator.pop(context);
+            },
+          ),
+
+          // 3. خيار الترتيب بالسعر
+          _buildLuxuryOption(
+            context,
+            icon: Icons.confirmation_number_outlined,
+            title: "Lowest prices",
+            subtitle: "Sort by price from lowest to highest",
+            onTap: () {
+              context.read<EventProvider>().sortByPriceLowToHigh();
+              Navigator.pop(context);
+            },
+          ),
+
+          const SizedBox(height: 15),
+          const Divider(color: AppColors.grey, thickness: 0.5),
+          const SizedBox(height: 15),
+
+          // زر إعادة الضبط
+          Center(
+            child: TextButton.icon(
+              onPressed: () {
                 context.read<EventProvider>().resetSort();
                 Navigator.pop(context);
               },
+              icon: const Icon(Icons.refresh_rounded,
+                  color: AppColors.secondary, size: 20),
+              label: const Text(
+                "Reset to Default",
+                style: TextStyle(
+                    color: AppColors.secondary, fontWeight: FontWeight.w600),
+              ),
             ),
-          ],
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLuxuryOption(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(25),
+        child: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: AppColors.grey.withAlpha(51), width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(5),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.orange.withAlpha(26),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: AppColors.orange, size: 24),
+              ),
+              const SizedBox(width: 18),
+              Expanded(
+                // أضفنا Expanded لضمان عدم حدوث Overflow في النصوص الطويلة
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style:
+                          TextStyle(fontSize: 13, color: Colors.grey.shade500),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.arrow_forward_ios_rounded,
+                  size: 14, color: Colors.grey.shade400),
+            ],
+          ),
         ),
       ),
     );
@@ -68,18 +195,28 @@ class Filterbutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 45,
-      height: 45,
-      child: MaterialButton(
-        elevation: 0,
-        color: AppColors.white,
-        shape: const CircleBorder(),
-        onPressed: () => _tapSheet(context),
-        child: Transform.translate(
-          offset: const Offset(-1, 0),
-          child: Center(
-            child: const Icon(Icons.tune, size: 22, color: AppColors.black),
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black
+                .withAlpha(30), // قللت الـ Alpha ليكون الظل واقعي أكثر
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Material(
+          color: Colors.white,
+          child: InkWell(
+            onTap: () => _tapSheet(context),
+            child: const SizedBox(
+              width: 48,
+              height: 48,
+              child: Icon(Icons.tune_rounded, color: AppColors.black, size: 22),
+            ),
           ),
         ),
       ),

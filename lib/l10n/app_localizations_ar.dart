@@ -182,7 +182,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingConfirmedDescription =>
-      'تم تأكيد الحجز! يمكنك الآن العثور على تذاكرك في قسم التذاكر.';
+      'تم تأكيد الحجز! يمكنك الآن العثور على تذاكرك في قسم التذاكر';
 
   @override
   String get oneHourAgo => 'منذ ساعة';
@@ -304,7 +304,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get eventReminderDescription =>
-      'حفلتك تبدأ خلال ساعتين في استاد المدينة! جهّز تذاكرك.';
+      'Your concert starts in 2 hours at City Stadium! Get your tickets ready.';
 
   @override
   String get bookingConfirmedTitle => 'تم تأكيد الحجز';
@@ -314,14 +314,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get specialOfferDescription =>
-      'عرض حصري! احصل على خصم 20٪ على حجزك القادم باستخدام الكود: EVENT20';
+      'Exclusive Offer! Get 20% off on your next booking using code : EVENT20';
 
   @override
   String get locationUpdateTitle => 'تحديث الموقع';
 
   @override
   String get locationUpdateDescription =>
-      'تحديث هام: تم نقل ورشة الفن إلى القاعة B';
+      'Important Update: the Art Workshop has been moved to Hall B';
 
   @override
   String get comingSoon => 'قريبًا';
@@ -330,7 +330,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get history => 'السجل';
 
   @override
-  String get bookingCode => 'كود الحجز';
+  String get bookingCode => 'رمز الحجز';
 
   @override
   String get home => 'الرئيسية';
@@ -372,7 +372,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get numberOfTickets => 'عدد التذاكر:';
 
   @override
-  String get bookingId => 'رقم الحجز';
+  String get bookingId => 'رقم الحجز:';
 
   @override
   String get downloadTicket => 'تحميل التذكرة';
@@ -481,14 +481,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get helpSupportDescription =>
-      'نحن هنا لمساعدتك في أي وقت. إذا واجهت أي مشكلة أثناء استخدام تطبيق EventHub أو كان لديك أي أسئلة أو اقتراحات، لا تتردد في التواصل معنا. يلتزم فريق الدعم لدينا بالرد على جميع الاستفسارات في أسرع وقت ممكن لضمان أفضل تجربة لك.\nيمكنك التواصل معنا عبر البريد الإلكتروني:';
+      'نحن هنا لمساعدتك في أي وقت. يلتزم فريق الدعم لدينا بالرد على جميع الاستفسارات في أسرع وقت ممكن لضمان أفضل تجربة لك.\nيمكنك التواصل معنا عبر البريد الإلكتروني:';
 
   @override
   String get settingsTitle => 'الإعدادات';
 
   @override
   String get settingsDescription =>
-      'هذه صفحة الإعدادات. هنا يمكنك تخصيص تجربة استخدامك لتطبيق EventHub من خلال تعديل التفضيلات والخيارات المختلفة. يمكنك تفعيل أو تعطيل الإشعارات وضبط ميزات التطبيق بما يناسب احتياجاتك.';
+      'هذه صفحة الإعدادات. هنا يمكنك تخصيص تجربة استخدامك لتطبيق EventHub.';
 
   @override
   String get enableNotifications => 'تفعيل إشعارات التطبيق';
@@ -498,11 +498,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get privacyPolicyText =>
-      'هذه هي سياسة الخصوصية الخاصة بـ EventHub. نحن نقدر خصوصيتك ونلتزم بحماية معلوماتك الشخصية. نقوم بجمع واستخدام بياناتك وفقًا لهذه السياسة. باستخدامك للتطبيق، فإنك توافق على الشروط الموضحة في سياسة الخصوصية هذه.\n\nالشروط والأحكام\n\nباستخدام هذا التطبيق، فإنك توافق على الشروط والأحكام التالية:\n\n1. استخدام التطبيق\nتوافق على استخدام التطبيق لأغراض قانونية فقط وعدم إساءة استخدام أي من خدماته أو محتواه.\n\n2. سياسة الخصوصية\nنحترم خصوصية المستخدمين وقد نقوم بجمع بعض المعلومات مثل الاسم أو البريد الإلكتروني أو رقم الهاتف لتحسين تجربة المستخدم.\n\n3. حماية البيانات\nنلتزم بحماية بيانات المستخدمين ولن نشارك المعلومات الشخصية مع أي طرف ثالث دون موافقة المستخدم.\n\n4. مسؤولية المستخدم\nيتحمل المستخدمون مسؤولية دقة المعلومات التي يقدمونها داخل التطبيق.\n\n5. التعديلات\nنحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت. استمرارك في استخدام التطبيق يعني موافقتك على أي تغييرات.\n\nإذا كان لديك أي استفسار، يرجى التواصل معنا عبر البريد الإلكتروني.';
+      'هذه هي سياسة الخصوصية الخاصة بـ EventHub. نحن نقدر خصوصيتك ونلتزم بحماية معلوماتك الشخصية...';
 
   @override
   String get languageDescription =>
-      'هذه صفحة إعدادات اللغة. هنا يمكنك اختيار لغتك المفضلة لتطبيق EventHub. نحن ندعم حاليًا اللغتين العربية والإنجليزية.\nيرجى اختيار لغتك من الخيارات التالية.';
+      'هذه صفحة إعدادات اللغة. هنا يمكنك اختيار لغتك المفضلة لتطبيق EventHub.';
 
   @override
   String get english => 'الإنجليزية';
@@ -566,4 +566,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get selectTickets => 'اختر عدد التذاكر';
+
+  @override
+  String get confirmAndBuy => 'تأكيد وشراء';
+
+  @override
+  String get noFavorites => 'لا توجد مفضلات بعد!';
 }

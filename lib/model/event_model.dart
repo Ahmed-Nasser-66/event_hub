@@ -1,11 +1,12 @@
 class EventModel {
   final String title;
   final String location;
-  final String datetime;
+  final DateTime datetime; 
   final double price;
   final String imagepath;
   final String category;
   bool isFavorite;
+
   EventModel({
     required this.title,
     required this.location,

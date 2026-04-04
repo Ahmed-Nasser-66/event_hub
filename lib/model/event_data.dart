@@ -2,11 +2,12 @@ import 'package:event_hub/model/event_model.dart';
 
 class EventRepository {
   static final List<EventModel> allEvents = [
+    
     EventModel(
       title: "Pro Gaming Tournament",
       location: "Cairo Tower, Egypt",
-      datetime: "10 June, 2026",
-      price: 20, 
+      datetime: DateTime(2026, 6, 10), 
+      price: 20,
       imagepath: 'assets/image/gaming1.jpg',
       category: "Gaming",
       isFavorite: false,
@@ -14,7 +15,7 @@ class EventRepository {
     EventModel(
       title: "Mobile Legends Cup",
       location: "Alexandria Stadium",
-      datetime: "12 June, 2026",
+      datetime: DateTime(2026, 6, 12),
       price: 15,
       imagepath: 'assets/image/gaming2.jpg',
       category: "Gaming",
@@ -23,17 +24,18 @@ class EventRepository {
     EventModel(
       title: "E-Sports Masterclass",
       location: "Online (Global)",
-      datetime: "15 June, 2026",
+      datetime: DateTime(2026, 6, 15),
       price: 0,
       imagepath: 'assets/image/gaming3.jpg',
       category: "Gaming",
       isFavorite: false,
     ),
 
+    
     EventModel(
       title: "Flutter Dev Meetup",
       location: "Alex, Egypt",
-      datetime: "15 July, 2026",
+      datetime: DateTime(2026, 7, 15),
       price: 50,
       imagepath: 'assets/image/tech1.jpg',
       category: "Tech",
@@ -42,7 +44,7 @@ class EventRepository {
     EventModel(
       title: "AI & Future Summit",
       location: "Smart Village, Giza",
-      datetime: "18 July, 2026",
+      datetime: DateTime(2026, 7, 18),
       price: 100,
       imagepath: 'assets/image/tech2.jpg',
       category: "Tech",
@@ -51,17 +53,18 @@ class EventRepository {
     EventModel(
       title: "Hackathon Cairo 2026",
       location: "AUC Campus, Egypt",
-      datetime: "25 July, 2026",
+      datetime: DateTime(2026, 7, 25),
       price: 10,
       imagepath: 'assets/image/tech3.jpg',
       category: "Tech",
       isFavorite: false,
     ),
 
+    
     EventModel(
       title: "Startup Weekend",
       location: "Downtown Cairo",
-      datetime: "01 Aug, 2026",
+      datetime: DateTime(2026, 8, 1),
       price: 40,
       imagepath: 'assets/image/business1.jpg',
       category: "Business",
@@ -70,7 +73,7 @@ class EventRepository {
     EventModel(
       title: "Investing 101 Workshop",
       location: "The Greek Campus",
-      datetime: "05 Aug, 2026",
+      datetime: DateTime(2026, 8, 5),
       price: 25,
       imagepath: 'assets/image/business2.jpg',
       category: "Business",
@@ -79,17 +82,18 @@ class EventRepository {
     EventModel(
       title: "Global Trade Forum",
       location: "Sheraton Hotel, Cairo",
-      datetime: "10 Aug, 2026",
+      datetime: DateTime(2026, 8, 10),
       price: 200,
       imagepath: 'assets/image/business3.jpg',
       category: "Business",
       isFavorite: false,
     ),
 
+    
     EventModel(
       title: "Study Abroad Fair",
       location: "El Shorouk Academy",
-      datetime: "12 Sept, 2026",
+      datetime: DateTime(2026, 9, 12),
       price: 0,
       imagepath: 'assets/image/education1.jpg',
       category: "Education",
@@ -98,7 +102,7 @@ class EventRepository {
     EventModel(
       title: "Data Science Bootcamp",
       location: "Online",
-      datetime: "20 Sept, 2026",
+      datetime: DateTime(2026, 9, 20),
       price: 80,
       imagepath: 'assets/image/education2.jpg',
       category: "Education",
@@ -107,17 +111,18 @@ class EventRepository {
     EventModel(
       title: "Creative Writing Class",
       location: "Maadi Library",
-      datetime: "25 Sept, 2026",
+      datetime: DateTime(2026, 9, 25),
       price: 15,
       imagepath: 'assets/image/education3.jpg',
       category: "Education",
       isFavorite: false,
     ),
 
+    
     EventModel(
       title: "Abstract Art Expo",
       location: "Giza, Egypt",
-      datetime: "20 Oct, 2026",
+      datetime: DateTime(2026, 10, 20),
       price: 30,
       imagepath: 'assets/image/arts1.jpg',
       category: "Arts",
@@ -126,7 +131,7 @@ class EventRepository {
     EventModel(
       title: "Classical Music Night",
       location: "Opera House, Cairo",
-      datetime: "25 Oct, 2026",
+      datetime: DateTime(2026, 10, 25),
       price: 60,
       imagepath: 'assets/image/arts2.jpg',
       category: "Arts",
@@ -135,17 +140,18 @@ class EventRepository {
     EventModel(
       title: "Photography Workshop",
       location: "Old Cairo",
-      datetime: "30 Oct, 2026",
+      datetime: DateTime(2026, 10, 30),
       price: 20,
       imagepath: 'assets/image/arts3.jpg',
       category: "Arts",
       isFavorite: false,
     ),
 
+    
     EventModel(
       title: "Cairo Half Marathon",
       location: "Zamalek, Egypt",
-      datetime: "05 Nov, 2026",
+      datetime: DateTime(2026, 11, 5),
       price: 10,
       imagepath: 'assets/image/sports1.jpg',
       category: "Sports",
@@ -154,7 +160,7 @@ class EventRepository {
     EventModel(
       title: "Yoga Morning Session",
       location: "Al-Azhar Park",
-      datetime: "10 Nov, 2026",
+      datetime: DateTime(2026, 11, 10),
       price: 5,
       imagepath: 'assets/image/sports2.jpg',
       category: "Sports",
@@ -163,27 +169,27 @@ class EventRepository {
     EventModel(
       title: "Tennis Open Championship",
       location: "Sporting Club, Alex",
-      datetime: "15 Nov, 2026",
+      datetime: DateTime(2026, 11, 15),
       price: 45,
       imagepath: 'assets/image/sports3.jpg',
       category: "Sports",
       isFavorite: false,
     ),
 
+    
     EventModel(
       title: "Summer Collection 2026",
       location: "Cairo Festival City",
-      datetime: "01 June, 2026",
+      datetime: DateTime(2026, 6, 1),
       price: 35,
       imagepath: 'assets/image/fashion1.jpg',
       category: "Fashion",
       isFavorite: false,
     ),
-
     EventModel(
       title: "Model Runway Show",
       location: "Marriott Hotel",
-      datetime: "15 June, 2026",
+      datetime: DateTime(2026, 6, 15),
       price: 120,
       imagepath: 'assets/image/fashion2.jpg',
       category: "Fashion",

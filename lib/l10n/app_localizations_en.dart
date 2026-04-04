@@ -372,7 +372,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get numberOfTickets => 'Number of tickets:';
 
   @override
-  String get bookingId => 'Booking ID';
+  String get bookingId => 'Booking ID:';
 
   @override
   String get downloadTicket => 'Download Ticket';
@@ -498,12 +498,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicyTitle => 'Privacy Policy';
 
   @override
-  String get privacyPolicyText =>
-      'This is the privacy policy of EventHub. We value your privacy and are committed to protecting your personal information. We collect and use your data in accordance with this policy. By using our app, you agree to the terms outlined in this privacy policy.\n\nTerms and Conditions\n\nBy using this application, you agree to the following terms and conditions:\n\n1. Use of the Application\nYou agree to use the application only for lawful purposes and not to misuse any of its services or content.\n\n2. Privacy Policy\nWe respect users\' privacy and may collect certain information such as name, email address, or phone number to improve user experience.\n\n3. Data Protection\nWe are committed to protecting user data and will not share personal information with third parties without user consent.\n\n4. User Responsibility\nUsers are responsible for the accuracy of the information they provide within the application.\n\n5. Modifications\nWe reserve the right to modify these terms and conditions at any time. Continued use of the application indicates acceptance of any changes.\n\nIf you have any questions, please contact us via email.';
+  String get privacyPolicyText => 'This is the privacy policy of EventHub...';
 
   @override
-  String get languageDescription =>
-      'This is the language settings page. Here you can select your preferred language for the EventHub app. We currently support English and Arabic.\nPlease select your language from the options below.';
+  String get languageDescription => 'This is the language settings page...';
 
   @override
   String get english => 'English';
@@ -567,4 +565,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noAccount => 'Don\'t have an account?';
+
+  @override
+  String get selectTickets => 'Select Tickets';
+
+  @override
+  String get confirmAndBuy => 'Confirm & Buy';
+
+  @override
+  String get noFavorites => 'No Favorites yet!';
 }

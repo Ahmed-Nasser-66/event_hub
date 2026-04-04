@@ -1,9 +1,10 @@
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart';
 
 class UpcomingEventCard extends StatelessWidget {
   final EventModel event;
@@ -14,6 +15,7 @@ class UpcomingEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final favoriteProvider = context.watch<FavoriteProvider>();
     final bool isFavorite = favoriteProvider.isExist(event);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -55,7 +57,6 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Positioned(
                   top: 20,
                   right: 20,
@@ -102,7 +103,6 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-
                   Text(
                     event.title,
                     style: const TextStyle(
@@ -112,7 +112,6 @@ class UpcomingEventCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
-
                   Row(
                     children: [
                       const Icon(
@@ -121,7 +120,6 @@ class UpcomingEventCard extends StatelessWidget {
                         color: AppColors.secondary,
                       ),
                       const SizedBox(width: 4),
-
                       Expanded(
                         child: Text(
                           event.location,
@@ -132,18 +130,15 @@ class UpcomingEventCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-
                       const SizedBox(width: 6),
-
                       const Icon(
                         Icons.access_time,
                         size: 14,
                         color: AppColors.secondary,
                       ),
                       const SizedBox(width: 4),
-
                       Text(
-                        event.datetime,
+                        DateFormat('dd MMM, yyyy').format(event.datetime),
                         style: const TextStyle(
                           color: AppColors.secondary,
                           fontSize: 12,
@@ -152,11 +147,11 @@ class UpcomingEventCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "\$${event.price}",
+                      // 🔥 تم تغيير العملة هنا من $ إلى EGP
+                      "${event.price.toStringAsFixed(0)} EGP",
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

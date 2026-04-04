@@ -1,7 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
-import 'package:event_hub/features/home/presentation/tabs/location.dart';
 import 'package:event_hub/features/home/presentation/tabs/nearby_events_screen.dart';
-import 'package:event_hub/features/home/presentation/tabs/notification_screen.dart';
+import 'package:event_hub/features/home/presentation/notification/notification_screen.dart';
+import 'package:event_hub/features/home/presentation/location/location_screen.dart';
 import 'package:event_hub/features/widgets/category.dart';
 import 'package:event_hub/features/widgets/filter_button.dart';
 import 'package:event_hub/features/widgets/nearby_event_card.dart';
@@ -73,7 +73,7 @@ class _HomeTabState extends State<HomeTab> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Location(),
+                                  builder: (context) => const LocationScreen(),
                                 ),
                               );
                             },

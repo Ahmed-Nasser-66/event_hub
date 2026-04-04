@@ -1,9 +1,9 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/nearby_event_card.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
-import 'package:event_hub/providers/favorite_provider.dart'; 
+import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
 
 class FavoriteTab extends StatelessWidget {
   const FavoriteTab({super.key});
@@ -16,7 +16,7 @@ class FavoriteTab extends StatelessWidget {
     final favoriteList = favoriteProvider.favoriteEvents;
 
     return Scaffold(
-      backgroundColor: AppColors.grey,
+      backgroundColor: AppColors.grey, 
       appBar: AppBar(
         backgroundColor: AppColors.grey,
         elevation: 0,
@@ -24,7 +24,7 @@ class FavoriteTab extends StatelessWidget {
         title: Text(
           locale.favoriteEvents,
           style: const TextStyle(
-            color: AppColors.black,
+            color: AppColors.black, 
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
@@ -40,12 +40,16 @@ class FavoriteTab extends StatelessWidget {
                     const Icon(
                       Icons.favorite_border,
                       size: 80,
-                      color: AppColors.grey,
+                      color: AppColors
+                          .cardGrey, 
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "No Favorites yet!", 
-                      style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                      locale.noFavorites, 
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: AppColors.lightGrey, 
+                      ),
                     ),
                   ],
                 ),

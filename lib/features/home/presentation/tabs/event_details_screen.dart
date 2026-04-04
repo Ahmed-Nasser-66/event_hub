@@ -5,6 +5,7 @@ import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EventDetailsScreen extends StatefulWidget {
@@ -24,7 +25,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     final locale = AppLocalizations.of(context)!;
     double totalPrice = widget.event.price * ticketCount;
 
-    final lightGreyColor = AppColors.cardGrey.withValues(alpha: 0.5);
+    final lightGreyColor =
+        AppColors.cardGrey.withAlpha(128); 
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -42,7 +44,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       height: MediaQuery.of(context).size.height * 0.35,
                       fit: BoxFit.cover,
                     ),
-
                     Positioned(
                       top: 40,
                       left: 20,
@@ -58,7 +59,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         ),
                       ),
                     ),
-
                     Positioned(
                       top: 40,
                       right: 20,
@@ -71,9 +71,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               favProvider.toggleFavorite(widget.event);
                             },
                             child: CircleAvatar(
-                              backgroundColor: AppColors.white.withValues(
-                                alpha: 0.9,
-                              ),
+                              backgroundColor: AppColors.white.withAlpha(230),
                               child: Icon(
                                 isFav ? Icons.favorite : Icons.favorite_border,
                                 color: isFav ? AppColors.red : AppColors.black,
@@ -85,9 +83,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 12),
-
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
@@ -122,6 +118,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            color: AppColors.black,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -149,7 +146,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              widget.event.datetime,
+                              DateFormat('dd MMM, yyyy')
+                                  .format(widget.event.datetime),
                               style: const TextStyle(color: AppColors.black),
                             ),
                           ],
@@ -160,6 +158,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
+                            color: AppColors.black,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -174,16 +173,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    'Speakers',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    locale.speakers, 
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
-
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   padding: const EdgeInsets.all(15),
@@ -194,25 +193,25 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   child: Column(
                     children: [
                       buildSpeakerCard(
-                        "Omar Tarek",
-                        "Science",
+                        context,
+                        locale.omarTarek, 
+                        locale.science, 
                         AppAssets.speaker,
                       ),
                       const SizedBox(height: 15),
-                      buildSpeakerCard("Majd", "Science", AppAssets.speaker1),
+                      buildSpeakerCard(
+                          context, "Majd", locale.science, AppAssets.speaker1),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Text(
-                    'Sponsors',
+                    'Sponsors', 
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
-
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   padding: const EdgeInsets.all(15),
@@ -241,14 +240,13 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ],
       ),
-
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.5),
+              color: AppColors.black.withAlpha(128),
               blurRadius: 10,
               spreadRadius: 2,
             ),
@@ -257,26 +255,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         child: Row(
           children: [
             Text(
-              "\$${totalPrice.toStringAsFixed(2)}",
+              "${totalPrice.toStringAsFixed(2)} EGP", 
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
                 color: AppColors.secondary,
               ),
             ),
-
             const SizedBox(width: 10),
-
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // العداد
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 1,
-                      vertical: 1,
-                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.orange),
                       borderRadius: BorderRadius.circular(12),
@@ -297,7 +288,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             color: AppColors.secondary,
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 3),
                           child: Text(
@@ -309,7 +299,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             ),
                           ),
                         ),
-
                         IconButton(
                           constraints: const BoxConstraints(),
                           padding: EdgeInsets.zero,
@@ -325,37 +314,34 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(width: 10),
-
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
                         context.read<TicketProvider>().addTicketFromEvent(
-                          widget.event,
-                          ticketCount,
-                        );
+                              widget.event,
+                              ticketCount,
+                            );
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("Booked $ticketCount tickets"),
+                            content: Text("${locale.bookNow} $ticketCount"),
+                            backgroundColor: AppColors.green,
                           ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.orange, // 🔥 اللون الصح
-                        foregroundColor: AppColors.secondary, // لون النص
+                        backgroundColor: AppColors.orange,
+                        foregroundColor: AppColors.secondary,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            16,
-                          ), // نفس الديزاين
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      child: const Text(
-                        "Book Now",
-                        style: TextStyle(
+                      child: Text(
+                        locale.bookNow,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -371,7 +357,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     );
   }
 
-  Widget buildSpeakerCard(String name, String topic, String imagePath) {
+  Widget buildSpeakerCard(
+      BuildContext context, String name, String topic, String imagePath) {
+    final locale = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -393,17 +381,25 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Speaker Name:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              Text(
+                locale.speakerName, 
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    color: AppColors.black),
               ),
-              Text(name, style: const TextStyle(fontSize: 13)),
+              Text(name,
+                  style: const TextStyle(fontSize: 13, color: AppColors.black)),
               const SizedBox(height: 5),
-              const Text(
-                "Topic:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              Text(
+                locale.topic, 
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    color: AppColors.black),
               ),
-              Text(topic, style: const TextStyle(fontSize: 13)),
+              Text(topic,
+                  style: const TextStyle(fontSize: 13, color: AppColors.black)),
             ],
           ),
         ],

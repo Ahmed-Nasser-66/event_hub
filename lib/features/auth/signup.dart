@@ -4,10 +4,10 @@ import 'package:event_hub/features/widgets/custom_logo_auth.dart';
 import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/user_provider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/gestures.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -51,7 +51,6 @@ class _SignupState extends State<Signup> {
                   const SizedBox(height: 50),
                   const CustomLogoAuth(),
                   const SizedBox(height: 20),
-
                   Text(
                     l10n.signupNow,
                     style: const TextStyle(
@@ -60,9 +59,7 @@ class _SignupState extends State<Signup> {
                       color: AppColors.secondary,
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
                     l10n.createAccount,
                     style: const TextStyle(
@@ -71,9 +68,7 @@ class _SignupState extends State<Signup> {
                       color: AppColors.secondary,
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   Text(
                     l10n.fullName,
                     style: const TextStyle(
@@ -81,9 +76,7 @@ class _SignupState extends State<Signup> {
                       fontSize: 14,
                     ),
                   ),
-
                   const SizedBox(height: 5),
-
                   CustomTextForm(
                     hinttext: l10n.enterFullName,
                     mycontroller: username,
@@ -104,9 +97,7 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
                     l10n.email,
                     style: const TextStyle(
@@ -114,9 +105,7 @@ class _SignupState extends State<Signup> {
                       fontSize: 14,
                     ),
                   ),
-
                   const SizedBox(height: 5),
-
                   CustomTextForm(
                     hinttext: l10n.emailExample,
                     mycontroller: email,
@@ -134,9 +123,7 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
                     l10n.password,
                     style: const TextStyle(
@@ -144,9 +131,7 @@ class _SignupState extends State<Signup> {
                       fontSize: 14,
                     ),
                   ),
-
                   const SizedBox(height: 5),
-
                   CustomTextForm(
                     hinttext: l10n.enterPassword,
                     mycontroller: pass,
@@ -170,9 +155,7 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
                     l10n.confirmPassword,
                     style: const TextStyle(
@@ -180,9 +163,7 @@ class _SignupState extends State<Signup> {
                       fontSize: 14,
                     ),
                   ),
-
                   const SizedBox(height: 5),
-
                   CustomTextForm(
                     hinttext: l10n.confirmPassword,
                     mycontroller: confirmpass,
@@ -202,7 +183,6 @@ class _SignupState extends State<Signup> {
                 ],
               ),
             ),
-
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               activeColor: AppColors.orange,
@@ -297,9 +277,7 @@ class _SignupState extends State<Signup> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
             CustomButtonAuth(
               title: l10n.signUpButton,
               color: AppColors.orange,
@@ -313,10 +291,11 @@ class _SignupState extends State<Signup> {
 
                 if (formState.currentState!.validate()) {
                   context.read<UserProvider>().registerUser(
-                    username.text,
-                    email.text,
-                    pass.text,
-                  );
+                        username.text,
+                        email.text,
+                        pass.text,
+                        confirmpass.text,
+                      );
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -335,9 +314,7 @@ class _SignupState extends State<Signup> {
                 }
               },
             ),
-
             const SizedBox(height: 20),
-
             InkWell(
               onTap: () {
                 Navigator.of(context).pushReplacementNamed("login");
@@ -360,14 +337,12 @@ class _SignupState extends State<Signup> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
             Row(
               children: [
                 const Expanded(
                   child: Divider(color: AppColors.black, thickness: 1),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
@@ -379,7 +354,6 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                 ),
-
                 const Expanded(
                   child: Divider(color: AppColors.black, thickness: 1),
                 ),

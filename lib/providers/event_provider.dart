@@ -8,9 +8,12 @@ class EventProvider extends ChangeNotifier {
 
   
   bool _isSortedByPrice = false;
+  bool _isSortedByDate = false;
+  bool _isSortedBySmartChoice = false;
 
   String get selectedCategory => _selectedCategory;
 
+  
   List<EventModel> get filteredEvents {
     
     final eventsByCategory = EventRepository.allEvents.where((event) {
@@ -18,42 +21,64 @@ class EventProvider extends ChangeNotifier {
     }).toList();
 
     
-    final startMatches = eventsByCategory
-        .where(
-          (event) =>
-              event.title.toLowerCase().startsWith(_searchQuery.toLowerCase()),
-        )
-        .toList();
+    final filteredBySearch = eventsByCategory.where((event) {
+      return event.title.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
 
     
-    final containsMatches = eventsByCategory
-        .where(
-          (event) =>
-              event.title.toLowerCase().contains(_searchQuery.toLowerCase()) &&
-              !event.title.toLowerCase().startsWith(_searchQuery.toLowerCase()),
-        )
-        .toList();
+    List<EventModel> result = List.from(filteredBySearch);
 
     
-    List<EventModel> result = [...startMatches, ...containsMatches];
+    if (_isSortedBySmartChoice) {
+      
+      result.sort((a, b) {
+        
+        int dateComparison = a.datetime.compareTo(b.datetime);
 
-    
-    if (_isSortedByPrice) {
+        
+        if (dateComparison == 0) {
+          return a.price.compareTo(b.price);
+        }
+        return dateComparison;
+      });
+    } else if (_isSortedByPrice) {
+      
       result.sort((a, b) => a.price.compareTo(b.price));
+    } else if (_isSortedByDate) {
+      
+      result.sort((a, b) => a.datetime.compareTo(b.datetime));
     }
 
     return result;
   }
 
   
-  void sortByPriceLowToHigh() {
-    _isSortedByPrice = true;
-    notifyListeners(); 
+
+  void sortBySmartChoice() {
+    _isSortedBySmartChoice = true;
+    _isSortedByPrice = false;
+    _isSortedByDate = false;
+    notifyListeners();
   }
 
-  
+  void sortByPriceLowToHigh() {
+    _isSortedByPrice = true;
+    _isSortedByDate = false;
+    _isSortedBySmartChoice = false;
+    notifyListeners();
+  }
+
+  void sortByDate() {
+    _isSortedByDate = true;
+    _isSortedByPrice = false;
+    _isSortedBySmartChoice = false;
+    notifyListeners();
+  }
+
   void resetSort() {
     _isSortedByPrice = false;
+    _isSortedByDate = false;
+    _isSortedBySmartChoice = false;
     notifyListeners();
   }
 

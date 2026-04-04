@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
   File? get image => _image;
   String get password => _password;
 
-  void registerUser(String name, String email, String password) {
+  void registerUser(String name, String email, String password, String text) {
     _name = name;
     _email = email;
     _password = password;

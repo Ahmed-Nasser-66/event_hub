@@ -3,6 +3,7 @@ import 'package:event_hub/features/home/presentation/tabs/event_details_screen.d
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class NearbyEventCard extends StatelessWidget {
@@ -13,7 +14,6 @@ class NearbyEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = context.read<FavoriteProvider>();
-
     final bool isFavorite = context.watch<FavoriteProvider>().isExist(event);
 
     return GestureDetector(
@@ -33,7 +33,7 @@ class NearbyEventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.5),
+              color: AppColors.black.withValues(alpha: 0.1),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -105,6 +105,8 @@ class NearbyEventCard extends StatelessWidget {
                       fontSize: 16,
                       color: AppColors.black,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -137,7 +139,7 @@ class NearbyEventCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        event.datetime,
+                        DateFormat('dd MMM, yyyy').format(event.datetime),
                         style: const TextStyle(
                           color: AppColors.secondary,
                           fontSize: 11,
@@ -149,10 +151,12 @@ class NearbyEventCard extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "\$${event.price}",
+                      // 🔥 تم تغيير العملة هنا من $ إلى EGP
+                      "${event.price.toStringAsFixed(0)} EGP",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.orange,
+                        fontSize: 14,
                       ),
                     ),
                   ),

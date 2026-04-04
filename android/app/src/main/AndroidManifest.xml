@@ -2,14 +2,18 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:label="event_hub"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         
-        <meta-data android:name="com.google.android.geo.API_KEY"
-                   android:value="AIzaSyB6I-Ihm3ZECwMbenyXlwcItvDopMGhApM"/>
+        <meta-data 
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCshuD8p6PtQTf3XnzZx9G_c_roMNPnwmY"/>
 
         <activity
             android:name=".MainActivity"
