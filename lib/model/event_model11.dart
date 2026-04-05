@@ -8,7 +8,7 @@ class Event11 {
   final double longitude;
   final String? imageUrl;
 
-  final String date;
+  final DateTime date;
   final String time;
   final int price;
 
@@ -27,8 +27,7 @@ class Event11 {
   });
 
   static List<Event11> egyptEvents11 = [
-    
-    const Event11(
+    Event11(
       id: 'c1',
       title: 'Cairo Tech Summit',
       description: 'Tech conference',
@@ -36,11 +35,11 @@ class Event11 {
       latitude: 30.0444,
       longitude: 31.2357,
       category: 'Technology',
-      date: '15 May 2026',
+      date: DateTime(2026, 1, 15),
       time: '10:00 AM',
       price: 300,
     ),
-    const Event11(
+    Event11(
       id: 'c2',
       title: 'Opera House Ballet',
       description: 'Classical dance',
@@ -48,11 +47,11 @@ class Event11 {
       latitude: 30.0425,
       longitude: 31.2242,
       category: 'Art',
-      date: '20 May 2026',
+      date: DateTime(2026, 2, 15),
       time: '7:00 PM',
       price: 250,
     ),
-    const Event11(
+    Event11(
       id: 'c3',
       title: 'Zamalek Art Gallery',
       description: 'Modern art',
@@ -60,11 +59,11 @@ class Event11 {
       latitude: 30.0595,
       longitude: 31.2220,
       category: 'Art',
-      date: '22 May 2026',
+      date: DateTime(2026, 8, 22),
       time: '5:00 PM',
       price: 150,
     ),
-    const Event11(
+    Event11(
       id: 'c4',
       title: 'Maadi Food Festival',
       description: 'International cuisines',
@@ -72,11 +71,11 @@ class Event11 {
       latitude: 29.9602,
       longitude: 31.2569,
       category: 'Food',
-      date: '25 May 2026',
+      date: DateTime(2026, 9, 25),
       time: '3:00 PM',
       price: 120,
     ),
-    const Event11(
+    Event11(
       id: 'c5',
       title: 'Al-Azhar Park Concert',
       description: 'Live music show',
@@ -84,13 +83,11 @@ class Event11 {
       latitude: 30.0406,
       longitude: 31.2647,
       category: 'Music',
-      date: '28 May 2026',
+      date: DateTime(2026, 5, 28),
       time: '8:00 PM',
       price: 200,
     ),
-
-    
-    const Event11(
+    Event11(
       id: 'g1',
       title: 'Pyramids Marathon',
       description: 'Annual run',
@@ -98,11 +95,11 @@ class Event11 {
       latitude: 29.9792,
       longitude: 31.1342,
       category: 'Sports',
-      date: '10 June 2026',
+      date: DateTime(2026, 6, 10),
       time: '6:00 AM',
       price: 100,
     ),
-    const Event11(
+    Event11(
       id: 'g2',
       title: 'Sound and Light Show',
       description: 'History show',
@@ -110,11 +107,11 @@ class Event11 {
       latitude: 29.9753,
       longitude: 31.1376,
       category: 'Culture',
-      date: '12 June 2026',
+      date: DateTime(2026, 6, 12),
       time: '7:30 PM',
       price: 180,
     ),
-    const Event11(
+    Event11(
       id: 'g3',
       title: 'Giza Zoo Tour',
       description: 'Family outing',
@@ -122,11 +119,11 @@ class Event11 {
       latitude: 30.0217,
       longitude: 31.2131,
       category: 'Family',
-      date: '15 June 2026',
+      date: DateTime(2026, 10, 15),
       time: '11:00 AM',
       price: 80,
     ),
-    const Event11(
+    Event11(
       id: 'g4',
       title: 'Grand Museum Opening',
       description: 'History exhibition',
@@ -134,11 +131,11 @@ class Event11 {
       latitude: 29.9949,
       longitude: 31.1189,
       category: 'Culture',
-      date: '18 June 2026',
+      date: DateTime(2026, 12, 18),
       time: '9:00 AM',
       price: 220,
     ),
-    const Event11(
+    Event11(
       id: 'g5',
       title: 'Smart Village Meetup',
       description: 'Startups gathering',
@@ -146,13 +143,11 @@ class Event11 {
       latitude: 30.0766,
       longitude: 31.0183,
       category: 'Business',
-      date: '20 June 2026',
+      date: DateTime(2026, 3, 20),
       time: '6:00 PM',
       price: 250,
     ),
-
-    
-    const Event11(
+    Event11(
       id: 'a1',
       title: 'Alex Music Festival',
       description: 'Beach music',
@@ -160,11 +155,11 @@ class Event11 {
       latitude: 31.2001,
       longitude: 29.9187,
       category: 'Music',
-      date: '1 July 2026',
+      date: DateTime(2026, 4, 1),
       time: '8:00 PM',
       price: 200,
     ),
-    const Event11(
+    Event11(
       id: 'a2',
       title: 'Bibliotheca Exhibition',
       description: 'Book fair',
@@ -172,11 +167,11 @@ class Event11 {
       latitude: 31.2089,
       longitude: 29.9092,
       category: 'Education',
-      date: '3 July 2026',
+      date: DateTime(2026, 7, 19),
       time: '10:00 AM',
       price: 120,
     ),
-    const Event11(
+    Event11(
       id: 'a3',
       title: 'Citadel Night',
       description: 'Historical tour',
@@ -184,11 +179,11 @@ class Event11 {
       latitude: 31.2140,
       longitude: 29.8856,
       category: 'History',
-      date: '5 July 2026',
+      date: DateTime(2026, 7, 8),
       time: '7:00 PM',
       price: 150,
     ),
-    const Event11(
+    Event11(
       id: 'a4',
       title: 'Stanley Bridge Run',
       description: 'Morning run',
@@ -196,11 +191,11 @@ class Event11 {
       latitude: 31.2338,
       longitude: 29.9482,
       category: 'Sports',
-      date: '7 July 2026',
+      date: DateTime(2026, 11, 28),
       time: '6:30 AM',
       price: 90,
     ),
-    const Event11(
+    Event11(
       id: 'a5',
       title: 'Seafood Festival',
       description: 'Fresh catch event',
@@ -208,13 +203,11 @@ class Event11 {
       latitude: 31.2118,
       longitude: 29.8920,
       category: 'Food',
-      date: '10 July 2026',
+      date: DateTime(2026, 3, 14),
       time: '4:00 PM',
       price: 130,
     ),
-
-    
-    const Event11(
+    Event11(
       id: 's1',
       title: 'Industrial Innovation',
       description: 'Factory expo',
@@ -222,11 +215,11 @@ class Event11 {
       latitude: 30.2970,
       longitude: 31.7505,
       category: 'Business',
-      date: '15 July 2026',
+      date: DateTime(2026, 10, 17),
       time: '11:00 AM',
       price: 200,
     ),
-    const Event11(
+    Event11(
       id: 's2',
       title: 'Sharqia Horses Festival',
       description: 'Traditional horses',
@@ -234,7 +227,7 @@ class Event11 {
       latitude: 30.5877,
       longitude: 31.5020,
       category: 'Culture',
-      date: '18 July 2026',
+      date: DateTime(2026, 8, 18),
       time: '5:00 PM',
       price: 100,
     ),

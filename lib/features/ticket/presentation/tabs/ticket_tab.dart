@@ -37,7 +37,6 @@ class _TicketTabState extends State<TicketTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
-
                     Row(
                       children: [
                         Expanded(
@@ -49,12 +48,10 @@ class _TicketTabState extends State<TicketTab> {
                             },
                           ),
                         ),
-
                         const SizedBox(width: 10),
                       ],
                     ),
                     const SizedBox(height: 15),
-
                     Container(
                       height: 45,
                       decoration: BoxDecoration(
@@ -69,11 +66,9 @@ class _TicketTabState extends State<TicketTab> {
                         ),
                         labelColor: AppColors.secondary,
                         unselectedLabelColor: AppColors.lightGrey,
-
                         onTap: (index) {
                           context.read<TicketProvider>().changeTab(index);
                         },
-
                         tabs: [
                           Tab(text: l10n.comingSoon),
                           Tab(text: l10n.history),
@@ -81,7 +76,6 @@ class _TicketTabState extends State<TicketTab> {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     Consumer<TicketProvider>(
                       builder: (context, provider, child) {
                         final events = provider.selectedTab == 0
@@ -113,6 +107,7 @@ class _TicketTabState extends State<TicketTab> {
                             return TicketCard(
                               title: event.title,
                               date: event.date,
+                              time: event.time,
                               location: event.location,
                               price: event.price,
                               tickets: event.ticketsCount.toString(),

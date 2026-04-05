@@ -21,21 +21,6 @@ class TicketProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _generateRandomTime() {
-    final random = Random();
-
-    int hour = random.nextInt(11) + 9;
-    int minute = random.nextBool() ? 0 : 30;
-
-    String period = hour >= 12 ? "PM" : "AM";
-
-    int displayHour = hour > 12 ? hour - 12 : hour;
-
-    String minuteString = minute == 0 ? "00" : "30";
-
-    return "$displayHour:$minuteString $period";
-  }
-
   final List<TicketModel> _tickets = [];
 
   void addTicketFromEvent(EventModel event, int count) {
@@ -72,7 +57,7 @@ class TicketProvider extends ChangeNotifier {
         image: event.imagepath,
         section: (random.nextInt(20) + 1).toString(),
         row: (random.nextInt(15) + 1).toString(),
-        time: _generateRandomTime(),
+        time: event.time,
         ticketsCount: count,
         price: "\$${(event.price * count).toStringAsFixed(2)}",
       );
@@ -84,7 +69,10 @@ class TicketProvider extends ChangeNotifier {
   }
 
   List<TicketModel> get comingSoonEvents {
-    final upcoming = _tickets.where((e) => e.isUpcoming).toList();
+    final upcoming = _tickets.where((event) {
+      DateTime date = DateTime.parse(event.date);
+      return date.isAfter(DateTime.now());
+    }).toList();
 
     // 🔥 ترتيب الأحداث: الأقرب تاريخاً يظهر أولاً
     upcoming.sort((a, b) {
@@ -112,8 +100,10 @@ class TicketProvider extends ChangeNotifier {
   }
 
   List<TicketModel> get historyEvents {
-    final history = _tickets.where((e) => !e.isUpcoming).toList();
-
+    final history = _tickets.where((event) {
+      DateTime date = DateTime.parse(event.date);
+      return date.isBefore(DateTime.now());
+    }).toList();
     // ترتيب السجل: الأحدث تاريخاً يظهر أولاً (عكس القادم)
     history.sort((a, b) {
       DateTime dateA = DateTime.tryParse(a.date) ?? DateTime.now();

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -20,6 +21,10 @@ class TicketDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    DateTime parsedDate = DateTime.parse(ticket.date);
+
+    String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
+
     return Screenshot(
       controller: screenshotController,
       child: Scaffold(
@@ -58,7 +63,6 @@ class TicketDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 15),
-
                       Expanded(
                         child: Text(
                           ticket.title,
@@ -73,9 +77,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 20),
-
                   Text(
                     l10n.venue,
                     style: TextStyle(
@@ -84,9 +86,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       color: AppColors.secondary,
                     ),
                   ),
-
                   const SizedBox(height: 4),
-
                   Text(
                     ticket.location,
                     style: const TextStyle(
@@ -96,7 +96,6 @@ class TicketDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-
                   Row(
                     children: [
                       Expanded(
@@ -124,9 +123,7 @@ class TicketDetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       SizedBox(width: 50),
-
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,9 +151,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 15),
-
                   Row(
                     children: [
                       Expanded(
@@ -173,7 +168,7 @@ class TicketDetailsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              ticket.date,
+                              formattedDate,
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
@@ -184,9 +179,7 @@ class TicketDetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       SizedBox(width: 50),
-
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +208,6 @@ class TicketDetailsScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 15),
-
                   Row(
                     children: [
                       Expanded(
@@ -230,9 +222,7 @@ class TicketDetailsScreen extends StatelessWidget {
                                 color: AppColors.secondary,
                               ),
                             ),
-
                             const SizedBox(height: 4),
-
                             Text(
                               "${ticket.ticketsCount}",
                               style: TextStyle(
@@ -245,9 +235,7 @@ class TicketDetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       SizedBox(width: 50),
-
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,9 +263,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 15),
-
                   Row(
                     children: [
                       Text(
@@ -289,7 +275,6 @@ class TicketDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-
                       GestureDetector(
                         onTap: () {
                           Clipboard.setData(
@@ -307,9 +292,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 4),
-
                   Text(
                     ticket.bookingId,
                     style: TextStyle(
@@ -318,16 +301,14 @@ class TicketDetailsScreen extends StatelessWidget {
                       color: AppColors.black,
                     ),
                   ),
-
                   const SizedBox(height: 10),
                   const Divider(),
                   const SizedBox(height: 10),
                   Center(
                     child: QrImageView(
-                      data:
-                          '''{
+                      data: '''{
                         "title": "${ticket.title}",
-                        "date": "${ticket.date}",
+                        "date": "$formattedDate",
                         "time": "${ticket.time}",
                         "location": "${ticket.location}",
                         "price": "${ticket.price}",
@@ -342,9 +323,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       version: QrVersions.auto,
                     ),
                   ),
-
                   const SizedBox(height: 15),
-
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -378,9 +357,8 @@ class TicketDetailsScreen extends StatelessWidget {
 
                           if (!context.mounted) return;
 
-                          final boundary =
-                              ticketKey.currentContext!.findRenderObject()
-                                  as RenderRepaintBoundary;
+                          final boundary = ticketKey.currentContext!
+                              .findRenderObject() as RenderRepaintBoundary;
 
                           final image = await boundary.toImage(pixelRatio: 3);
 

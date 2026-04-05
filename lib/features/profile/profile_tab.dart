@@ -37,13 +37,9 @@ class ProfileTab extends StatelessWidget {
                     color: AppColors.secondary,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 ProfileHeader(name: user.name, email: user.email),
-
                 const SizedBox(height: 10),
-
                 ProfileOptionItem(
                   title: l10n.settings,
                   icon: Icons.settings_outlined,
@@ -54,7 +50,6 @@ class ProfileTab extends StatelessWidget {
                     );
                   },
                 ),
-
                 ProfileOptionItem(
                   title: l10n.language,
                   icon: Icons.language_outlined,
@@ -70,7 +65,6 @@ class ProfileTab extends StatelessWidget {
                     );
                   },
                 ),
-
                 ProfileOptionItem(
                   title: l10n.helpSupport,
                   icon: Icons.headset_mic_outlined,
@@ -81,7 +75,6 @@ class ProfileTab extends StatelessWidget {
                     );
                   },
                 ),
-
                 ProfileOptionItem(
                   title: l10n.termsPrivacy,
                   icon: Icons.description_outlined,
@@ -95,9 +88,7 @@ class ProfileTab extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 20),
-
           Padding(
             padding: const EdgeInsets.all(10),
             child: Center(

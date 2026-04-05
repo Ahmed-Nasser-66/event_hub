@@ -304,7 +304,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get eventReminderDescription =>
-      'Your concert starts in 2 hours at City Stadium! Get your tickets ready.';
+      'سيبدأ الحفل بعد ساعتين في ملعب المدينة! جهّز تذاكرك.';
 
   @override
   String get bookingConfirmedTitle => 'تم تأكيد الحجز';
@@ -314,14 +314,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get specialOfferDescription =>
-      'Exclusive Offer! Get 20% off on your next booking using code : EVENT20';
+      'عرض حصري! احصل على خصم 20٪ على حجزك القادم باستخدام الكود: EVENT20';
 
   @override
   String get locationUpdateTitle => 'تحديث الموقع';
 
   @override
   String get locationUpdateDescription =>
-      'Important Update: the Art Workshop has been moved to Hall B';
+      'تحديث مهم: تم نقل ورشة الفن إلى القاعة B';
 
   @override
   String get comingSoon => 'قريبًا';
@@ -498,7 +498,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get privacyPolicyText =>
-      'هذه هي سياسة الخصوصية الخاصة بـ EventHub. نحن نقدر خصوصيتك ونلتزم بحماية معلوماتك الشخصية...';
+      'هذه هي سياسة الخصوصية الخاصة بتطبيق EventHub. نحن نُقدّر خصوصيتك ونلتزم بحماية معلوماتك الشخصية. نقوم بجمع واستخدام بياناتك وفقًا لهذه السياسة. باستخدامك للتطبيق، فإنك توافق على الشروط الموضحة في سياسة الخصوصية هذه.\n\nالشروط والأحكام\n\nباستخدامك لهذا التطبيق، فإنك توافق على الشروط والأحكام التالية:\n\n1. استخدام التطبيق\nتوافق على استخدام التطبيق لأغراض قانونية فقط وعدم إساءة استخدام أي من خدماته أو محتواه.\n\n2. سياسة الخصوصية\nنحن نحترم خصوصية المستخدمين وقد نقوم بجمع بعض المعلومات مثل الاسم أو البريد الإلكتروني أو رقم الهاتف لتحسين تجربة المستخدم.\n\n3. حماية البيانات\nنحن ملتزمون بحماية بيانات المستخدمين ولن نقوم بمشاركة المعلومات الشخصية مع أي طرف ثالث دون موافقة المستخدم.\n\n4. مسؤولية المستخدم\nالمستخدمون مسؤولون عن دقة المعلومات التي يقومون بإدخالها داخل التطبيق.\n\n5. التعديلات\nنحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت. استمرار استخدام التطبيق يعني الموافقة على أي تغييرات يتم إجراؤها.\n\nإذا كان لديك أي استفسارات، يرجى التواصل معنا عبر البريد الإلكتروني.';
 
   @override
   String get languageDescription =>

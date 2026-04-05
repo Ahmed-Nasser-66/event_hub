@@ -2,10 +2,12 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class TicketCard extends StatelessWidget {
   final String title;
   final String date;
+  final String time;
   final String location;
   final String price;
   final String tickets;
@@ -23,11 +25,15 @@ class TicketCard extends StatelessWidget {
     required this.image,
     required this.onTap,
     required this.bookingId,
+    required this.time,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    DateTime parsedDate = DateTime.parse(date);
+
+    String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
 
     return GestureDetector(
       onTap: onTap,
@@ -50,9 +56,7 @@ class TicketCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               title,
               style: TextStyle(
@@ -61,9 +65,7 @@ class TicketCard extends StatelessWidget {
                 color: AppColors.black,
               ),
             ),
-
             const SizedBox(height: 5),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -71,10 +73,17 @@ class TicketCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      date,
+                      formattedDate,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        color: AppColors.lightGrey,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      time,
+                      style: const TextStyle(
+                        fontSize: 14,
                         color: AppColors.lightGrey,
                       ),
                     ),
@@ -83,13 +92,11 @@ class TicketCard extends StatelessWidget {
                       location,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
                         color: AppColors.lightGrey,
                       ),
                     ),
                   ],
                 ),
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -111,7 +118,6 @@ class TicketCard extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 10),
                     Text(
                       price,
@@ -125,9 +131,7 @@ class TicketCard extends StatelessWidget {
                 ),
               ],
             ),
-
             const Divider(height: 24),
-
             Row(
               children: [
                 Text(

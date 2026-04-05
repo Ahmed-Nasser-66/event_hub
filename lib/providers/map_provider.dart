@@ -45,13 +45,26 @@ class MapProvider extends ChangeNotifier {
     if (query.isEmpty) {
       searchResults = [];
     } else {
-      searchResults = Event11.egyptEvents11.where((e) {
-        final lowerQuery = query.toLowerCase();
-        return e.title.toLowerCase().contains(lowerQuery) ||
-            e.category.toLowerCase().contains(lowerQuery) ||
-            e.city.toLowerCase().contains(lowerQuery);
+      final lowerQuery = query.toLowerCase();
+
+      final startMatches = Event11.egyptEvents11.where((e) {
+        return e.title.toLowerCase().startsWith(lowerQuery) ||
+            e.category.toLowerCase().startsWith(lowerQuery) ||
+            e.city.toLowerCase().startsWith(lowerQuery);
       }).toList();
+
+      final containsMatches = Event11.egyptEvents11.where((e) {
+        return (e.title.toLowerCase().contains(lowerQuery) ||
+                e.category.toLowerCase().contains(lowerQuery) ||
+                e.city.toLowerCase().contains(lowerQuery)) &&
+            !(e.title.toLowerCase().startsWith(lowerQuery) ||
+                e.category.toLowerCase().startsWith(lowerQuery) ||
+                e.city.toLowerCase().startsWith(lowerQuery));
+      }).toList();
+
+      searchResults = [...startMatches, ...containsMatches];
     }
+
     notifyListeners();
   }
 

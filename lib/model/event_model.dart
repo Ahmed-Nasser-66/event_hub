@@ -1,10 +1,12 @@
 class EventModel {
   final String title;
   final String location;
-  final DateTime datetime; 
+  final DateTime datetime;
   final double price;
   final String imagepath;
+  final String time;
   final String category;
+
   bool isFavorite;
 
   EventModel({
@@ -15,5 +17,6 @@ class EventModel {
     required this.imagepath,
     required this.category,
     this.isFavorite = false,
+    required this.time,
   });
 }
