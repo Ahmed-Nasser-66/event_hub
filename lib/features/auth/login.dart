@@ -47,7 +47,6 @@ class _LoginState extends State<Login> {
                 children: [
                   const CustomLogoAuth(),
                   const SizedBox(height: 20),
-
                   Text(
                     l10n.loginNow,
                     style: const TextStyle(
@@ -56,9 +55,7 @@ class _LoginState extends State<Login> {
                       color: AppColors.secondary,
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
                     l10n.signInToAccount,
                     style: const TextStyle(
@@ -67,9 +64,7 @@ class _LoginState extends State<Login> {
                       color: AppColors.secondary,
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   Text(
                     l10n.email,
                     style: const TextStyle(
@@ -78,9 +73,7 @@ class _LoginState extends State<Login> {
                       color: AppColors.black,
                     ),
                   ),
-
                   const SizedBox(height: 5),
-
                   CustomTextForm(
                     hinttext: l10n.emailExample,
                     mycontroller: email,
@@ -98,9 +91,7 @@ class _LoginState extends State<Login> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
-
                   Text(
                     l10n.password,
                     style: const TextStyle(
@@ -109,9 +100,7 @@ class _LoginState extends State<Login> {
                       color: AppColors.black,
                     ),
                   ),
-
                   const SizedBox(height: 5),
-
                   CustomTextForm(
                     hinttext: l10n.enterPassword,
                     mycontroller: pass,
@@ -135,9 +124,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-
             const SizedBox(height: 10),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -157,18 +144,16 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ),
-
             const SizedBox(height: 20),
-
             CustomButtonAuth(
               title: l10n.login,
               color: AppColors.orange,
               onPressed: () {
                 if (formState.currentState!.validate()) {
                   bool success = context.read<UserProvider>().login(
-                    email.text,
-                    pass.text,
-                  );
+                        email.text,
+                        pass.text,
+                      );
                   if (success) {
                     Navigator.of(context).pushReplacementNamed("homepage");
                   } else {
@@ -188,9 +173,7 @@ class _LoginState extends State<Login> {
                 }
               },
             ),
-
             const SizedBox(height: 20),
-
             InkWell(
               onTap: () {
                 Navigator.of(context).pushReplacementNamed("signup");
@@ -213,15 +196,12 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-
             const SizedBox(height: 50),
-
             Row(
               children: [
                 const Expanded(
                   child: Divider(color: AppColors.black, thickness: 1),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
@@ -233,33 +213,43 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-
                 const Expanded(
                   child: Divider(color: AppColors.black, thickness: 1),
                 ),
               ],
             ),
-
             const SizedBox(height: 60),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  "assets/icon/google.svg",
-                  width: 50,
-                  height: 50,
+                GestureDetector(
+                  onTap: () {},
+                  child: SvgPicture.asset(
+                    "assets/icon/google.svg",
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
                 const SizedBox(width: 20),
-                SvgPicture.asset(
-                  "assets/icon/facebook.svg",
-                  width: 50,
-                  height: 50,
+                GestureDetector(
+                  onTap: () {},
+                  child: SvgPicture.asset(
+                    "assets/icon/facebook.svg",
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
                 const SizedBox(width: 12),
-                SvgPicture.asset("assets/icon/x.svg", width: 50, height: 50),
+                GestureDetector(
+                  onTap: () {},
+                  child: SvgPicture.asset(
+                    "assets/icon/x.svg",
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
               ],
-            ),
+            )
           ],
         ),
       ),

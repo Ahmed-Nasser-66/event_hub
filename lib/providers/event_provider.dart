@@ -36,7 +36,7 @@ class EventProvider extends ChangeNotifier {
 
     if (_isSortedBySmartChoice) {
       result.sort((a, b) {
-        int dateComparison = a.datetime.compareTo(b.datetime);
+        int dateComparison = a.date.compareTo(b.date);
 
         if (dateComparison == 0) {
           return a.price.compareTo(b.price);
@@ -46,7 +46,7 @@ class EventProvider extends ChangeNotifier {
     } else if (_isSortedByPrice) {
       result.sort((a, b) => a.price.compareTo(b.price));
     } else if (_isSortedByDate) {
-      result.sort((a, b) => a.datetime.compareTo(b.datetime));
+      result.sort((a, b) => a.date.compareTo(b.date));
     }
 
     return result;

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/model/ticket_model.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class TicketProvider extends ChangeNotifier {
     int index = _tickets.indexWhere((t) => t.title == event.title);
 
     // بنحول الـ DateTime لنص بصيغة ISO عشان نعرف نعمله Parse بسهولة وقت الترتيب
-    String dateString = event.datetime.toIso8601String();
+    String dateString = event.date.toIso8601String();
 
     if (index != -1) {
       _tickets[index] = TicketModel(
@@ -37,7 +36,7 @@ class TicketProvider extends ChangeNotifier {
         isUpcoming: true,
         bookingId: _tickets[index].bookingId,
         location: event.location,
-        image: event.imagepath,
+        image: event.image,
         section: _tickets[index].section,
         row: _tickets[index].row,
         time: _tickets[index].time,
@@ -54,7 +53,7 @@ class TicketProvider extends ChangeNotifier {
         isUpcoming: true,
         bookingId: "${random.nextInt(9000000) + 1000000}",
         location: event.location,
-        image: event.imagepath,
+        image: event.image,
         section: (random.nextInt(20) + 1).toString(),
         row: (random.nextInt(15) + 1).toString(),
         time: event.time,

@@ -50,7 +50,7 @@ class UpcomingEventCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      event.imagepath,
+                      event.image,
                       height: 130,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -138,7 +138,7 @@ class UpcomingEventCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('dd MMM, yyyy').format(event.datetime),
+                        DateFormat('dd MMM, yyyy').format(event.date),
                         style: const TextStyle(
                           color: AppColors.secondary,
                           fontSize: 12,

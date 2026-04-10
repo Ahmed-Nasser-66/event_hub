@@ -1,5 +1,6 @@
 import 'package:event_hub/features/home/presentation/location/location_service.dart';
-import 'package:event_hub/model/event_model11.dart';
+import 'package:event_hub/model/event_data.dart';
+import 'package:event_hub/model/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,54 +13,58 @@ class MapProvider extends ChangeNotifier {
   Set<Marker> markers = {};
   GoogleMapController? controller;
 
-  List<Event11> searchResults = [];
+  List<EventModel> searchResults = [];
   Set<Polyline> polylines = {};
 
-  Event11? selectedEvent;
+  EventModel? selectedEvent;
 
   Future<void> initializeMap() async {
     currentLocation = await _service.getCurrentLocation();
+
     try {
       mapStyle = await rootBundle.loadString('assets/map_style/map_style.json');
     } catch (e) {
       debugPrint("Map style error: $e");
     }
+
     _loadEventsMarkers();
     notifyListeners();
   }
 
+  // ✅ تحميل الـ markers من repository
   void _loadEventsMarkers() {
-    markers = Event11.egyptEvents11
-        .map((event) => Marker(
-              markerId: MarkerId(event.id),
-              position: LatLng(event.latitude, event.longitude),
-              infoWindow: InfoWindow(title: event.title),
-              onTap: () {
-                selectEvent(event);
-              },
-            ))
-        .toSet();
+    markers = EventRepository.allEvents.map((event) {
+      return Marker(
+        markerId: MarkerId(event.id),
+        position: LatLng(event.latitude, event.longitude),
+        infoWindow: InfoWindow(title: event.title),
+        onTap: () {
+          selectEvent(event);
+        },
+      );
+    }).toSet();
   }
 
+  // ✅ Search بعد حذف city
   void searchEvents(String query) {
     if (query.isEmpty) {
       searchResults = [];
     } else {
       final lowerQuery = query.toLowerCase();
 
-      final startMatches = Event11.egyptEvents11.where((e) {
+      final startMatches = EventRepository.allEvents.where((e) {
         return e.title.toLowerCase().startsWith(lowerQuery) ||
             e.category.toLowerCase().startsWith(lowerQuery) ||
-            e.city.toLowerCase().startsWith(lowerQuery);
+            e.location.toLowerCase().startsWith(lowerQuery);
       }).toList();
 
-      final containsMatches = Event11.egyptEvents11.where((e) {
+      final containsMatches = EventRepository.allEvents.where((e) {
         return (e.title.toLowerCase().contains(lowerQuery) ||
                 e.category.toLowerCase().contains(lowerQuery) ||
-                e.city.toLowerCase().contains(lowerQuery)) &&
+                e.location.toLowerCase().contains(lowerQuery)) &&
             !(e.title.toLowerCase().startsWith(lowerQuery) ||
                 e.category.toLowerCase().startsWith(lowerQuery) ||
-                e.city.toLowerCase().startsWith(lowerQuery));
+                e.location.toLowerCase().startsWith(lowerQuery));
       }).toList();
 
       searchResults = [...startMatches, ...containsMatches];
@@ -68,13 +73,18 @@ class MapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectEvent(Event11 event) {
+  void selectEvent(EventModel event) {
     selectedEvent = event;
 
     final destination = LatLng(event.latitude, event.longitude);
 
-    controller?.animateCamera(CameraUpdate.newLatLngZoom(destination, 14));
-    controller?.showMarkerInfoWindow(MarkerId(event.id));
+    controller?.animateCamera(
+      CameraUpdate.newLatLngZoom(destination, 14),
+    );
+
+    controller?.showMarkerInfoWindow(
+      MarkerId(event.id),
+    );
 
     if (currentLocation != null) {
       _drawRoute(currentLocation!, destination);
@@ -86,6 +96,7 @@ class MapProvider extends ChangeNotifier {
 
   void _drawRoute(LatLng start, LatLng end) {
     polylines.clear();
+
     polylines.add(
       Polyline(
         polylineId: const PolylineId("path_to_event"),
@@ -97,12 +108,17 @@ class MapProvider extends ChangeNotifier {
         endCap: Cap.roundCap,
       ),
     );
+
     notifyListeners();
   }
 
   void moveToLocation(LatLng position) {
     selectedEvent = null;
-    controller?.animateCamera(CameraUpdate.newLatLngZoom(position, 15));
+
+    controller?.animateCamera(
+      CameraUpdate.newLatLngZoom(position, 15),
+    );
+
     polylines.clear();
     notifyListeners();
   }

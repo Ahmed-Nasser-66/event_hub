@@ -39,7 +39,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 Stack(
                   children: [
                     Image.asset(
-                      widget.event.imagepath,
+                      widget.event.image,
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.35,
                       fit: BoxFit.cover,
@@ -147,7 +147,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             const SizedBox(width: 5),
                             Text(
                               DateFormat('dd MMM, yyyy')
-                                  .format(widget.event.datetime),
+                                  .format(widget.event.date),
                               style: const TextStyle(color: AppColors.black),
                             ),
                           ],

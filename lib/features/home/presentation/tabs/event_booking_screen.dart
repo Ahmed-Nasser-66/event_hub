@@ -2,14 +2,13 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
-import 'package:event_hub/model/event_model11.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EventBookingScreen extends StatefulWidget {
-  final Event11 event;
+  final EventModel event;
   const EventBookingScreen({super.key, required this.event});
 
   @override
@@ -42,7 +41,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
-                widget.event.imageUrl ?? 'assets/image/sports1.jpg',
+                widget.event.image,
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -81,7 +80,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    widget.event.city,
+                    widget.event.location,
                     style: const TextStyle(color: AppColors.lightGrey),
                   ),
                 ),
@@ -147,21 +146,8 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                  DateTime parsedDate = widget.event.date;
-
-                  final eventForProvider = EventModel(
-                    title: widget.event.title,
-                    location: widget.event.city,
-                    datetime: parsedDate,
-                    price: widget.event.price.toDouble(),
-                    imagepath:
-                        widget.event.imageUrl ?? 'assets/image/sports1.jpg',
-                    category: widget.event.category,
-                    time: '',
-                  );
-
                   Provider.of<TicketProvider>(context, listen: false)
-                      .addTicketFromEvent(eventForProvider, ticketCount);
+                      .addTicketFromEvent(widget.event, ticketCount);
 
                   Navigator.pushReplacement(
                     context,

@@ -46,7 +46,7 @@ class NearbyEventCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.asset(
-                    event.imagepath,
+                    event.image,
                     height: 100,
                     width: 120,
                     fit: BoxFit.cover,
@@ -139,7 +139,7 @@ class NearbyEventCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('dd MMM, yyyy').format(event.datetime),
+                        DateFormat('dd MMM, yyyy').format(event.date),
                         style: const TextStyle(
                           color: AppColors.secondary,
                           fontSize: 11,

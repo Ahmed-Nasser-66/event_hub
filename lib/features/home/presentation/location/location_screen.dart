@@ -1,8 +1,8 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/event_booking_screen.dart';
 import 'package:event_hub/features/widgets/search_bar_widget.dart';
-import 'package:event_hub/l10n/app_localizations.dart'; 
-import 'package:event_hub/model/event_model11.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/model/event_model.dart'; 
 import 'package:event_hub/providers/map_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -30,7 +30,7 @@ class _LocationScreenState extends State<LocationScreen> {
     super.dispose();
   }
 
-  void _showEventDetails(BuildContext context, Event11 event) {
+  void _showEventDetails(BuildContext context, EventModel event) {
     final l10n = AppLocalizations.of(context)!;
 
     showModalBottomSheet(
@@ -83,7 +83,7 @@ class _LocationScreenState extends State<LocationScreen> {
             const SizedBox(height: 5),
 
             Text(
-              "${event.city} • ${event.category}",
+              "${event.location} • ${event.category}",
               style: const TextStyle(
                 color: AppColors.lightGrey, 
                 fontSize: 14,
