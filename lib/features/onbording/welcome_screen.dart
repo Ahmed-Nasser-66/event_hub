@@ -109,9 +109,10 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 50),
 
                 ///        متنساش تمسحو
+
                 CustomButtonAuth(
                   title: l10n.home,
                   color: const Color.fromARGB(255, 248, 207, 0),
@@ -119,6 +120,7 @@ class WelcomeScreen extends StatelessWidget {
                     Navigator.of(context).pushReplacementNamed("homepage");
                   },
                 ),
+
                 //     لحد هنا
               ],
             ),

@@ -15,6 +15,7 @@ import 'package:event_hub/providers/app_language_provider.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/map_provider.dart';
+import 'package:event_hub/providers/notification_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => MapProvider()..initializeMap()),
       ],
       child: MyApp(),

@@ -1,7 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/profile/presentation/tabs/privacy_screen.dart';
-import 'package:event_hub/features/profile/presentation/tabs/settings_screen.dart';
 import 'package:event_hub/features/profile/presentation/widget/change_language.dart';
+import 'package:event_hub/features/profile/presentation/widget/change_notification.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/user_provider.dart';
@@ -40,13 +40,27 @@ class ProfileTab extends StatelessWidget {
                 const SizedBox(height: 10),
                 ProfileHeader(name: user.name, email: user.email),
                 const SizedBox(height: 10),
+                Text(
+                  l10n.settings,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.secondary,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 ProfileOptionItem(
-                  title: l10n.settings,
-                  icon: Icons.settings_outlined,
+                  title: l10n.notifications,
+                  icon: Icons.notifications_none,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25),
+                        ),
+                      ),
+                      builder: (_) => const NotificationSheet(),
                     );
                   },
                 ),
@@ -65,6 +79,16 @@ class ProfileTab extends StatelessWidget {
                     );
                   },
                 ),
+                const SizedBox(height: 10),
+                Text(
+                  l10n.support,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.secondary,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 ProfileOptionItem(
                   title: l10n.helpSupport,
                   icon: Icons.headset_mic_outlined,

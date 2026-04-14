@@ -47,7 +47,6 @@ class _ChangeLanguageSheetState extends State<ChangeLanguageSheet> {
               ],
             ),
             const SizedBox(height: 20),
-
             RadioGroup<String>(
               groupValue: selectedLang,
               onChanged: (value) {
@@ -63,14 +62,12 @@ class _ChangeLanguageSheetState extends State<ChangeLanguageSheet> {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
             ElevatedButton(
               onPressed: () {
                 context.read<AppLanguageProvider>().changeLanguage(
-                  selectedLang,
-                );
+                      selectedLang,
+                    );
 
                 Navigator.pop(context);
               },
@@ -101,7 +98,7 @@ class _ChangeLanguageSheetState extends State<ChangeLanguageSheet> {
         decoration: BoxDecoration(
           color: selectedLang == lang
               ? AppColors.orange.withValues(alpha: 0.1)
-              : AppColors.grey.withValues(alpha: 3),
+              : AppColors.grey.withValues(alpha: 1),
           border: Border.all(
             color: selectedLang == lang
                 ? AppColors.orange
@@ -115,9 +112,8 @@ class _ChangeLanguageSheetState extends State<ChangeLanguageSheet> {
             Text(
               title,
               style: TextStyle(
-                fontWeight: selectedLang == lang
-                    ? FontWeight.bold
-                    : FontWeight.normal,
+                fontWeight:
+                    selectedLang == lang ? FontWeight.bold : FontWeight.normal,
               ),
             ),
             Radio<String>(value: lang, activeColor: AppColors.orange),
