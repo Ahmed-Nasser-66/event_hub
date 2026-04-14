@@ -49,7 +49,9 @@ class _HomeTabState extends State<HomeTab> {
     final events = eventProvider.filteredEvents;
 
     final upcomingEvents = events.take(5).toList();
-    final nearbyEvents = events;
+    final allEvents = events;
+    final nearbyEvents = events.take(5).toList();
+    final allNearbyEvents = events;
     return Scaffold(
       backgroundColor: AppColors.grey,
       body: SafeArea(
@@ -60,7 +62,6 @@ class _HomeTabState extends State<HomeTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -112,9 +113,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 10),
-
                 Row(
                   children: [
                     Expanded(
@@ -129,13 +128,9 @@ class _HomeTabState extends State<HomeTab> {
                     const Filterbutton(),
                   ],
                 ),
-
                 const SizedBox(height: 10),
-
                 const Category(),
-
                 const SizedBox(height: 15),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -148,7 +143,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     TextButton(
                       onPressed: () =>
-                          goToAllEvents(upcomingEvents, locale.upcomingEvents),
+                          goToAllEvents(allEvents, locale.upcomingEvents),
                       child: Text(
                         locale.seeAll,
                         style: const TextStyle(
@@ -160,9 +155,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 10),
-
                 SizedBox(
                   height: 300,
                   child: upcomingEvents.isEmpty
@@ -177,9 +170,7 @@ class _HomeTabState extends State<HomeTab> {
                           },
                         ),
                 ),
-
                 const SizedBox(height: 15),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -192,7 +183,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     TextButton(
                       onPressed: () =>
-                          goToAllEvents(nearbyEvents, locale.nearbyEvents),
+                          goToAllEvents(allNearbyEvents, locale.nearbyEvents),
                       child: Text(
                         locale.seeAll,
                         style: const TextStyle(
@@ -204,9 +195,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 10),
-
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -215,7 +204,6 @@ class _HomeTabState extends State<HomeTab> {
                     return NearbyEventCard(event: nearbyEvents[index]);
                   },
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),

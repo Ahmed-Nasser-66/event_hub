@@ -25,8 +25,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     final locale = AppLocalizations.of(context)!;
     double totalPrice = widget.event.price * ticketCount;
 
-    final lightGreyColor =
-        AppColors.cardGrey.withAlpha(128); 
+    final lightGreyColor = AppColors.cardGrey.withAlpha(128);
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -178,7 +177,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    locale.speakers, 
+                    locale.speakers,
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.w500),
                   ),
@@ -194,8 +193,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     children: [
                       buildSpeakerCard(
                         context,
-                        locale.omarTarek, 
-                        locale.science, 
+                        locale.omarTarek,
+                        locale.science,
                         AppAssets.speaker,
                       ),
                       const SizedBox(height: 15),
@@ -208,7 +207,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 const Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Text(
-                    'Sponsors', 
+                    'Sponsors',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -255,7 +254,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         child: Row(
           children: [
             Text(
-              "${totalPrice.toStringAsFixed(2)} EGP", 
+              "${totalPrice.toStringAsFixed(2)} EGP",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
@@ -382,7 +381,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                locale.speakerName, 
+                locale.speakerName,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
@@ -392,7 +391,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   style: const TextStyle(fontSize: 13, color: AppColors.black)),
               const SizedBox(height: 5),
               Text(
-                locale.topic, 
+                locale.topic,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
