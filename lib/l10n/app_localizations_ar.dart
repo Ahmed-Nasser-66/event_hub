@@ -477,6 +477,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get helpSupportTitle => 'المساعدة والدعم';
 
   @override
+  String get support => 'الدعم';
+
+  @override
   String get bookNow => 'احجز الآن';
 
   @override
@@ -563,6 +566,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get education => 'تعليم';
+
+  @override
+  String get on => 'تشغيل';
+
+  @override
+  String get off => 'إيقاف';
 
   @override
   String get noAccount => 'ليس لديك حساب؟';

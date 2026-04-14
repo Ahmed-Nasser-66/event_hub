@@ -998,6 +998,12 @@ abstract class AppLocalizations {
   /// **'Help & Support'**
   String get helpSupportTitle;
 
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
   /// No description provided for @bookNow.
   ///
   /// In en, this message translates to:
@@ -1165,6 +1171,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'education'**
   String get education;
+
+  /// No description provided for @on.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get on;
+
+  /// No description provided for @off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get off;
 
   /// No description provided for @noAccount.
   ///

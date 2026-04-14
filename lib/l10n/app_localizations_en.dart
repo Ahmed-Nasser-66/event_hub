@@ -478,6 +478,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpSupportTitle => 'Help & Support';
 
   @override
+  String get support => 'Support';
+
+  @override
   String get bookNow => 'Book Now';
 
   @override
@@ -563,6 +566,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get education => 'education';
+
+  @override
+  String get on => 'On';
+
+  @override
+  String get off => 'Off';
 
   @override
   String get noAccount => 'Don\'t have an account?';

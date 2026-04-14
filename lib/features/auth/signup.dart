@@ -206,7 +206,7 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                     TextSpan(
-                      text: l10n.privacyPolicy,
+                      text: l10n.termsPrivacy,
                       style: const TextStyle(
                         color: AppColors.orange,
                         fontWeight: FontWeight.w500,
@@ -219,7 +219,7 @@ class _SignupState extends State<Signup> {
                             builder: (context) {
                               return AlertDialog(
                                 title: Text(
-                                  l10n.privacyPolicy,
+                                  l10n.termsPrivacy,
                                   style: const TextStyle(
                                     color: AppColors.orange,
                                     fontWeight: FontWeight.w500,

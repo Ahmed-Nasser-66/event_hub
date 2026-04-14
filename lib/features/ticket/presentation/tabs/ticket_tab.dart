@@ -30,6 +30,7 @@ class _TicketTabState extends State<TicketTab> {
         backgroundColor: AppColors.grey,
         body: SafeArea(
           child: ListView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),

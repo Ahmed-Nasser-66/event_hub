@@ -60,7 +60,8 @@ class _EditProfileState extends State<EditProfile> {
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.all(12),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           children: [
             Form(
               key: formState,
@@ -88,19 +89,17 @@ class _EditProfileState extends State<EditProfile> {
                               backgroundImage: _image != null
                                   ? FileImage(_image!)
                                   : (context.read<UserProvider>().image != null
-                                        ? FileImage(
-                                            context.read<UserProvider>().image!,
-                                          )
-                                        : null),
-                              child:
-                                  (_image == null &&
+                                      ? FileImage(
+                                          context.read<UserProvider>().image!,
+                                        )
+                                      : null),
+                              child: (_image == null &&
                                       context.read<UserProvider>().image ==
                                           null)
                                   ? const Icon(Icons.person, size: 35)
                                   : null,
                             ),
                           ),
-
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -161,7 +160,6 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
                   Text(
                     l10n.email,
@@ -185,29 +183,6 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                   ),
-
-                  const SizedBox(height: 10),
-                  Text(
-                    l10n.phoneNumber,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  CustomTextForm(
-                    hinttext: l10n.enterPhoneNumber,
-                    mycontroller: phone,
-                    validator: (val) {
-                      if (val != null && val.isNotEmpty) {
-                        if (!RegExp(r'^[0-9]{11}$').hasMatch(val)) {
-                          return l10n.phoneMustBe11Digits;
-                        }
-                      }
-                      return null;
-                    },
-                  ),
-
                   const SizedBox(height: 10),
                   Text(
                     l10n.password,
@@ -230,7 +205,6 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
                   Text(
                     l10n.retypePassword,
@@ -251,7 +225,6 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 40),
                   Row(
                     children: [
@@ -274,13 +247,17 @@ class _EditProfileState extends State<EditProfile> {
                               final user = context.read<UserProvider>();
 
                               context.read<UserProvider>().setUser(
-                                username.text.isEmpty
-                                    ? user.name
-                                    : username.text,
-                                email.text.isEmpty ? user.email : email.text,
-                                pass.text.isEmpty ? user.password : pass.text,
-                                newImage: _image ?? user.image,
-                              );
+                                    username.text.isEmpty
+                                        ? user.name
+                                        : username.text,
+                                    email.text.isEmpty
+                                        ? user.email
+                                        : email.text,
+                                    pass.text.isEmpty
+                                        ? user.password
+                                        : pass.text,
+                                    newImage: _image ?? user.image,
+                                  );
 
                               Navigator.pop(context);
                             }
