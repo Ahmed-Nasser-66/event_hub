@@ -2,7 +2,7 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/event_booking_screen.dart';
 import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
-import 'package:event_hub/model/event_model.dart'; 
+import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/map_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,17 +36,17 @@ class _LocationScreenState extends State<LocationScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.transparent, 
+      backgroundColor: AppColors.transparent,
       builder: (context) => Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.white, 
+          color: AppColors.white,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(25),
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.secondary.withAlpha(26), 
+              color: AppColors.secondary.withAlpha(26),
               blurRadius: 20,
               offset: const Offset(0, -5),
             )
@@ -56,65 +56,52 @@ class _LocationScreenState extends State<LocationScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             Center(
               child: Container(
                 width: 50,
                 height: 5,
                 decoration: BoxDecoration(
-                  color: AppColors.cardGrey, 
+                  color: AppColors.cardGrey,
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
-            
             Text(
               event.title,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: AppColors.black, 
+                color: AppColors.black,
               ),
             ),
-
             const SizedBox(height: 5),
-
             Text(
               "${event.location} • ${event.category}",
               style: const TextStyle(
-                color: AppColors.lightGrey, 
+                color: AppColors.lightGrey,
                 fontSize: 14,
               ),
             ),
-
             const SizedBox(height: 20),
-
             Text(
-              l10n.aboutEvent, 
+              l10n.aboutEvent,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: AppColors.black,
               ),
             ),
-
             const SizedBox(height: 8),
-
             Text(
               event.description,
               style: const TextStyle(
                 fontSize: 15,
-                color: AppColors.lightGrey, 
+                color: AppColors.lightGrey,
                 height: 1.4,
               ),
             ),
-
             const SizedBox(height: 30),
-
-            
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -129,23 +116,22 @@ class _LocationScreenState extends State<LocationScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.orange, 
+                  backgroundColor: AppColors.orange,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
                 child: Text(
-                  l10n.bookNow, 
+                  l10n.bookNow,
                   style: const TextStyle(
-                    color: AppColors.white, 
+                    color: AppColors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 10),
           ],
         ),
@@ -211,7 +197,7 @@ class _LocationScreenState extends State<LocationScreen> {
               margin: const EdgeInsets.only(top: 8),
               constraints: const BoxConstraints(maxHeight: 300),
               decoration: BoxDecoration(
-                color: AppColors.white, 
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -257,10 +243,10 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget _buildButtons(MapProvider provider) {
     return Positioned(
       bottom: 30,
-      right: 20,
+      left: 20,
       child: FloatingActionButton(
         heroTag: 'my_location_fab',
-        backgroundColor: AppColors.white, 
+        backgroundColor: AppColors.white,
         elevation: 6,
         shape: const CircleBorder(),
         onPressed: () {
