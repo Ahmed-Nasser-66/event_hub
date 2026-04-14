@@ -584,4 +584,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noFavorites => 'لا توجد مفضلات بعد!';
+
+  @override
+  String get noTicketsyet => 'لا توجد تذاكر بعد';
+
+  @override
+  String get refineEvents => 'تحسين الفعاليات';
+
+  @override
+  String get combiningTheTwo => 'دمج الاثنين';
+
+  @override
+  String get earliestdateswiththelowestprices => 'أقدم التواريخ مع أقل الأسعار';
+
+  @override
+  String get earliestdates => 'أقدم التواريخ';
+
+  @override
+  String get seeEventshappeningsoonest =>
+      'شاهد الفعاليات التي تحدث في أقرب وقت';
+
+  @override
+  String get lowestprices => 'أقل الأسعار';
+
+  @override
+  String get sortbypricefromlowesttohighest =>
+      'ترتيب حسب السعر من الأقل إلى الأعلى';
+
+  @override
+  String get resetToDefault => 'إعادة التعيين إلى الوضع الافتراضي';
 }

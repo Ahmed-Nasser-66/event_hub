@@ -84,12 +84,12 @@ class _TicketTabState extends State<TicketTab> {
                             : provider.historyEvents;
 
                         if (events.isEmpty) {
-                          return const Center(
+                          return Center(
                             child: Padding(
-                              padding: EdgeInsets.only(top: 300),
+                              padding: const EdgeInsets.only(top: 300),
                               child: Text(
-                                "No Tickets yet!",
-                                style: TextStyle(
+                                AppLocalizations.of(context)!.noTicketsyet,
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.lightGrey,

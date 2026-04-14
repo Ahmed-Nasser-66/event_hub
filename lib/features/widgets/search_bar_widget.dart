@@ -10,7 +10,7 @@ class Searchbarwidget extends StatelessWidget {
   const Searchbarwidget({
     super.key,
     required this.controller,
-    this.onChanged, 
+    this.onChanged,
   });
 
   @override
@@ -26,7 +26,7 @@ class Searchbarwidget extends StatelessWidget {
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.findEvent,
           border: InputBorder.none,
-          suffixIcon: const Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           contentPadding: const EdgeInsets.only(left: 20, top: 12),
         ),
       ),

@@ -1207,6 +1207,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Favorites yet!'**
   String get noFavorites;
+
+  /// No description provided for @noTicketsyet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Tickets yet'**
+  String get noTicketsyet;
+
+  /// No description provided for @refineEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Refine Events'**
+  String get refineEvents;
+
+  /// No description provided for @combiningTheTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Combining the Two'**
+  String get combiningTheTwo;
+
+  /// No description provided for @earliestdateswiththelowestprices.
+  ///
+  /// In en, this message translates to:
+  /// **'Earliest dates with the lowest prices'**
+  String get earliestdateswiththelowestprices;
+
+  /// No description provided for @earliestdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Earliest dates'**
+  String get earliestdates;
+
+  /// No description provided for @seeEventshappeningsoonest.
+  ///
+  /// In en, this message translates to:
+  /// **'See events happening soonest'**
+  String get seeEventshappeningsoonest;
+
+  /// No description provided for @lowestprices.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest prices'**
+  String get lowestprices;
+
+  /// No description provided for @sortbypricefromlowesttohighest.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by price from lowest to highest'**
+  String get sortbypricefromlowesttohighest;
+
+  /// No description provided for @resetToDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to Default'**
+  String get resetToDefault;
 }
 
 class _AppLocalizationsDelegate

@@ -16,15 +16,16 @@ class FavoriteTab extends StatelessWidget {
     final favoriteList = favoriteProvider.favoriteEvents;
 
     return Scaffold(
-      backgroundColor: AppColors.grey, 
+      backgroundColor: AppColors.grey,
       appBar: AppBar(
         backgroundColor: AppColors.grey,
         elevation: 0,
+        toolbarHeight: 80,
         centerTitle: false,
         title: Text(
           locale.favoriteEvents,
           style: const TextStyle(
-            color: AppColors.black, 
+            color: AppColors.black,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
@@ -40,15 +41,14 @@ class FavoriteTab extends StatelessWidget {
                     const Icon(
                       Icons.favorite_border,
                       size: 80,
-                      color: AppColors
-                          .cardGrey, 
+                      color: AppColors.cardGrey,
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      locale.noFavorites, 
+                      locale.noFavorites,
                       style: const TextStyle(
                         fontSize: 18,
-                        color: AppColors.lightGrey, 
+                        color: AppColors.lightGrey,
                       ),
                     ),
                   ],

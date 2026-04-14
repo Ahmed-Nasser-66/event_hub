@@ -1,4 +1,5 @@
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,10 +48,10 @@ class Filterbutton extends StatelessWidget {
           ),
           const SizedBox(height: 30),
 
-          const Center(
+          Center(
             child: Text(
-              "Refine Events",
-              style: TextStyle(
+              AppLocalizations.of(context)!.refineEvents,
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
                 color: AppColors.secondary,
@@ -64,8 +65,9 @@ class Filterbutton extends StatelessWidget {
           _buildLuxuryOption(
             context,
             icon: Icons.auto_awesome_rounded, // أيقونة توحي بالذكاء/التميز
-            title: "Combining the two",
-            subtitle: "Earliest dates with the lowest prices",
+            title: AppLocalizations.of(context)!.combiningTheTwo,
+            subtitle:
+                AppLocalizations.of(context)!.earliestdateswiththelowestprices,
             onTap: () {
               context.read<EventProvider>().sortBySmartChoice();
               Navigator.pop(context);
@@ -76,8 +78,8 @@ class Filterbutton extends StatelessWidget {
           _buildLuxuryOption(
             context,
             icon: Icons.calendar_today_rounded,
-            title: "Earliest dates",
-            subtitle: "See events happening soonest",
+            title: AppLocalizations.of(context)!.earliestdates,
+            subtitle: AppLocalizations.of(context)!.seeEventshappeningsoonest,
             onTap: () {
               context.read<EventProvider>().sortByDate();
               Navigator.pop(context);
@@ -88,8 +90,9 @@ class Filterbutton extends StatelessWidget {
           _buildLuxuryOption(
             context,
             icon: Icons.confirmation_number_outlined,
-            title: "Lowest prices",
-            subtitle: "Sort by price from lowest to highest",
+            title: AppLocalizations.of(context)!.lowestprices,
+            subtitle:
+                AppLocalizations.of(context)!.sortbypricefromlowesttohighest,
             onTap: () {
               context.read<EventProvider>().sortByPriceLowToHigh();
               Navigator.pop(context);
@@ -109,9 +112,9 @@ class Filterbutton extends StatelessWidget {
               },
               icon: const Icon(Icons.refresh_rounded,
                   color: AppColors.secondary, size: 20),
-              label: const Text(
-                "Reset to Default",
-                style: TextStyle(
+              label: Text(
+                AppLocalizations.of(context)!.resetToDefault,
+                style: const TextStyle(
                     color: AppColors.secondary, fontWeight: FontWeight.w600),
               ),
             ),

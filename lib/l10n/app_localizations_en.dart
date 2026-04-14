@@ -584,4 +584,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noFavorites => 'No Favorites yet!';
+
+  @override
+  String get noTicketsyet => 'No Tickets yet';
+
+  @override
+  String get refineEvents => 'Refine Events';
+
+  @override
+  String get combiningTheTwo => 'Combining the Two';
+
+  @override
+  String get earliestdateswiththelowestprices =>
+      'Earliest dates with the lowest prices';
+
+  @override
+  String get earliestdates => 'Earliest dates';
+
+  @override
+  String get seeEventshappeningsoonest => 'See events happening soonest';
+
+  @override
+  String get lowestprices => 'Lowest prices';
+
+  @override
+  String get sortbypricefromlowesttohighest =>
+      'Sort by price from lowest to highest';
+
+  @override
+  String get resetToDefault => 'Reset to Default';
 }
