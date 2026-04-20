@@ -10,117 +10,119 @@ class Filterbutton extends StatelessWidget {
   void _tapSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent, // لجعل الحواف دائرية خلف الحاوية
+      backgroundColor: Colors.transparent, 
       isScrollControlled: true,
       builder: (_) => _buildBottomSheetContent(context),
     );
   }
 
   Widget _buildBottomSheetContent(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(16), // شيت "طاير" لشكل أفخم
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(26),
-            blurRadius: 20,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // مقبض السحب
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: AppColors.grey.withAlpha(77),
-                borderRadius: BorderRadius.circular(10),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(35),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(26),
+                blurRadius: 20,
+                offset: const Offset(0, -5),
               ),
-            ),
+            ],
           ),
-          const SizedBox(height: 30),
-
-          Center(
-            child: Text(
-              AppLocalizations.of(context)!.refineEvents,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-                color: AppColors.secondary,
-                letterSpacing: 1.2,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.grey.withAlpha(77),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 35),
+              const SizedBox(height: 30),
 
-          // 1. خيار الترتيب الذكي (التعديل الجديد)
-          _buildLuxuryOption(
-            context,
-            icon: Icons.auto_awesome_rounded, // أيقونة توحي بالذكاء/التميز
-            title: AppLocalizations.of(context)!.combiningTheTwo,
-            subtitle:
-                AppLocalizations.of(context)!.earliestdateswiththelowestprices,
-            onTap: () {
-              context.read<EventProvider>().sortBySmartChoice();
-              Navigator.pop(context);
-            },
-          ),
-
-          // 2. خيار الترتيب بالتاريخ
-          _buildLuxuryOption(
-            context,
-            icon: Icons.calendar_today_rounded,
-            title: AppLocalizations.of(context)!.earliestdates,
-            subtitle: AppLocalizations.of(context)!.seeEventshappeningsoonest,
-            onTap: () {
-              context.read<EventProvider>().sortByDate();
-              Navigator.pop(context);
-            },
-          ),
-
-          // 3. خيار الترتيب بالسعر
-          _buildLuxuryOption(
-            context,
-            icon: Icons.confirmation_number_outlined,
-            title: AppLocalizations.of(context)!.lowestprices,
-            subtitle:
-                AppLocalizations.of(context)!.sortbypricefromlowesttohighest,
-            onTap: () {
-              context.read<EventProvider>().sortByPriceLowToHigh();
-              Navigator.pop(context);
-            },
-          ),
-
-          const SizedBox(height: 15),
-          const Divider(color: AppColors.grey, thickness: 0.5),
-          const SizedBox(height: 15),
-
-          // زر إعادة الضبط
-          Center(
-            child: TextButton.icon(
-              onPressed: () {
-                context.read<EventProvider>().resetSort();
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.refresh_rounded,
-                  color: AppColors.secondary, size: 20),
-              label: Text(
-                AppLocalizations.of(context)!.resetToDefault,
-                style: const TextStyle(
-                    color: AppColors.secondary, fontWeight: FontWeight.w600),
+              Center(
+                child: Text(
+                  AppLocalizations.of(context)!.refineEvents,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.secondary,
+                    letterSpacing: 1.2,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 35),
+
+              _buildLuxuryOption(
+                context,
+                icon: Icons.auto_awesome_rounded,
+                title: AppLocalizations.of(context)!.combiningTheTwo,
+                subtitle: AppLocalizations.of(context)!
+                    .earliestdateswiththelowestprices,
+                onTap: () {
+                  context.read<EventProvider>().sortBySmartChoice();
+                  Navigator.pop(context);
+                },
+              ),
+
+              _buildLuxuryOption(
+                context,
+                icon: Icons.calendar_today_rounded,
+                title: AppLocalizations.of(context)!.earliestdates,
+                subtitle:
+                    AppLocalizations.of(context)!.seeEventshappeningsoonest,
+                onTap: () {
+                  context.read<EventProvider>().sortByDate();
+                  Navigator.pop(context);
+                },
+              ),
+
+              _buildLuxuryOption(
+                context,
+                icon: Icons.confirmation_number_outlined,
+                title: AppLocalizations.of(context)!.lowestprices,
+                subtitle: AppLocalizations.of(context)!
+                    .sortbypricefromlowesttohighest,
+                onTap: () {
+                  context.read<EventProvider>().sortByPriceLowToHigh();
+                  Navigator.pop(context);
+                },
+              ),
+
+              const SizedBox(height: 15),
+              const Divider(color: AppColors.grey, thickness: 0.5),
+              const SizedBox(height: 15),
+
+              Center(
+                child: TextButton.icon(
+                  onPressed: () {
+                    context.read<EventProvider>().resetSort();
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.refresh_rounded,
+                      color: AppColors.secondary, size: 20),
+                  label: Text(
+                    AppLocalizations.of(context)!.resetToDefault,
+                    style: const TextStyle(
+                        color: AppColors.secondary,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
           ),
-          const SizedBox(height: 10),
-        ],
+        ),
       ),
     );
   }
@@ -163,7 +165,7 @@ class Filterbutton extends StatelessWidget {
               ),
               const SizedBox(width: 18),
               Expanded(
-                // أضفنا Expanded لضمان عدم حدوث Overflow في النصوص الطويلة
+                
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -203,7 +205,7 @@ class Filterbutton extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black
-                .withAlpha(30), // قللت الـ Alpha ليكون الظل واقعي أكثر
+                .withAlpha(30), 
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),

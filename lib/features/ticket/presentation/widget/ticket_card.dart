@@ -120,7 +120,7 @@ class TicketCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      price,
+                      price.replaceAll("\$", "EGP "),
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,

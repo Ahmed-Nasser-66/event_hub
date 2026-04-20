@@ -25,57 +25,59 @@ class _NotificationSheetState extends State<NotificationSheet> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                l10n.notifications,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          RadioGroup<String>(
-            groupValue: selected,
-            onChanged: (value) {
-              setState(() {
-                selected = value!;
-              });
-            },
-            child: Column(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildOption(l10n.on, "on"),
-                const SizedBox(height: 10),
-                buildOption(l10n.off, "off"),
+                Text(
+                  l10n.notifications,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
+                ),
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              context.read<NotificationProvider>().setNotification(selected);
+            const SizedBox(height: 20),
+            RadioGroup<String>(
+              groupValue: selected,
+              onChanged: (value) {
+                setState(() {
+                  selected = value!;
+                });
+              },
+              child: Column(
+                children: [
+                  buildOption(l10n.on, "on"),
+                  const SizedBox(height: 10),
+                  buildOption(l10n.off, "off"),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                context.read<NotificationProvider>().setNotification(selected);
 
-              Navigator.pop(context);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.orange,
-              minimumSize: const Size(double.infinity, 50),
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.orange,
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: Text(
+                l10n.confirm,
+                style: const TextStyle(color: AppColors.secondary),
+              ),
             ),
-            child: Text(
-              l10n.confirm,
-              style: const TextStyle(color: AppColors.secondary),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

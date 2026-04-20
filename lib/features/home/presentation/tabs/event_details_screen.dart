@@ -5,6 +5,7 @@ import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,18 @@ class EventDetailsScreen extends StatefulWidget {
 
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   int ticketCount = 1;
+  TextEditingController ticketController = TextEditingController(text: "1");
+  @override
+  void initState() {
+    super.initState();
+    ticketController.text = "1";
+  }
+
+  @override
+  void dispose() {
+    ticketController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +41,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     final lightGreyColor = AppColors.cardGrey.withAlpha(128);
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.grey,
       body: Stack(
         children: [
@@ -129,21 +143,30 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               size: 18,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              widget.event.location,
-                              style: const TextStyle(
-                                color: AppColors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
+
+                            // 🔥 ده المهم
+                            Expanded(
+                              child: Text(
+                                widget.event.location,
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                overflow:
+                                    TextOverflow.ellipsis, // 👈 يمنع overflow
                               ),
                             ),
-                            const Spacer(),
+
+                            const SizedBox(width: 10),
+
                             const Icon(
                               Icons.access_time,
                               color: AppColors.black,
                               size: 18,
                             ),
                             const SizedBox(width: 5),
+
                             Text(
                               DateFormat('dd MMM, yyyy')
                                   .format(widget.event.date),
@@ -239,92 +262,111 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withAlpha(128),
-              blurRadius: 10,
-              spreadRadius: 2,
-            ),
-          ],
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        child: Row(
-          children: [
-            Text(
-              "${totalPrice.toStringAsFixed(2)} EGP",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                color: AppColors.secondary,
-              ),
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black.withAlpha(128),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.orange),
-                      borderRadius: BorderRadius.circular(12),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    "${totalPrice.toStringAsFixed(2)} EGP",
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.secondary,
                     ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          constraints: const BoxConstraints(),
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            if (ticketCount > 1) {
-                              setState(() => ticketCount--);
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.remove,
-                            size: 20,
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3),
-                          child: Text(
-                            "$ticketCount",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.secondary,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          constraints: const BoxConstraints(),
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            setState(() => ticketCount++);
-                          },
-                          icon: const Icon(
-                            Icons.add,
-                            size: 20,
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.orange),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        constraints: const BoxConstraints(),
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          int value = int.tryParse(ticketController.text) ?? 1;
+                          if (value > 1) {
+                            value--;
+                            ticketController.text = value.toString();
+                            setState(() => ticketCount = value);
+                          }
+                        },
+                        icon: const Icon(Icons.remove, size: 18),
+                      ),
+                      SizedBox(
+                        width: 40,
+                        child: TextField(
+                          controller: ticketController,
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            isCollapsed: true,
+                          ),
+                          onChanged: (value) {
+                            int newValue = int.tryParse(value) ?? 1;
+                            if (newValue < 1) newValue = 1;
+                            setState(() => ticketCount = newValue);
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        constraints: const BoxConstraints(),
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          int value = int.tryParse(ticketController.text) ?? 1;
+                          value++;
+                          ticketController.text = value.toString();
+                          setState(() => ticketCount = value);
+                        },
+                        icon: const Icon(Icons.add, size: 18),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 3,
+                  child: SizedBox(
+                    height: 45,
                     child: ElevatedButton(
                       onPressed: () {
+                        int count = int.tryParse(ticketController.text) ?? 1;
+
                         context.read<TicketProvider>().addTicketFromEvent(
                               widget.event,
-                              ticketCount,
+                              count,
                             );
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("${locale.bookNow} $ticketCount"),
+                            content: Text("${locale.bookNow} $count"),
                             backgroundColor: AppColors.green,
                           ),
                         );
@@ -333,24 +375,25 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         backgroundColor: AppColors.orange,
                         foregroundColor: AppColors.secondary,
                         elevation: 0,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       child: Text(
                         locale.bookNow,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -250,7 +250,7 @@ class TicketDetailsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              ticket.price,
+                              ticket.price.replaceAll("\$", "EGP "),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
