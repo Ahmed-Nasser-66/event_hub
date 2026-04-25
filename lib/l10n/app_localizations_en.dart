@@ -612,5 +612,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sort by price from lowest to highest';
 
   @override
+  String get emailCopied => 'Email copied!';
+
+  @override
   String get resetToDefault => 'Reset to Default';
 }

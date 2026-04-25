@@ -62,7 +62,10 @@ class SupportScreen extends StatelessWidget {
 
                   ScaffoldMessenger.of(
                     context,
-                  ).showSnackBar(const SnackBar(content: Text("Email copied")));
+                  ).showSnackBar(SnackBar(
+                    content: Text(AppLocalizations.of(context)!.emailCopied),
+                    backgroundColor: AppColors.green,
+                  ));
                 },
               ),
             ],

@@ -376,9 +376,9 @@
   "@refineEvents": {},
   "combiningTheTwo": "دمج الاثنين",
   "@combiningTheTwo": {},
-  "earliestdateswiththelowestprices": "أقدم التواريخ مع أقل الأسعار",
+  "earliestdateswiththelowestprices": "أقرب التواريخ مع أقل الأسعار",
   "@earliestdateswiththelowestprices": {},
-  "earliestdates": "أقدم التواريخ",
+  "earliestdates": "أقرب التواريخ",
   "@earliestdates": {},
   "seeEventshappeningsoonest": "شاهد الفعاليات التي تحدث في أقرب وقت",
   "@seeEventshappeningsoonest": {},
@@ -386,6 +386,8 @@
   "@lowestprices": {},
   "sortbypricefromlowesttohighest": "ترتيب حسب السعر من الأقل إلى الأعلى",
   "@sortbypricefromlowesttohighest": {},
+  "emailCopied":"تم نسخ البريد الإلكتروني!",
+  "@emailCopied": {},
   "resetToDefault": "إعادة التعيين إلى الوضع الافتراضي",
   "@resetToDefault": {}
 }

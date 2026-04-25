@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// 1 ==> بعمل class
 class AppLanguageProvider extends ChangeNotifier {
-  /// 2 ==> بيشيل حاجتين
-  /// 1 - data ==> البيانات
-  /// 2- funcation ==> عشان هتسمع في اكتر من مكان
-  String appLanguage = 'en'; // String ==> عشان Locale بياحد مني String
+  static const String languageKey = 'language';
 
-  void changeLanguage(String newLanguage) {
-    if (appLanguage == newLanguage) {
-      return;
-    }
+  String appLanguage = 'en';
+
+  /// تحميل اللغة من التخزين
+  Future<void> loadLanguage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    appLanguage = prefs.getString(languageKey) ?? 'en';
+    notifyListeners();
+  }
+
+  /// تغيير اللغة
+  Future<void> changeLanguage(String newLanguage) async {
+    if (appLanguage == newLanguage) return;
+
     appLanguage = newLanguage;
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(languageKey, newLanguage);
+
     notifyListeners();
   }
 }

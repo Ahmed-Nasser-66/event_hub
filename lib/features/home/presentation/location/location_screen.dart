@@ -17,6 +17,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   late TextEditingController _searchController;
+  bool _isShowingBottomSheet = false; // ✅ التعديل 1
 
   @override
   void initState() {
@@ -27,6 +28,10 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    // ✅ التعديل 7: تنظيف البيانات
+    final mapProvider = context.read<MapProvider>();
+    mapProvider.searchResults = [];
+    mapProvider.selectedEvent = null;
     super.dispose();
   }
 
@@ -143,10 +148,13 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget build(BuildContext context) {
     return Consumer<MapProvider>(
       builder: (context, mapProvider, child) {
-        if (mapProvider.selectedEvent != null) {
+        // ✅ التعديل 4: منع ظهور الـ BottomSheet مرتين
+        if (mapProvider.selectedEvent != null && !_isShowingBottomSheet) {
+          _isShowingBottomSheet = true;
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _showEventDetails(context, mapProvider.selectedEvent!);
             mapProvider.selectedEvent = null;
+            _isShowingBottomSheet = false;
           });
         }
 
@@ -157,20 +165,23 @@ class _LocationScreenState extends State<LocationScreen> {
         }
 
         return Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true, // ✅ التعديل 2
           body: Stack(
             children: [
-              GoogleMap(
-                initialCameraPosition: CameraPosition(
-                    target: mapProvider.currentLocation!, zoom: 12),
-                onMapCreated: (controller) =>
-                    mapProvider.controller = controller,
-                style: mapProvider.mapStyle,
-                markers: mapProvider.markers,
-                polylines: mapProvider.polylines,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: false,
+              // ✅ التعديل 3: إضافة ClipRRect
+              ClipRRect(
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: mapProvider.currentLocation!, zoom: 12),
+                  onMapCreated: (controller) =>
+                      mapProvider.controller = controller,
+                  style: mapProvider.mapStyle,
+                  markers: mapProvider.markers,
+                  polylines: mapProvider.polylines,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  zoomControlsEnabled: false,
+                ),
               ),
               _buildSearchArea(context, mapProvider),
               _buildButtons(mapProvider),
@@ -192,6 +203,8 @@ class _LocationScreenState extends State<LocationScreen> {
             controller: _searchController,
             onChanged: (value) => mapProvider.searchEvents(value),
           ),
+
+          // ✅ نتائج البحث
           if (mapProvider.searchResults.isNotEmpty)
             Container(
               margin: const EdgeInsets.only(top: 8),
@@ -229,9 +242,27 @@ class _LocationScreenState extends State<LocationScreen> {
                         mapProvider.selectEvent(event);
                         _searchController.clear();
                         FocusScope.of(context).unfocus();
+                        setState(() {}); // ✅ التعديل 6
                       },
                     );
                   },
+                ),
+              ),
+            )
+
+          // ✅ التعديل 5: رسالة "لا توجد نتائج"
+          else if (_searchController.text.isNotEmpty)
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  'No events found for "${_searchController.text}"',
+                  style: const TextStyle(color: AppColors.lightGrey),
                 ),
               ),
             ),

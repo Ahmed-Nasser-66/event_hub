@@ -47,8 +47,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      // ignore: use_build_context_synchronously
+      context.read<AppLanguageProvider>().loadLanguage();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var languageprovider = Provider.of<AppLanguageProvider>(context);
+
     return MaterialApp(
       themeMode: ThemeMode.dark,
       theme: ThemeData(

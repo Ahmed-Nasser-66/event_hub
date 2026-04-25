@@ -1256,6 +1256,12 @@ abstract class AppLocalizations {
   /// **'Sort by price from lowest to highest'**
   String get sortbypricefromlowesttohighest;
 
+  /// No description provided for @emailCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Email copied!'**
+  String get emailCopied;
+
   /// No description provided for @resetToDefault.
   ///
   /// In en, this message translates to:

@@ -18,18 +18,90 @@ class MapProvider extends ChangeNotifier {
 
   EventModel? selectedEvent;
 
-  Future<void> initializeMap() async {
-    currentLocation = await _service.getCurrentLocation();
+  // ✅ المتغيرات الجديدة
+  bool _isLoading = false;
+  String? _errorMessage;
 
-    try {
-      mapStyle = await rootBundle.loadString('assets/map_style/map_style.json');
-    } catch (e) {
-      debugPrint("Map style error: $e");
+  // ✅ أضف هذا المتغير لمنع الطلبات المتكررة
+  bool _isLocationFetched = false;
+
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+
+  Future<void> initializeMap() async {
+    // ✅ منع الطلبات المتكررة: لو الموقع جابته قبل كده، متجيبوش تاني
+    if (_isLocationFetched && currentLocation != null) {
+      debugPrint("📍 Location already fetched, skipping...");
+      return;
     }
 
-    _loadEventsMarkers();
+    _isLoading = true;
     notifyListeners();
+
+    try {
+      currentLocation = await _service.getCurrentLocation();
+
+      if (currentLocation == null) {
+        _errorMessage = "Could not get current location";
+      } else {
+        _errorMessage = null;
+        _isLocationFetched = true; // ✅ علامة ان الموقع جابته
+      }
+
+      try {
+        mapStyle =
+            await rootBundle.loadString('assets/map_style/map_style.json');
+      } catch (e) {
+        debugPrint("Map style error: $e");
+      }
+
+      _loadEventsMarkers();
+    } catch (e) {
+      _errorMessage = e.toString();
+      debugPrint("Initialize map error: $e");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
+
+  // ✅ دالة refreshLocation
+  Future<void> refreshLocation() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      currentLocation = await _service.getCurrentLocation();
+
+      if (currentLocation == null) {
+        _errorMessage = "Could not refresh location";
+      } else {
+        _isLocationFetched = true; // ✅ تحديث العلامة
+        _loadEventsMarkers();
+
+        if (controller != null && currentLocation != null) {
+          controller?.animateCamera(
+            CameraUpdate.newLatLngZoom(currentLocation!, 14),
+          );
+        }
+      }
+    } catch (e) {
+      _errorMessage = e.toString();
+      debugPrint("Refresh location error: $e");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // ✅ دالة retryLocation
+  Future<void> retryLocation() async {
+    await refreshLocation();
+  }
+
+  // ✅ دالة للتحقق من صحة الموقع
+  bool get hasLocation => currentLocation != null;
 
   // ✅ تحميل الـ markers من repository
   void _loadEventsMarkers() {
@@ -45,7 +117,7 @@ class MapProvider extends ChangeNotifier {
     }).toSet();
   }
 
-  // ✅ Search بعد حذف city
+  // ✅ Search
   void searchEvents(String query) {
     if (query.isEmpty) {
       searchResults = [];
@@ -121,5 +193,13 @@ class MapProvider extends ChangeNotifier {
 
     polylines.clear();
     notifyListeners();
+  }
+
+  // ✅ دالة لتنظيف الموارد
+  void disposeMap() {
+    controller?.dispose();
+    polylines.clear();
+    markers.clear();
+    searchResults.clear();
   }
 }

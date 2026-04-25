@@ -11,7 +11,7 @@ class EventModel {
   final DateTime date;
   bool isFavorite;
   final String image;
-
+  double? distance;
   EventModel({
     required this.title,
     required this.location,
@@ -25,5 +25,6 @@ class EventModel {
     required this.longitude,
     required this.date,
     required this.image,
+    this.distance,
   });
 }

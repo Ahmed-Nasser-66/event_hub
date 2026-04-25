@@ -595,10 +595,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get combiningTheTwo => 'دمج الاثنين';
 
   @override
-  String get earliestdateswiththelowestprices => 'أقدم التواريخ مع أقل الأسعار';
+  String get earliestdateswiththelowestprices => 'أقرب التواريخ مع أقل الأسعار';
 
   @override
-  String get earliestdates => 'أقدم التواريخ';
+  String get earliestdates => 'أقرب التواريخ';
 
   @override
   String get seeEventshappeningsoonest =>
@@ -610,6 +610,9 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get sortbypricefromlowesttohighest =>
       'ترتيب حسب السعر من الأقل إلى الأعلى';
+
+  @override
+  String get emailCopied => 'تم نسخ البريد الإلكتروني!';
 
   @override
   String get resetToDefault => 'إعادة التعيين إلى الوضع الافتراضي';

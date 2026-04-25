@@ -151,7 +151,6 @@ class NearbyEventCard extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      // 🔥 تم تغيير العملة هنا من $ إلى EGP
                       "${event.price.toStringAsFixed(0)} EGP",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,

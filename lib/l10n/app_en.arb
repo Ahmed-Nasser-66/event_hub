@@ -386,6 +386,8 @@
   "@lowestprices": {},
   "sortbypricefromlowesttohighest": "Sort by price from lowest to highest",
   "@sortbypricefromlowesttohighest": {},
+  "emailCopied":"Email copied!",
+  "@emailCopied": {},
   "resetToDefault": "Reset to Default",
   "@resetToDefault": {}
 }
