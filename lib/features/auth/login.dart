@@ -148,12 +148,14 @@ class _LoginState extends State<Login> {
             CustomButtonAuth(
               title: l10n.login,
               color: AppColors.orange,
-              onPressed: () {
+              onPressed: () async {
                 if (formState.currentState!.validate()) {
-                  bool success = context.read<UserProvider>().login(
+                  bool success = await context.read<UserProvider>().login(
                         email.text,
                         pass.text,
                       );
+                  if (!context.mounted) return;
+
                   if (success) {
                     Navigator.of(context).pushReplacementNamed("homepage");
                   } else {

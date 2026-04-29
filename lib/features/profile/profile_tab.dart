@@ -117,12 +117,19 @@ class ProfileTab extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Center(
               child: CustomButtonAuth(
-                title: l10n.logout,
-                color: AppColors.orange,
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed("login");
-                },
-              ),
+                  title: l10n.logout,
+                  color: AppColors.orange,
+                  onPressed: () async {
+                    await context.read<UserProvider>().logout();
+
+                    if (!context.mounted) return;
+
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      "login",
+                      (route) => false,
+                    );
+                  }),
             ),
           ),
         ],

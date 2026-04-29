@@ -2,6 +2,7 @@ import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -52,8 +53,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   });
                 },
                 itemBuilder: (context, index) {
-                  final isLandscape =
-                      MediaQuery.of(context).orientation ==
+                  final isLandscape = MediaQuery.of(context).orientation ==
                       Orientation.landscape;
                   return LayoutBuilder(
                     builder: (context, constraints) {
@@ -67,16 +67,14 @@ class _OnBoardingState extends State<OnBoarding> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Spacer(),
-
                                 Image.asset(
                                   pages[index]["image"]!,
                                   height: isLandscape
                                       ? MediaQuery.of(context).size.height * 0.5
                                       : MediaQuery.of(context).size.height *
-                                            0.25,
+                                          0.25,
                                   fit: BoxFit.contain,
                                 ),
-
                                 const SizedBox(height: 20),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -92,9 +90,7 @@ class _OnBoardingState extends State<OnBoarding> {
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
-
                                 const SizedBox(height: 10),
-
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 40,
@@ -120,7 +116,6 @@ class _OnBoardingState extends State<OnBoarding> {
                 },
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -138,16 +133,19 @@ class _OnBoardingState extends State<OnBoarding> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
                 children: [
                   TextButton(
-                    onPressed: () =>
-                        Navigator.pushReplacementNamed(context, "welcome"),
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool("seenOnboarding", true);
+
+                      if (!context.mounted) return;
+                      Navigator.pushReplacementNamed(context, "welcome");
+                    },
                     child: Text(
                       l10n.skip,
                       style: const TextStyle(color: AppColors.lightGrey),
@@ -155,12 +153,20 @@ class _OnBoardingState extends State<OnBoarding> {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () => currentPage == pages.length - 1
-                        ? Navigator.pushReplacementNamed(context, "welcome")
-                        : controller.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
-                          ),
+                    onPressed: () async {
+                      if (currentPage == pages.length - 1) {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool("seenOnboarding", true);
+
+                        if (!context.mounted) return;
+                        Navigator.pushReplacementNamed(context, "welcome");
+                      } else {
+                        controller.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.ease,
+                        );
+                      }
+                    },
                     child: Text(
                       currentPage == pages.length - 1
                           ? l10n.getStarted

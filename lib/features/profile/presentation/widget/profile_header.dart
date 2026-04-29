@@ -20,15 +20,12 @@ class ProfileHeader extends StatelessWidget {
             builder: (context, user, child) {
               return CircleAvatar(
                 radius: 40,
-                backgroundImage: user.image != null
-                    ? FileImage(user.image!)
-                    : null,
+                backgroundImage:
+                    user.image != null ? FileImage(user.image!) : null,
               );
             },
           ),
-
           const SizedBox(height: 15),
-
           Text(
             name,
             style: const TextStyle(
@@ -37,7 +34,6 @@ class ProfileHeader extends StatelessWidget {
               color: AppColors.secondary,
             ),
           ),
-
           Text(
             email,
             style: const TextStyle(
@@ -46,9 +42,7 @@ class ProfileHeader extends StatelessWidget {
               color: AppColors.secondary,
             ),
           ),
-
           const SizedBox(height: 15),
-
           OutlinedButton(
             onPressed: () {
               Navigator.push(

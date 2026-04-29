@@ -1,3 +1,4 @@
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
@@ -63,9 +64,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 30),
-
               Text(
                 l10n.email,
                 style: const TextStyle(
@@ -74,9 +73,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   color: AppColors.black,
                 ),
               ),
-
               const SizedBox(height: 5),
-
               CustomTextForm(
                 hinttext: l10n.emailExample,
                 mycontroller: email,
@@ -94,19 +91,22 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 20),
               const Padding(padding: EdgeInsets.only(bottom: 10)),
-
               CustomButtonAuth(
-                title: l10n.sendCode,
-                color: AppColors.orange,
-                onPressed: () {
-                  if (formState.currentState!.validate()) {
-                    Navigator.of(context).pushReplacementNamed("varification");
-                  }
-                },
-              ),
+                  title: l10n.sendCode,
+                  color: AppColors.orange,
+                  onPressed: () async {
+                    if (formState.currentState!.validate()) {
+                      await ApiService().forgotPassword(email.text);
+                      if (!context.mounted) return;
+                      Navigator.pushReplacementNamed(
+                        context,
+                        "varification",
+                        arguments: email.text,
+                      );
+                    }
+                  }),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
@@ -8,6 +9,7 @@ import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -18,7 +20,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   TextEditingController username = TextEditingController();
-  TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController confirmpass = TextEditingController();
@@ -242,24 +243,69 @@ class _EditProfileState extends State<EditProfile> {
                         child: CustomButtonAuth(
                           title: l10n.save,
                           color: AppColors.orange,
-                          onPressed: () {
+                          onPressed: () async {
                             if (formState.currentState!.validate()) {
                               final user = context.read<UserProvider>();
 
-                              context.read<UserProvider>().setUser(
-                                    username.text.isEmpty
-                                        ? user.name
-                                        : username.text,
-                                    email.text.isEmpty
-                                        ? user.email
-                                        : email.text,
-                                    pass.text.isEmpty
-                                        ? user.password
-                                        : pass.text,
-                                    newImage: _image ?? user.image,
-                                  );
+                              try {
+                                final response =
+                                    await ApiService().updateProfile(
+                                  name: username.text.isEmpty
+                                      ? user.name
+                                      : username.text,
+                                  email: email.text.isEmpty
+                                      ? user.email
+                                      : email.text,
+                                  password:
+                                      pass.text.isEmpty ? null : pass.text,
+                                  image: _image,
+                                );
 
-                              Navigator.pop(context);
+                                if (!context.mounted) return;
+
+                                if (response.statusCode == 200 ||
+                                    response.statusCode == 201) {
+                                  context.read<UserProvider>().setUser(
+                                        username.text.isEmpty
+                                            ? user.name
+                                            : username.text,
+                                        email.text.isEmpty
+                                            ? user.email
+                                            : email.text,
+                                        pass.text.isEmpty
+                                            ? user.password
+                                            : pass.text,
+                                        newImage: _image ?? user.image,
+                                      );
+
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  await prefs.setString("name", username.text);
+                                  await prefs.setString("email", email.text);
+                                  if (!context.mounted) return;
+                                  if (_image != null) {
+                                    final user = context.read<UserProvider>();
+
+                                    await prefs.setString(
+                                      "image_${user.email}",
+                                      _image!.path,
+                                    );
+                                  }
+
+                                  if (!context.mounted) return;
+                                  Navigator.pop(context);
+                                } else {
+                                  throw Exception();
+                                }
+                              } catch (e) {
+                                if (!context.mounted) return;
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Update failed")),
+                                );
+                              }
                             }
                           },
                         ),

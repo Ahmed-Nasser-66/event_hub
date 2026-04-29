@@ -1,13 +1,12 @@
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/features/widgets/custom_logo_auth.dart';
 import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
-import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -281,7 +280,7 @@ class _SignupState extends State<Signup> {
             CustomButtonAuth(
               title: l10n.signUpButton,
               color: AppColors.orange,
-              onPressed: () {
+              onPressed: () async {
                 if (!value) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(l10n.agreePrivacyPolicy)),
@@ -290,27 +289,30 @@ class _SignupState extends State<Signup> {
                 }
 
                 if (formState.currentState!.validate()) {
-                  context.read<UserProvider>().registerUser(
-                        username.text,
-                        email.text,
-                        pass.text,
-                        confirmpass.text,
+                  final api = ApiService();
+                  try {
+                    final response = await api.register(
+                      username.text,
+                      email.text,
+                      pass.text,
+                    );
+
+                    if (response.statusCode == 200 ||
+                        response.statusCode == 201) {
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(l10n.accountCreated)),
                       );
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        l10n.accountCreated,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                      backgroundColor: AppColors.green,
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                  Navigator.of(context).pushReplacementNamed("login");
+                      Navigator.of(context).pushReplacementNamed("login");
+                    } else {
+                      throw Exception("Register failed");
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Signup failed")),
+                    );
+                  }
                 }
               },
             ),

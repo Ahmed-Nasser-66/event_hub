@@ -22,11 +22,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final userProvider = UserProvider();
+  await userProvider.loadUser();
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppLanguageProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => userProvider),
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),
@@ -50,8 +55,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
-      // ignore: use_build_context_synchronously
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AppLanguageProvider>().loadLanguage();
     });
   }

@@ -1,4 +1,4 @@
-import 'package:event_hub/core/api/api_service.dart';
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
@@ -17,14 +17,12 @@ class _VarificationOtpState extends State<VarificationOtp> {
   bool isLoading = false;
   bool isResending = false;
 
-  /// 🔥 تخزين OTP
   List<String> otp = ["", "", "", ""];
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    /// 🔥 استلام الإيميل
     final email = ModalRoute.of(context)?.settings.arguments as String? ?? "";
 
     return Scaffold(
@@ -42,7 +40,6 @@ class _VarificationOtpState extends State<VarificationOtp> {
           padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
           child: ListView(
             children: [
-              /// 🔹 Title
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -65,10 +62,7 @@ class _VarificationOtpState extends State<VarificationOtp> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 30),
-
-              /// 🔥 OTP INPUT
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(4, (index) {
@@ -101,7 +95,7 @@ class _VarificationOtpState extends State<VarificationOtp> {
                           if (index < 3) {
                             FocusScope.of(context).nextFocus();
                           } else {
-                            FocusScope.of(context).unfocus(); // 👈 مهم
+                            FocusScope.of(context).unfocus();
                           }
                         }
                       },
@@ -109,10 +103,7 @@ class _VarificationOtpState extends State<VarificationOtp> {
                   );
                 }),
               ),
-
               const SizedBox(height: 20),
-
-              /// 🔹 Resend
               InkWell(
                 onTap: isResending
                     ? null
@@ -122,8 +113,7 @@ class _VarificationOtpState extends State<VarificationOtp> {
                         final api = ApiService();
 
                         try {
-                          await api.sendOtp(email);
-
+                          await api.forgotPassword(email);
                           if (!context.mounted) return;
 
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -157,14 +147,10 @@ class _VarificationOtpState extends State<VarificationOtp> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
-              /// 🔥 BUTTON
               CustomButtonAuth(
                 title: l10n.goToResetPassword,
                 color: AppColors.orange,
-
                 onPressed: isLoading
                     ? null
                     : () async {
@@ -183,27 +169,29 @@ class _VarificationOtpState extends State<VarificationOtp> {
                         final api = ApiService();
 
                         try {
-                          final response = await api.verifyOtp(
-                            email,
-                            enteredOtp,
-                          );
-                          if (!context.mounted) return;
+                          final response =
+                              await api.verifyOtp(email, enteredOtp);
 
-                          if (response.data["status"] == "success") {
+                          final data = response.data;
+                          if (!context.mounted) return;
+                          if (data["success"] == true) {
                             Navigator.pushReplacementNamed(
                               context,
                               "restpassword",
+                              arguments: {
+                                "email": email,
+                                "code": enteredOtp,
+                              },
                             );
                           } else {
-                            throw Exception();
+                            throw Exception(data["message"]);
                           }
                         } catch (e) {
-                          if (!mounted) return;
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(l10n.invalidOtp)),
                           );
                         }
-
                         setState(() => isLoading = false);
                       },
               ),

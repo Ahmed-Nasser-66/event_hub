@@ -1,11 +1,10 @@
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/features/widgets/text_form_field.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
-import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RestPassword extends StatefulWidget {
   const RestPassword({super.key});
@@ -29,6 +28,10 @@ class _RestPasswordState extends State<RestPassword> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    final email = args["email"];
+    final code = args["code"];
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -67,9 +70,7 @@ class _RestPasswordState extends State<RestPassword> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 30),
-
               Text(
                 l10n.newPassword,
                 style: const TextStyle(
@@ -78,9 +79,7 @@ class _RestPasswordState extends State<RestPassword> {
                   color: AppColors.black,
                 ),
               ),
-
               const SizedBox(height: 8),
-
               CustomTextForm(
                 hinttext: l10n.enterPassword,
                 mycontroller: password,
@@ -104,9 +103,7 @@ class _RestPasswordState extends State<RestPassword> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 10),
-
               Text(
                 l10n.confirmPassword,
                 style: const TextStyle(
@@ -114,9 +111,7 @@ class _RestPasswordState extends State<RestPassword> {
                   fontSize: 14,
                 ),
               ),
-
               const SizedBox(height: 5),
-
               CustomTextForm(
                 hinttext: l10n.confirmPassword,
                 mycontroller: confirmPassword,
@@ -136,28 +131,40 @@ class _RestPasswordState extends State<RestPassword> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 20),
               const Padding(padding: EdgeInsets.only(bottom: 10)),
-
               CustomButtonAuth(
-                title: l10n.resetPassword,
-                color: AppColors.orange,
-                onPressed: () {
-                  if (formState.currentState!.validate()) {
-                    context.read<UserProvider>().updatePassword(password.text);
+                  title: l10n.resetPassword,
+                  color: AppColors.orange,
+                  onPressed: () async {
+                    if (formState.currentState!.validate()) {
+                      try {
+                        final response = await ApiService().resetPassword(
+                            email, code.toString(), password.text);
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l10n.passwordUpdatedSuccessfully),
-                        backgroundColor: AppColors.green,
-                      ),
-                    );
+                        if (response.data["success"] == true) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Password updated successfully"),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
 
-                    Navigator.of(context).pop("login");
-                  }
-                },
-              ),
+                          Navigator.pushReplacementNamed(context, "login");
+                        } else {
+                          throw Exception(response.data["message"]);
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("OTP غلط أو منتهي"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    }
+                  }),
             ],
           ),
         ),
