@@ -17,6 +17,15 @@ class NotificationCard extends StatelessWidget {
     this.isHighlighted = false,
   });
 
+  // 🔥 حل ذكي للصورة
+  ImageProvider _getImageProvider(String image) {
+    if (image.startsWith('http')) {
+      return NetworkImage(image);
+    } else {
+      return AssetImage(image);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,14 +39,14 @@ class NotificationCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 25,
-            backgroundColor: isHighlighted
-                ? AppColors.orange
-                : AppColors.secondary,
-            child: CircleAvatar(radius: 22, backgroundImage: AssetImage(image)),
+            backgroundColor:
+                isHighlighted ? AppColors.orange : AppColors.secondary,
+            child: CircleAvatar(
+              radius: 22,
+              backgroundImage: _getImageProvider(image), // 🔥 هنا الحل
+            ),
           ),
-
           const SizedBox(width: 12),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,9 +74,7 @@ class NotificationCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 4),
-
                 Text(
                   description,
                   style: const TextStyle(

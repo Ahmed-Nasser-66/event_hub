@@ -18,7 +18,10 @@ class _NotificationSheetState extends State<NotificationSheet> {
   void initState() {
     super.initState();
 
-    selected = context.read<NotificationProvider>().status;
+    final status = context.read<NotificationProvider>().status;
+
+    // 🔥 تحويل bool → String
+    selected = status ? "on" : "off";
   }
 
   @override
@@ -36,7 +39,8 @@ class _NotificationSheetState extends State<NotificationSheet> {
               children: [
                 Text(
                   l10n.notifications,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
@@ -44,26 +48,27 @@ class _NotificationSheetState extends State<NotificationSheet> {
                 ),
               ],
             ),
+
             const SizedBox(height: 20),
-            RadioGroup<String>(
-              groupValue: selected,
-              onChanged: (value) {
-                setState(() {
-                  selected = value!;
-                });
-              },
-              child: Column(
-                children: [
-                  buildOption(l10n.on, "on"),
-                  const SizedBox(height: 10),
-                  buildOption(l10n.off, "off"),
-                ],
-              ),
+
+            // ================= OPTIONS =================
+            Column(
+              children: [
+                buildOption(l10n.on, "on"),
+                const SizedBox(height: 10),
+                buildOption(l10n.off, "off"),
+              ],
             ),
+
             const SizedBox(height: 20),
+
+            // ================= BUTTON =================
             ElevatedButton(
               onPressed: () {
-                context.read<NotificationProvider>().setNotification(selected);
+                // 🔥 تحويل String → bool
+                final bool value = selected == "on";
+
+                context.read<NotificationProvider>().setNotification(value);
 
                 Navigator.pop(context);
               },
@@ -82,6 +87,7 @@ class _NotificationSheetState extends State<NotificationSheet> {
     );
   }
 
+  // ================= OPTION WIDGET =================
   Widget buildOption(String title, String value) {
     return InkWell(
       onTap: () {
@@ -112,10 +118,17 @@ class _NotificationSheetState extends State<NotificationSheet> {
                     selected == value ? FontWeight.bold : FontWeight.normal,
               ),
             ),
-            Radio<String>(
-              value: value,
-              activeColor: AppColors.orange,
-            ),
+            RadioGroup<String>(
+              groupValue: selected,
+              onChanged: (val) {
+                setState(() {
+                  selected = val!;
+                });
+              },
+              child: Radio<String>(
+                value: value,
+              ),
+            )
           ],
         ),
       ),

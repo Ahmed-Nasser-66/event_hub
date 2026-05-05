@@ -1,10 +1,12 @@
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/widgets/event_details_skeleton.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_details_model.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
+import 'package:event_hub/providers/notification_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -218,7 +220,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         ),
                         const SizedBox(height: 8),
                         if (_isLoadingDetails)
-                          const Center(child: CircularProgressIndicator())
+                          const EventDetailsSkeleton()
                         else
                           Text(
                             event.description.isNotEmpty
@@ -252,7 +254,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: _isLoadingDetails
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const EventDetailsSkeleton()
                       : (_details?.speakers.isEmpty ?? true)
                           ? Text(
                               locale.eventDetailsDescription) // fallback text
@@ -344,7 +346,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: _isLoadingDetails
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const EventDetailsSkeleton()
                       : (_details?.sponsors.isEmpty ?? true)
                           ? Text(
                               locale.eventDetailsDescription) // fallback text
@@ -483,11 +485,22 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       onPressed: () {
                         int count = int.tryParse(ticketController.text) ?? 1;
 
+                        // 🟢 1- إضافة التذكرة
                         context.read<TicketProvider>().addTicketFromEvent(
                               widget.event,
                               count,
                             );
 
+                        // 🔥 2- إضافة Notification (Fake)
+                        context
+                            .read<NotificationProvider>()
+                            .addLocalNotification(
+                              "Booking Confirmed",
+                              "You booked ${widget.event.title} ($count tickets)",
+                              image: widget.event.imageUrl, // 🔥 ده أهم سطر
+                            );
+
+                        // 🟢 3- Snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("${locale.bookNow} $count"),

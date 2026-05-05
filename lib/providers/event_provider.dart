@@ -54,24 +54,14 @@ class EventProvider extends ChangeNotifier {
 
   // ================== CATEGORY NAME ==================
   String categoryName(int? id) {
-    switch (id) {
-      case 1:
-        return 'Art';
-      case 2:
-        return 'Tech';
-      case 3:
-        return 'Gaming';
-      case 4:
-        return 'Business';
-      case 5:
-        return 'Fashion';
-      case 7:
-        return 'Education';
-      case 8:
-        return 'Sport';
-      default:
-        return 'Other';
-    }
+    if (id == null) return "Unknown";
+
+    final category = _categories.firstWhere(
+      (c) => c.id == id,
+      orElse: () => CategoryItem(id: 0, name: "Unknown", slug: ""),
+    );
+
+    return category.name;
   }
 
   // ================== FILTER ==================
@@ -117,7 +107,7 @@ class EventProvider extends ChangeNotifier {
     return result;
   }
 
-  // ================== 🔥 NEW ==================
+  // ================== UPCOMING ==================
   List<EventModel> get filteredUpcomingEvents {
     final now = DateTime.now();
 
@@ -127,15 +117,57 @@ class EventProvider extends ChangeNotifier {
     }).toList();
   }
 
+  // ================== 🌐 ONLINE EVENTS ==================
+  List<EventModel> get onlineEvents {
+    return filteredEvents
+        .where((e) => e.latitude == null || e.longitude == null)
+        .toList();
+  }
+
+  // ================== 📍 NEARBY ==================
   List<EventModel> get filteredNearbyEvents {
-    if (_userLat == null || _userLng == null) {
-      return [];
+    if (_userLat == null || _userLng == null) return [];
+
+    final list = filteredEvents
+        .where((e) => e.latitude != null && e.longitude != null)
+        .toList();
+
+    for (var e in list) {
+      e.distance ??= Geolocator.distanceBetween(
+        _userLat!,
+        _userLng!,
+        e.latitude!,
+        e.longitude!,
+      );
     }
 
-    return filteredEvents.where((event) {
-      return event.distance != null;
-    }).toList()
-      ..sort((a, b) => (a.distance ?? 0).compareTo(b.distance ?? 0));
+    list.sort((a, b) => a.distance!.compareTo(b.distance!));
+
+    return list;
+  }
+
+  // ================== DISTANCE ==================
+  void _calculateDistances() {
+    if (_userLat == null || _userLng == null) return;
+
+    for (var event in _allEvents) {
+      if (event.latitude != null && event.longitude != null) {
+        event.distance = Geolocator.distanceBetween(
+          _userLat!,
+          _userLng!,
+          event.latitude!,
+          event.longitude!,
+        );
+      }
+    }
+  }
+
+  void setUserLocation(double lat, double lng) {
+    _userLat = lat;
+    _userLng = lng;
+
+    _calculateDistances();
+    notifyListeners();
   }
 
   // ================== ACTIONS ==================
@@ -156,23 +188,7 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserLocation(double lat, double lng) {
-    _userLat = lat;
-    _userLng = lng;
-
-    for (var event in _allEvents) {
-      event.distance = Geolocator.distanceBetween(
-        lat,
-        lng,
-        event.latitude ?? 0,
-        event.longitude ?? 0,
-      );
-    }
-
-    notifyListeners();
-  }
-
-  // ================== SORT FUNCTIONS ==================
+  // ================== SORT ==================
 
   void sortBySmartChoice() {
     _isSortedBySmartChoice = true;
@@ -215,6 +231,8 @@ class EventProvider extends ChangeNotifier {
       if (response.data['success'] == true) {
         final List eventsJson = response.data['message']['data'] ?? [];
         _allEvents = eventsJson.map((e) => EventModel.fromJson(e)).toList();
+
+        _calculateDistances();
       }
 
       _isLoading = false;
@@ -253,6 +271,8 @@ class EventProvider extends ChangeNotifier {
       if (response.data['success'] == true) {
         final List eventsJson = response.data['message']['data'] ?? [];
         _allEvents = eventsJson.map((e) => EventModel.fromJson(e)).toList();
+
+        _calculateDistances();
 
         _state = EventsState.loaded;
         _errorMessage = null;

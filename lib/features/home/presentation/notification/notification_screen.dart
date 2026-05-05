@@ -3,14 +3,97 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/notification_card.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart'; // 🔥 الجديد
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
+
+  @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      if (!mounted) return;
+
+      context.read<NotificationProvider>().fetchNotifications();
+    });
+  }
+
+  // 🔥 format time
+  String formatTime(String? time) {
+    if (time == null || time.isEmpty) return "";
+
+    try {
+      final date = DateTime.parse(time);
+      return DateFormat('dd MMM, hh:mm a').format(date);
+    } catch (_) {
+      return time;
+    }
+  }
+
+  // 🔥 Skeleton Widget جوه نفس الملف
+  Widget buildSkeleton() {
+    return ListView.builder(
+      itemCount: 6,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Row(
+              children: [
+                // circle image
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 12),
+
+                // text
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 12,
+                        width: double.infinity,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 10,
+                        width: 150,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final provider = context.watch<NotificationProvider>();
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -18,83 +101,64 @@ class NotificationScreen extends StatelessWidget {
         backgroundColor: AppColors.grey,
         elevation: 0,
         leading: CustomBackButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Form(
-        child: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          child: ListView(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.notifications,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.secondary,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.notifications,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: AppColors.secondary,
               ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: provider.isLoading
+                  ? buildSkeleton() // 🔥 بدل spinner
 
-              NotificationCard(
-                title: l10n.eventReminder,
-                description: l10n.concertStartsSoon,
-                time: l10n.minutesAgo7,
-                image: AppAssets.ellipse1,
-                isHighlighted: true,
-              ),
-              NotificationCard(
-                title: l10n.bookingConfirmed,
-                description: l10n.bookingConfirmedDescription,
-                time: l10n.oneHourAgo,
-                image: AppAssets.ellipse2,
-                isHighlighted: true,
-              ),
-              NotificationCard(
-                title: l10n.specialOffer,
-                description: l10n.specialOfferDescription,
-                time: l10n.sevenHoursAgo,
-                image: AppAssets.ellipse3,
-              ),
-              NotificationCard(
-                title: l10n.locationUpdate,
-                description: l10n.locationUpdateDescription,
-                time: l10n.twelveHoursAgo,
-                image: AppAssets.ellipse4,
-              ),
-              NotificationCard(
-                title: l10n.eventCancellation,
-                description: l10n.eventCancellationDescription,
-                time: l10n.oneDayAgo,
-                image: AppAssets.ellipse2,
-              ),
-              NotificationCard(
-                title: l10n.newEventAvailable,
-                description: l10n.newEventAvailableDescription,
-                time: l10n.twoDaysAgo,
-                image: AppAssets.ellipse3,
-              ),
-              NotificationCard(
-                title: l10n.eventReminder,
-                description: l10n.eventReminderDescription,
-                time: l10n.threeDaysAgo,
-                image: AppAssets.ellipse4,
-              ),
-              NotificationCard(
-                title: l10n.ticketExpiringSoon,
-                description: l10n.ticketExpiringSoonDescription,
-                time: l10n.fourDaysAgo,
-                image: AppAssets.ellipse2,
-              ),
-            ],
-          ),
+                  : provider.notifications.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.notifications_off,
+                                size: 60,
+                                color: Colors.grey[400],
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                "No Notifications Yet",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: provider.notifications.length,
+                          itemBuilder: (context, index) {
+                            final n = provider.notifications[index];
+
+                            return NotificationCard(
+                              title: n.title,
+                              description: n.body,
+                              time: formatTime(n.time),
+                              image: n.image ?? AppAssets.ellipse1,
+                              isHighlighted: false,
+                            );
+                          },
+                        ),
+            ),
+          ],
         ),
       ),
     );
