@@ -292,12 +292,14 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
-                      height: 300,
+                      height: 320,
                       child: upcomingEvents.isEmpty
                           ? const Center(child: Text("No Events Found"))
                           : ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: upcomingEvents.length,
+                              itemCount: upcomingEvents.length > 5
+                                  ? 5
+                                  : upcomingEvents.length,
                               itemBuilder: (context, index) {
                                 return UpcomingEventCard(
                                   event: upcomingEvents[index],
@@ -341,7 +343,8 @@ class _HomeTabState extends State<HomeTab> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: nearbyEvents.length,
+                        itemCount:
+                            nearbyEvents.length > 5 ? 5 : nearbyEvents.length,
                         itemBuilder: (context, index) {
                           return NearbyEventCard(
                             event: nearbyEvents[index],

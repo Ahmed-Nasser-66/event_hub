@@ -55,11 +55,21 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                widget.event.image,
+
+              // ✅ التعديل الوحيد (fix crash)
+              child: Image.network(
+                widget.event.imageUrl ?? '',
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 200,
+                    width: double.infinity,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.image, color: Colors.grey),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 20),
@@ -77,7 +87,8 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                 const Icon(Icons.calendar_month, color: AppColors.orange),
                 const SizedBox(width: 8),
                 Text(
-                  DateFormat('dd MMM, yyyy').format(widget.event.date),
+                  DateFormat('dd MMM, yyyy')
+                      .format(widget.event.date ?? DateTime.now()),
                   style: const TextStyle(color: AppColors.lightGrey),
                 ),
               ],
@@ -194,7 +205,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                 ),
                 const Spacer(),
                 Text(
-                  "${ticketCount * widget.event.price} EGP",
+                  "${ticketCount * (widget.event.price ?? 0)} EGP",
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -232,7 +243,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                     elevation: 0,
                   ),
                   child: Text(
-                    "Confirm & Buy (${ticketCount * widget.event.price} EGP)",
+                    "Confirm & Buy (${ticketCount * (widget.event.price ?? 0)} EGP)",
                     style: const TextStyle(
                       fontSize: 18,
                       color: AppColors.secondary,

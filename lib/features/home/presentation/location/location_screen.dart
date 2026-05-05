@@ -82,7 +82,7 @@ class _LocationScreenState extends State<LocationScreen> {
             ),
             const SizedBox(height: 5),
             Text(
-              "${event.location} • ${event.category}",
+              "${event.location} • ${event.category ?? ''}", // ✅ تعديل
               style: const TextStyle(
                 color: AppColors.lightGrey,
                 fontSize: 14,
@@ -236,7 +236,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: AppColors.black)),
-                      subtitle: Text(event.category,
+                      subtitle: Text(event.category ?? '', // ✅ تعديل
                           style: const TextStyle(color: AppColors.lightGrey)),
                       onTap: () {
                         mapProvider.selectEvent(event);

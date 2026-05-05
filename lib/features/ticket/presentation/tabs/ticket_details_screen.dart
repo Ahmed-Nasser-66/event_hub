@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
@@ -55,8 +56,10 @@ class TicketDetailsScreen extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          ticket.image,
+                        child: Image.network(
+                          ticket.image.startsWith('http')
+                              ? ticket.image
+                              : 'https://via.placeholder.com/300',
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,

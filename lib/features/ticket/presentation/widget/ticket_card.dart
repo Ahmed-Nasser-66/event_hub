@@ -49,8 +49,10 @@ class TicketCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                image,
+              child: Image.network(
+                image.startsWith('http')
+                    ? image
+                    : 'https://via.placeholder.com/300',
                 height: 160,
                 width: double.infinity,
                 fit: BoxFit.cover,

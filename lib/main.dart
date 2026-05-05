@@ -6,9 +6,9 @@ import 'package:event_hub/features/auth/signup.dart';
 import 'package:event_hub/features/auth/varification_otp.dart';
 import 'package:event_hub/features/home/presentation/home_page.dart';
 import 'package:event_hub/features/home/presentation/notification/notification_screen.dart';
-import 'package:event_hub/features/profile/profile_tab.dart';
 import 'package:event_hub/features/onbording/onbording_screen.dart';
 import 'package:event_hub/features/onbording/welcome_screen.dart';
+import 'package:event_hub/features/profile/profile_tab.dart';
 import 'package:event_hub/features/splash/splach_screen.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/app_language_provider.dart';
@@ -32,7 +32,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AppLanguageProvider()),
         ChangeNotifierProvider(create: (_) => userProvider),
-        ChangeNotifierProvider(create: (_) => EventProvider()),
+        ChangeNotifierProvider(
+            create: (_) => EventProvider()..refreshEvents()), // ✅ تعديل
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),

@@ -1,6 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart';
 import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +15,18 @@ class UpcomingEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = context.watch<FavoriteProvider>();
+    final eventProvider = context.read<EventProvider>();
     final bool isFavorite = favoriteProvider.isExist(event);
+
+    String formatTime(String? time) {
+      if (time == null) return '';
+      try {
+        final parsed = DateTime.parse(time);
+        return DateFormat('hh:mm a').format(parsed);
+      } catch (_) {
+        return '';
+      }
+    }
 
     return GestureDetector(
       onTap: () {
@@ -49,11 +61,19 @@ class UpcomingEventCard extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      event.image,
-                      height: 130,
+                    child: Image.network(
+                      event.imageUrl ?? '',
+                      height: 110,
                       width: double.infinity,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          height: 110,
+                          width: double.infinity,
+                          color: Colors.grey[300],
+                          child: const Icon(Icons.image, color: Colors.grey),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -85,6 +105,7 @@ class UpcomingEventCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 🔥 category (من الـ Provider)
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -95,14 +116,17 @@ class UpcomingEventCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      event.category,
+                      eventProvider.categoryName(event.categoryId), // ✅ تعديل
                       style: const TextStyle(
                         color: AppColors.secondary,
                         fontSize: 11,
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 8),
+
+                  // title
                   Text(
                     event.title,
                     style: const TextStyle(
@@ -111,47 +135,85 @@ class UpcomingEventCard extends StatelessWidget {
                       color: AppColors.black,
                     ),
                   ),
+
                   const SizedBox(height: 6),
-                  Row(
+
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 6,
                     children: [
-                      const Icon(
-                        Icons.location_on,
-                        size: 14,
-                        color: AppColors.secondary,
-                      ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          event.location,
-                          style: const TextStyle(
-                            color: AppColors.secondary,
-                            fontSize: 12,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.location_on,
+                              size: 14, color: AppColors.secondary),
+                          const SizedBox(width: 4),
+                          Text(
+                            event.location,
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        ],
                       ),
-                      const SizedBox(width: 6),
-                      const Icon(
-                        Icons.access_time,
-                        size: 14,
-                        color: AppColors.secondary,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.calendar_today,
+                              size: 14, color: AppColors.secondary),
+                          const SizedBox(width: 4),
+                          Text(
+                            DateFormat('dd MMM')
+                                .format(event.date ?? DateTime.now()),
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        DateFormat('dd MMM, yyyy').format(event.date),
-                        style: const TextStyle(
-                          color: AppColors.secondary,
-                          fontSize: 12,
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.access_time,
+                              size: 14, color: AppColors.secondary),
+                          const SizedBox(width: 4),
+                          Text(
+                            "${formatTime(event.startTime)} - ${formatTime(event.endTime)}",
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.wifi,
+                              size: 14, color: AppColors.secondary),
+                          const SizedBox(width: 4),
+                          Text(
+                            event.type == 'online' ? 'Online' : 'In Person',
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 10),
+
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      // 🔥 تم تغيير العملة هنا من $ إلى EGP
-                      "${event.price.toStringAsFixed(0)} EGP",
+                      event.priceType == 'free'
+                          ? 'FREE'
+                          : "${(event.price ?? 0).toStringAsFixed(0)} EGP",
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -159,6 +221,7 @@ class UpcomingEventCard extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 12),
                 ],
               ),

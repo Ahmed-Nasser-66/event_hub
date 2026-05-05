@@ -1,7 +1,9 @@
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/model/event_details_model.dart';
 import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +23,15 @@ class EventDetailsScreen extends StatefulWidget {
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   int ticketCount = 1;
   TextEditingController ticketController = TextEditingController(text: "1");
+
+  EventDetailsModel? _details;
+  bool _isLoadingDetails = false;
+
   @override
   void initState() {
     super.initState();
     ticketController.text = "1";
+    _loadEventDetails();
   }
 
   @override
@@ -33,10 +40,32 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     super.dispose();
   }
 
+  Future<void> _loadEventDetails() async {
+    setState(() => _isLoadingDetails = true);
+
+    final provider = context.read<EventProvider>();
+    final data = await provider.fetchEventDetails(widget.event.id);
+
+    if (mounted) {
+      setState(() {
+        _details = data;
+        _isLoadingDetails = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
-    double totalPrice = widget.event.price * ticketCount;
+    final eventProvider = context.read<EventProvider>();
+
+    final event = _details?.event ?? widget.event;
+
+    // نضمن إن الـ Category يظهر بالقيمة الصحيحة
+    final String category = widget.event.category ??
+        eventProvider.categoryName(widget.event.categoryId);
+
+    double totalPrice = (event.price ?? 0) * ticketCount;
 
     final lightGreyColor = AppColors.cardGrey.withAlpha(128);
 
@@ -49,10 +78,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 🔥 IMAGE WITH BACK & FAVORITE BUTTONS
                 Stack(
                   children: [
-                    Image.asset(
-                      widget.event.image,
+                    Image.network(
+                      event.imageUrl ??
+                          'https://eventhub.huma-volve.com/storage/events/default.png',
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.35,
                       fit: BoxFit.cover,
@@ -108,26 +139,30 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Category Badge - يظهر القيمة الصحيحة من الـ API أو من الـ Widget
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
-                            vertical: 4,
+                            vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.black),
-                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: AppColors.secondary),
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
                           ),
                           child: Text(
-                            widget.event.category.toLowerCase(),
+                            category,
                             style: const TextStyle(
-                              color: AppColors.black,
+                              color: AppColors.secondary,
                               fontSize: 12,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                         const SizedBox(height: 12),
+                        // Title
                         Text(
-                          widget.event.title,
+                          event.title,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -135,6 +170,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ),
                         ),
                         const SizedBox(height: 24),
+                        // Location & Date Row
                         Row(
                           children: [
                             const Icon(
@@ -143,38 +179,35 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               size: 18,
                             ),
                             const SizedBox(width: 5),
-
-                            // 🔥 ده المهم
                             Expanded(
                               child: Text(
-                                widget.event.location,
+                                event.location,
                                 style: const TextStyle(
                                   color: AppColors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),
-                                overflow:
-                                    TextOverflow.ellipsis, // 👈 يمنع overflow
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-
                             const SizedBox(width: 10),
-
                             const Icon(
                               Icons.access_time,
                               color: AppColors.black,
                               size: 18,
                             ),
                             const SizedBox(width: 5),
-
                             Text(
-                              DateFormat('dd MMM, yyyy')
-                                  .format(widget.event.date),
+                              event.date != null
+                                  ? DateFormat('dd MMM, yyyy')
+                                      .format(event.date!)
+                                  : '',
                               style: const TextStyle(color: AppColors.black),
                             ),
                           ],
                         ),
                         const SizedBox(height: 24),
+                        // About Event Section
                         Text(
                           locale.aboutEvent,
                           style: const TextStyle(
@@ -184,18 +217,24 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                          locale.eventDetailsDescription,
-                          style: const TextStyle(
-                            color: AppColors.black,
-                            height: 1.5,
+                        if (_isLoadingDetails)
+                          const Center(child: CircularProgressIndicator())
+                        else
+                          Text(
+                            event.description.isNotEmpty
+                                ? event.description
+                                : locale.eventDetailsDescription,
+                            style: const TextStyle(
+                              color: AppColors.black,
+                              height: 1.5,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
+                // Speakers Section
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -212,21 +251,84 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     color: lightGreyColor,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Column(
-                    children: [
-                      buildSpeakerCard(
-                        context,
-                        locale.omarTarek,
-                        locale.science,
-                        AppAssets.speaker,
-                      ),
-                      const SizedBox(height: 15),
-                      buildSpeakerCard(
-                          context, "Majd", locale.science, AppAssets.speaker1),
-                    ],
-                  ),
+                  child: _isLoadingDetails
+                      ? const Center(child: CircularProgressIndicator())
+                      : (_details?.speakers.isEmpty ?? true)
+                          ? Text(
+                              locale.eventDetailsDescription) // fallback text
+                          : Column(
+                              children: _details!.speakers.map((speaker) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 15),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.white,
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          child: Image.network(
+                                            "https://eventhub.huma-volve.com/storage/${speaker.profilePicture}",
+                                            width: 80,
+                                            height: 80,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Image.asset(
+                                              AppAssets.speaker,
+                                              width: 80,
+                                              height: 80,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 15),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              locale.speakerName,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  color: AppColors.black),
+                                            ),
+                                            Text(
+                                              speaker.name,
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors.black),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              locale.topic,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  color: AppColors.black),
+                                            ),
+                                            Text(
+                                              speaker.sessionTitle ?? '',
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors.black),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                 ),
                 const SizedBox(height: 20),
+                // Sponsors Section
                 const Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Text(
@@ -241,20 +343,42 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     color: lightGreyColor,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        buildSponsorImage(AppAssets.sponsors),
-                        const SizedBox(width: 15),
-                        buildSponsorImage(AppAssets.sponsors1),
-                        const SizedBox(width: 15),
-                        buildSponsorImage(AppAssets.sponsors),
-                        const SizedBox(width: 15),
-                        buildSponsorImage(AppAssets.sponsors1),
-                      ],
-                    ),
-                  ),
+                  child: _isLoadingDetails
+                      ? const Center(child: CircularProgressIndicator())
+                      : (_details?.sponsors.isEmpty ?? true)
+                          ? Text(
+                              locale.eventDetailsDescription) // fallback text
+                          : SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: _details!.sponsors.map((s) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Container(
+                                        color: AppColors.white,
+                                        child: Image.network(
+                                          "https://eventhub.huma-volve.com/storage/${s.logo}",
+                                          width: 70,
+                                          height: 70,
+                                          fit: BoxFit.contain,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Image.asset(
+                                            AppAssets.sponsors,
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                 ),
                 const SizedBox(height: 120),
               ],

@@ -1,5 +1,6 @@
+import 'package:event_hub/core/api/auth_api_service.dart';
+import 'package:event_hub/core/api/events_service.dart';
 import 'package:event_hub/features/home/presentation/location/location_service.dart';
-import 'package:event_hub/model/event_data.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,8 +26,30 @@ class MapProvider extends ChangeNotifier {
   // ✅ أضف هذا المتغير لمنع الطلبات المتكررة
   bool _isLocationFetched = false;
 
+  // ✅ قائمة الفعاليات من الـ API
+  List<EventModel> _allEvents = [];
+
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+
+  // ✅ تحميل الفعاليات من الـ API
+  Future<void> loadEventsFromApi() async {
+    try {
+      final apiService = ApiService();
+      final eventsService = EventsService(apiService.dio);
+      final response = await eventsService.getAllEvents();
+
+      if (response.data['success'] == true) {
+        final List<dynamic> eventsJson = response.data['message']['data'];
+        _allEvents =
+            eventsJson.map((json) => EventModel.fromJson(json)).toList();
+        _loadEventsMarkers();
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Load events error: $e");
+    }
+  }
 
   Future<void> initializeMap() async {
     // ✅ منع الطلبات المتكررة: لو الموقع جابته قبل كده، متجيبوش تاني
@@ -55,7 +78,8 @@ class MapProvider extends ChangeNotifier {
         debugPrint("Map style error: $e");
       }
 
-      _loadEventsMarkers();
+      // ✅ تحميل الفعاليات من الـ API الأول، وبعدين العلامات
+      await loadEventsFromApi();
     } catch (e) {
       _errorMessage = e.toString();
       debugPrint("Initialize map error: $e");
@@ -103,12 +127,12 @@ class MapProvider extends ChangeNotifier {
   // ✅ دالة للتحقق من صحة الموقع
   bool get hasLocation => currentLocation != null;
 
-  // ✅ تحميل الـ markers من repository
+  // ✅ تحميل الـ markers من القائمة الداخلية
   void _loadEventsMarkers() {
-    markers = EventRepository.allEvents.map((event) {
+    markers = _allEvents.map((event) {
       return Marker(
-        markerId: MarkerId(event.id),
-        position: LatLng(event.latitude, event.longitude),
+        markerId: MarkerId(event.id.toString()),
+        position: LatLng(event.latitude ?? 0.0, event.longitude ?? 0.0),
         infoWindow: InfoWindow(title: event.title),
         onTap: () {
           selectEvent(event);
@@ -124,18 +148,18 @@ class MapProvider extends ChangeNotifier {
     } else {
       final lowerQuery = query.toLowerCase();
 
-      final startMatches = EventRepository.allEvents.where((e) {
+      final startMatches = _allEvents.where((e) {
         return e.title.toLowerCase().startsWith(lowerQuery) ||
-            e.category.toLowerCase().startsWith(lowerQuery) ||
+            (e.category ?? '').toLowerCase().startsWith(lowerQuery) ||
             e.location.toLowerCase().startsWith(lowerQuery);
       }).toList();
 
-      final containsMatches = EventRepository.allEvents.where((e) {
+      final containsMatches = _allEvents.where((e) {
         return (e.title.toLowerCase().contains(lowerQuery) ||
-                e.category.toLowerCase().contains(lowerQuery) ||
+                (e.category ?? '').toLowerCase().contains(lowerQuery) ||
                 e.location.toLowerCase().contains(lowerQuery)) &&
             !(e.title.toLowerCase().startsWith(lowerQuery) ||
-                e.category.toLowerCase().startsWith(lowerQuery) ||
+                (e.category ?? '').toLowerCase().startsWith(lowerQuery) ||
                 e.location.toLowerCase().startsWith(lowerQuery));
       }).toList();
 
@@ -148,14 +172,14 @@ class MapProvider extends ChangeNotifier {
   void selectEvent(EventModel event) {
     selectedEvent = event;
 
-    final destination = LatLng(event.latitude, event.longitude);
+    final destination = LatLng(event.latitude ?? 0.0, event.longitude ?? 0.0);
 
     controller?.animateCamera(
       CameraUpdate.newLatLngZoom(destination, 14),
     );
 
     controller?.showMarkerInfoWindow(
-      MarkerId(event.id),
+      MarkerId(event.id.toString()),
     );
 
     if (currentLocation != null) {

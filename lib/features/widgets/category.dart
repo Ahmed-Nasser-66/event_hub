@@ -8,25 +8,29 @@ import 'package:provider/provider.dart';
 class Category extends StatelessWidget {
   const Category({super.key});
 
-  final List<Map<String, String>> _categories = const [
-    {"image": "assets/icon/all.svg", "name": "all"},
-    {"image": "assets/icon/games.svg", "name": "gaming"},
-    {"image": "assets/icon/tech.svg", "name": "tech"},
-    {"image": "assets/icon/business.svg", "name": "business"},
-    {"image": "assets/icon/education.svg", "name": "education"},
-    {"image": "assets/icon/arts.svg", "name": "arts"},
-    {"image": "assets/icon/sports.svg", "name": "sports"},
-    {"image": "assets/icon/fashion.svg", "name": "fashion"},
-  ];
+  static const Map<String, String> _categoryIcons = {
+    'all': 'assets/icon/all.svg',
+    'gaming': 'assets/icon/games.svg',
+    'tech': 'assets/icon/tech.svg',
+    'business': 'assets/icon/business.svg',
+    'education': 'assets/icon/education.svg',
+    'art': 'assets/icon/arts.svg',
+    'sport': 'assets/icon/sports.svg',
+    'fashion': 'assets/icon/fashion.svg',
+  };
 
-  String _getCategoryName(BuildContext context, String key) {
+  String _getIconForCategory(String slug) {
+    return _categoryIcons[slug.toLowerCase()] ?? 'assets/icon/all.svg';
+  }
+
+  String _getCategoryName(BuildContext context, String name) {
     final l10n = AppLocalizations.of(context)!;
-    switch (key) {
+    switch (name.toLowerCase()) {
       case 'all':
         return "All";
       case 'gaming':
         return l10n.gaming;
-      case 'arts':
+      case 'art':
         return l10n.arts;
       case 'business':
         return l10n.business;
@@ -34,68 +38,59 @@ class Category extends StatelessWidget {
         return l10n.tech;
       case 'fashion':
         return l10n.fashion;
-      case 'sports':
+      case 'sport':
         return l10n.sports;
       case 'education':
         return l10n.education;
       default:
-        return key;
-    }
-  }
-
-  String _getRawName(String key) {
-    switch (key) {
-      case 'gaming':
-        return 'Gaming';
-      case 'tech':
-        return 'Tech';
-      case 'business':
-        return 'Business';
-      case 'education':
-        return 'Education';
-      case 'arts':
-        return 'Arts';
-      case 'sports':
-        return 'Sports';
-      case 'fashion':
-        return 'Fashion';
-      default:
-        return 'All';
+        return name;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final eventProvider = context.watch<EventProvider>();
+    final categories = eventProvider.categories;
+
+    if (categories.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.categories,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ],
+        Text(
+          AppLocalizations.of(context)!.categories,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         SizedBox(
           height: 105,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: _categories.length,
+            itemCount: categories.length + 1,
             itemBuilder: (context, index) {
-              final category = _categories[index];
-              final rawName = _getRawName(category["name"]!);
-              bool isSelected = eventProvider.selectedCategory == rawName;
+              final isAll = index == 0;
+              final category = isAll ? null : categories[index - 1];
+              final categoryId = category?.id;
+              final categoryName = category?.name ?? 'Other';
+              final categorySlug = category?.slug ?? 'all';
+
+              final isSelected = isAll
+                  ? eventProvider.selectedCategoryId == null
+                  : eventProvider.selectedCategoryId == categoryId;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: GestureDetector(
                   onTap: () {
-                    eventProvider.setCategory(rawName);
+                    if (isAll) {
+                      eventProvider.selectCategory(
+                        CategoryItem(id: 0, name: 'All', slug: 'all'),
+                      );
+                    } else {
+                      eventProvider.selectCategory(category!);
+                    }
                   },
                   child: Column(
                     children: [
@@ -104,41 +99,27 @@ class Category extends StatelessWidget {
                         height: 60,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: isSelected
-                              ? AppColors.orange
-                              : AppColors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.black.withValues(alpha: 0.05),
-                              blurRadius: 4,
-                              spreadRadius: 1,
-                            ),
-                          ],
+                          color:
+                              isSelected ? AppColors.orange : AppColors.white,
                         ),
                         child: Center(
-                          child:
-                              (category["name"] == "all" &&
-                                  category["image"] == "")
-                              ? Icon(
-                                  Icons.grid_view_rounded,
-                                  color: isSelected
-                                      ? AppColors.white
-                                      : AppColors.grey,
-                                )
-                              : SvgPicture.asset(category["image"]!, width: 30),
+                          child: SvgPicture.asset(
+                            isAll
+                                ? _categoryIcons['all']!
+                                : _getIconForCategory(categorySlug),
+                            width: 30,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        _getCategoryName(context, category["name"]!),
+                        isAll ? "All" : _getCategoryName(context, categoryName),
                         style: TextStyle(
                           fontSize: 13,
-                          fontWeight: isSelected
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                          color: isSelected
-                              ? AppColors.orange
-                              : AppColors.black,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.normal,
+                          color:
+                              isSelected ? AppColors.orange : AppColors.black,
                         ),
                       ),
                     ],
@@ -148,7 +129,6 @@ class Category extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 5),
       ],
     );
   }

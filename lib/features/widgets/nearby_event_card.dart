@@ -1,6 +1,7 @@
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/tabs/event_details_screen.dart';
 import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +15,19 @@ class NearbyEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = context.read<FavoriteProvider>();
+    final eventProvider = context.read<EventProvider>();
     final bool isFavorite = context.watch<FavoriteProvider>().isExist(event);
+
+    // 🔥 Format time
+    String formatTime(String? time) {
+      if (time == null) return '';
+      try {
+        final parsed = DateTime.parse(time);
+        return DateFormat('hh:mm a').format(parsed);
+      } catch (_) {
+        return '';
+      }
+    }
 
     return GestureDetector(
       onTap: () {
@@ -45,11 +58,19 @@ class NearbyEventCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    event.image,
+                  child: Image.network(
+                    event.imageUrl ?? '',
                     height: 100,
                     width: 120,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 100,
+                        width: 120,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.image, color: Colors.grey),
+                      );
+                    },
                   ),
                 ),
                 Positioned(
@@ -76,10 +97,13 @@ class NearbyEventCard extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 12),
+
+            // 🔥 INFO
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Category
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
@@ -90,14 +114,17 @@ class NearbyEventCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      event.category,
+                      eventProvider.categoryName(event.categoryId), // ✅ FIX
                       style: const TextStyle(
                         fontSize: 10,
                         color: AppColors.secondary,
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 4),
+
+                  // Title
                   Text(
                     event.title,
                     style: const TextStyle(
@@ -108,7 +135,10 @@ class NearbyEventCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
+
                   const SizedBox(height: 4),
+
+                  // Location
                   Row(
                     children: [
                       const Icon(
@@ -129,7 +159,32 @@ class NearbyEventCard extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 4),
+
+                  // Date
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.calendar_today,
+                        size: 12,
+                        color: AppColors.secondary,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        DateFormat('dd MMM, yyyy')
+                            .format(event.date ?? DateTime.now()),
+                        style: const TextStyle(
+                          color: AppColors.secondary,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  // 🔥 Time Range
                   Row(
                     children: [
                       const Icon(
@@ -139,7 +194,7 @@ class NearbyEventCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('dd MMM, yyyy').format(event.date),
+                        "${formatTime(event.startTime)} - ${formatTime(event.endTime)}",
                         style: const TextStyle(
                           color: AppColors.secondary,
                           fontSize: 11,
@@ -147,11 +202,27 @@ class NearbyEventCard extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  const SizedBox(height: 4),
+
+                  // 🔥 Event Type
+                  Text(
+                    event.type == 'online' ? 'Online' : 'In Person',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.secondary,
+                    ),
+                  ),
+
                   const SizedBox(height: 8),
+
+                  // 🔥 Price
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "${event.price.toStringAsFixed(0)} EGP",
+                      event.priceType == 'free'
+                          ? 'FREE'
+                          : "${(event.price ?? 0).toStringAsFixed(0)} EGP",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.orange,
