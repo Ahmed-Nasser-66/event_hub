@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 class TicketCard extends StatelessWidget {
   final String title;
   final String date;
-  final String time;
+  final String startTime;
+  final String endTime;
   final String location;
   final String price;
   final String tickets;
@@ -25,7 +26,8 @@ class TicketCard extends StatelessWidget {
     required this.image,
     required this.onTap,
     required this.bookingId,
-    required this.time,
+    required this.startTime,
+    required this.endTime,
   });
 
   @override
@@ -34,7 +36,13 @@ class TicketCard extends StatelessWidget {
     DateTime parsedDate = DateTime.parse(date);
 
     String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
+    String formattedStartTime = DateFormat(
+      'hh:mm a',
+    ).format(DateTime.parse(startTime));
 
+    String formattedEndTime = DateFormat(
+      'hh:mm a',
+    ).format(DateTime.parse(endTime));
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -83,7 +91,7 @@ class TicketCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      time,
+                      "$formattedStartTime - $formattedEndTime",
                       style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.lightGrey,

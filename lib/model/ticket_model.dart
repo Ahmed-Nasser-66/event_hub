@@ -8,7 +8,8 @@ class TicketModel {
   final String image;
   final String section;
   final String row;
-  final String time;
+  final String startTime;
+  final String endTime;
   final String price;
   int ticketsCount;
 
@@ -22,8 +23,9 @@ class TicketModel {
     required this.image,
     required this.section,
     required this.row,
-    required this.time,
     required this.ticketsCount,
     required this.price,
+    required this.startTime,
+    required this.endTime,
   });
 }

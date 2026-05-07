@@ -7,7 +7,7 @@ import 'package:event_hub/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart'; // 🔥 الجديد
+import 'package:shimmer/shimmer.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -28,7 +28,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     });
   }
 
-  // 🔥 format time
   String formatTime(String? time) {
     if (time == null || time.isEmpty) return "";
 
@@ -40,7 +39,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     }
   }
 
-  // 🔥 Skeleton Widget جوه نفس الملف
   Widget buildSkeleton() {
     return ListView.builder(
       itemCount: 6,
@@ -52,7 +50,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             highlightColor: Colors.grey[100]!,
             child: Row(
               children: [
-                // circle image
                 Container(
                   width: 50,
                   height: 50,
@@ -62,8 +59,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 ),
                 const SizedBox(width: 12),
-
-                // text
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,8 +115,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             const SizedBox(height: 10),
             Expanded(
               child: provider.isLoading
-                  ? buildSkeleton() // 🔥 بدل spinner
-
+                  ? buildSkeleton()
                   : provider.notifications.isEmpty
                       ? Center(
                           child: Column(

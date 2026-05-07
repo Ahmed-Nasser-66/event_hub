@@ -108,7 +108,8 @@ class _TicketTabState extends State<TicketTab> {
                             return TicketCard(
                               title: event.title,
                               date: event.date,
-                              time: event.time,
+                              startTime: event.startTime,
+                              endTime: event.endTime,
                               location: event.location,
                               price: event.price,
                               tickets: event.ticketsCount.toString(),

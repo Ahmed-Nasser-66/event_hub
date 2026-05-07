@@ -120,8 +120,6 @@ class _HomeTabState extends State<HomeTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-
-                  /// Header
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -175,10 +173,7 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10),
-
-                  /// Search
                   Row(
                     children: [
                       Expanded(
@@ -191,12 +186,9 @@ class _HomeTabState extends State<HomeTab> {
                       const Filterbutton(),
                     ],
                   ),
-
                   const SizedBox(height: 10),
                   const Category(),
                   const SizedBox(height: 15),
-
-                  /// Upcoming Events
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -210,11 +202,9 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10),
-
                   SizedBox(
-                    height: 320,
+                    height: 360,
                     child: eventProvider.isLoading
                         ? const EventSkeleton(isHorizontal: true)
                         : upcomingEvents.isEmpty
@@ -229,10 +219,7 @@ class _HomeTabState extends State<HomeTab> {
                                 },
                               ),
                   ),
-
                   const SizedBox(height: 15),
-
-                  /// Nearby Events
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -246,9 +233,7 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10),
-
                   if (mapProvider.currentLocation == null ||
                       eventProvider.isLoading)
                     const EventSkeleton(isHorizontal: false)
@@ -265,11 +250,7 @@ class _HomeTabState extends State<HomeTab> {
                         );
                       },
                     ),
-
                   const SizedBox(height: 15),
-
-                  /// 🌐 Online Events (🔥 الجديد)
-
                   const SizedBox(height: 20),
                 ],
               ),

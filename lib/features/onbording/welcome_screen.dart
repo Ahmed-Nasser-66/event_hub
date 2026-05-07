@@ -46,9 +46,7 @@ class WelcomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset(AppAssets.event, height: 80, fit: BoxFit.contain),
-
                 const SizedBox(height: 20),
-
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 29),
                   child: Image.asset(
@@ -57,7 +55,6 @@ class WelcomeScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
-
                 Text(
                   l10n.welcome,
                   textAlign: TextAlign.center,
@@ -67,9 +64,7 @@ class WelcomeScreen extends StatelessWidget {
                     color: AppColors.secondary,
                   ),
                 ),
-
                 const SizedBox(height: 30),
-
                 CustomButtonAuth(
                   title: l10n.login,
                   color: AppColors.orange,
@@ -77,9 +72,7 @@ class WelcomeScreen extends StatelessWidget {
                     Navigator.of(context).pushReplacementNamed("login");
                   },
                 ),
-
                 const SizedBox(height: 12),
-
                 CustomButtonAuth(
                   title: l10n.signup,
                   color: AppColors.grey,
@@ -108,20 +101,7 @@ class WelcomeScreen extends StatelessWidget {
                     indicatorSize: const Size(40, 40),
                   ),
                 ),
-
                 const SizedBox(height: 50),
-
-                ///        متنساش تمسحو
-
-                CustomButtonAuth(
-                  title: l10n.home,
-                  color: const Color.fromARGB(255, 248, 207, 0),
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed("homepage");
-                  },
-                ),
-
-                //     لحد هنا
               ],
             ),
           ),

@@ -35,110 +35,113 @@ class Filterbutton extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 45,
-              height: 5,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            const SizedBox(height: 25),
-            Text(
-              AppLocalizations.of(context)!.refineEvents,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w900,
-                color: AppColors.secondary,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "Choose the best way to explore events",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade600,
-              ),
-            ),
-            const SizedBox(height: 30),
-            _buildLuxuryOption(
-              context,
-              icon: Icons.auto_awesome_rounded,
-              title: AppLocalizations.of(context)!.combiningTheTwo,
-              subtitle: AppLocalizations.of(context)!
-                  .earliestdateswiththelowestprices,
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xffFF9F43),
-                  Color(0xffFF6B00),
-                ],
-              ),
-              onTap: () {
-                context.read<EventProvider>().sortBySmartChoice();
-                Navigator.pop(context);
-              },
-            ),
-            _buildLuxuryOption(
-              context,
-              icon: Icons.calendar_month_rounded,
-              title: AppLocalizations.of(context)!.earliestdates,
-              subtitle: AppLocalizations.of(context)!.seeEventshappeningsoonest,
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xff6C63FF),
-                  Color(0xff5A54D1),
-                ],
-              ),
-              onTap: () {
-                context.read<EventProvider>().sortByDate();
-                Navigator.pop(context);
-              },
-            ),
-            _buildLuxuryOption(
-              context,
-              icon: Icons.attach_money_rounded,
-              title: AppLocalizations.of(context)!.lowestprices,
-              subtitle:
-                  AppLocalizations.of(context)!.sortbypricefromlowesttohighest,
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xff00B894),
-                  Color(0xff009970),
-                ],
-              ),
-              onTap: () {
-                context.read<EventProvider>().sortByPriceLowToHigh();
-                Navigator.pop(context);
-              },
-            ),
-            const SizedBox(height: 10),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 1,
-            ),
-            const SizedBox(height: 8),
-            TextButton.icon(
-              onPressed: () {
-                context.read<EventProvider>().resetSort();
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.refresh_rounded,
-                color: AppColors.secondary,
-              ),
-              label: Text(
-                AppLocalizations.of(context)!.resetToDefault,
-                style: const TextStyle(
-                  color: AppColors.secondary,
-                  fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 45,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-            ),
-            const SizedBox(height: 5),
-          ],
+              const SizedBox(height: 25),
+              Text(
+                AppLocalizations.of(context)!.refineEvents,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.secondary,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Choose the best way to explore events",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 30),
+              _buildLuxuryOption(
+                context,
+                icon: Icons.auto_awesome_rounded,
+                title: AppLocalizations.of(context)!.combiningTheTwo,
+                subtitle: AppLocalizations.of(context)!
+                    .earliestdateswiththelowestprices,
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xffFF9F43),
+                    Color(0xffFF6B00),
+                  ],
+                ),
+                onTap: () {
+                  context.read<EventProvider>().sortBySmartChoice();
+                  Navigator.pop(context);
+                },
+              ),
+              _buildLuxuryOption(
+                context,
+                icon: Icons.calendar_month_rounded,
+                title: AppLocalizations.of(context)!.earliestdates,
+                subtitle:
+                    AppLocalizations.of(context)!.seeEventshappeningsoonest,
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xff6C63FF),
+                    Color(0xff5A54D1),
+                  ],
+                ),
+                onTap: () {
+                  context.read<EventProvider>().sortByDate();
+                  Navigator.pop(context);
+                },
+              ),
+              _buildLuxuryOption(
+                context,
+                icon: Icons.attach_money_rounded,
+                title: AppLocalizations.of(context)!.lowestprices,
+                subtitle: AppLocalizations.of(context)!
+                    .sortbypricefromlowesttohighest,
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xff00B894),
+                    Color(0xff009970),
+                  ],
+                ),
+                onTap: () {
+                  context.read<EventProvider>().sortByPriceLowToHigh();
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(height: 10),
+              Divider(
+                color: Colors.grey.shade300,
+                thickness: 1,
+              ),
+              const SizedBox(height: 8),
+              TextButton.icon(
+                onPressed: () {
+                  context.read<EventProvider>().resetSort();
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.refresh_rounded,
+                  color: AppColors.secondary,
+                ),
+                label: Text(
+                  AppLocalizations.of(context)!.resetToDefault,
+                  style: const TextStyle(
+                    color: AppColors.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+            ],
+          ),
         ),
       ),
     );
@@ -176,8 +179,9 @@ class Filterbutton extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 58,
-                height: 58,
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.85,
+                ),
                 decoration: BoxDecoration(
                   gradient: gradient,
                   shape: BoxShape.circle,

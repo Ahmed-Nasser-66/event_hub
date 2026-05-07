@@ -25,7 +25,13 @@ class TicketDetailsScreen extends StatelessWidget {
     DateTime parsedDate = DateTime.parse(ticket.date);
 
     String formattedDate = DateFormat('dd MMM yyyy').format(parsedDate);
+    String formattedStartTime = DateFormat(
+      'hh:mm a',
+    ).format(DateTime.parse(ticket.startTime));
 
+    String formattedEndTime = DateFormat(
+      'hh:mm a',
+    ).format(DateTime.parse(ticket.endTime));
     return Screenshot(
       controller: screenshotController,
       child: Scaffold(
@@ -197,7 +203,7 @@ class TicketDetailsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              ticket.time,
+                              "$formattedStartTime - $formattedEndTime",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
@@ -312,7 +318,7 @@ class TicketDetailsScreen extends StatelessWidget {
                       data: '''{
                         "title": "${ticket.title}",
                         "date": "$formattedDate",
-                        "time": "${ticket.time}",
+                        "time": "$formattedStartTime - $formattedEndTime",           
                         "location": "${ticket.location}",
                         "price": "${ticket.price}",
                         "section": "${ticket.section}",

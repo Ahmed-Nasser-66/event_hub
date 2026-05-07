@@ -118,8 +118,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          EventBookingScreen(event: event),
+                      builder: (context) => EventBookingScreen(event: event),
                     ),
                   );
                 },
@@ -155,8 +154,7 @@ class _LocationScreenState extends State<LocationScreen> {
           "Markers On Screen: ${mapProvider.markers.length}",
         );
 
-        if (mapProvider.selectedEvent != null &&
-            !_isShowingBottomSheet) {
+        if (mapProvider.selectedEvent != null && !_isShowingBottomSheet) {
           _isShowingBottomSheet = true;
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -216,9 +214,9 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   Widget _buildSearchArea(
-      BuildContext context,
-      MapProvider mapProvider,
-      ) {
+    BuildContext context,
+    MapProvider mapProvider,
+  ) {
     return Positioned(
       top: 60,
       left: 20,
@@ -227,8 +225,7 @@ class _LocationScreenState extends State<LocationScreen> {
         children: [
           Searchbarwidget(
             controller: _searchController,
-            onChanged: (value) =>
-                mapProvider.searchEvents(value),
+            onChanged: (value) => mapProvider.searchEvents(value),
           ),
           if (mapProvider.searchResults.isNotEmpty)
             Container(
@@ -252,16 +249,13 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
-                  itemCount:
-                  mapProvider.searchResults.length,
-                  separatorBuilder: (context, index) =>
-                  const Divider(
+                  itemCount: mapProvider.searchResults.length,
+                  separatorBuilder: (context, index) => const Divider(
                     height: 1,
                     color: AppColors.grey,
                   ),
                   itemBuilder: (context, index) {
-                    final event =
-                    mapProvider.searchResults[index];
+                    final event = mapProvider.searchResults[index];
 
                     return ListTile(
                       leading: const Icon(

@@ -38,7 +38,8 @@ class TicketProvider extends ChangeNotifier {
         image: event.imageUrl ?? '',
         section: _tickets[index].section,
         row: _tickets[index].row,
-        time: _tickets[index].time,
+        startTime: _tickets[index].startTime,
+        endTime: _tickets[index].endTime,
         ticketsCount: count,
         price: "\$${((event.price ?? 0) * count).toStringAsFixed(2)}",
       );
@@ -55,7 +56,8 @@ class TicketProvider extends ChangeNotifier {
         image: event.imageUrl ?? '',
         section: (random.nextInt(20) + 1).toString(),
         row: (random.nextInt(15) + 1).toString(),
-        time: event.startTime ?? '',
+        startTime: event.startTime ?? '',
+        endTime: event.endTime ?? '',
         ticketsCount: count,
         price: "\$${((event.price ?? 0) * count).toStringAsFixed(2)}",
       );

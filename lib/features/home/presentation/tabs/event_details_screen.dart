@@ -63,7 +63,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
     final event = _details?.event ?? widget.event;
 
-    // نضمن إن الـ Category يظهر بالقيمة الصحيحة
     final String category = widget.event.category ??
         eventProvider.categoryName(widget.event.categoryId);
 
@@ -80,7 +79,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 🔥 IMAGE WITH BACK & FAVORITE BUTTONS
                 Stack(
                   children: [
                     Image.network(
@@ -148,7 +146,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Category Badge - يظهر القيمة الصحيحة من الـ API أو من الـ Widget
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
@@ -169,7 +166,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        // Title
                         Text(
                           event.title,
                           style: const TextStyle(
@@ -179,7 +175,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ),
                         ),
                         const SizedBox(height: 24),
-                        // Location & Date Row
                         Row(
                           children: [
                             const Icon(
@@ -216,7 +211,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           ],
                         ),
                         const SizedBox(height: 24),
-                        // About Event Section
                         Text(
                           locale.aboutEvent,
                           style: const TextStyle(
@@ -243,7 +237,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Speakers Section
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -264,7 +257,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       ? const EventDetailsSkeleton()
                       : (_details?.speakers.isEmpty ?? true)
                           ? Text(
-                              locale.eventDetailsDescription) // fallback text
+                              locale.eventDetailsDescription) 
                           : Column(
                               children: _details!.speakers.map((speaker) {
                                 return Padding(

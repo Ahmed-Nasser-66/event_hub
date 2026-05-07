@@ -48,8 +48,7 @@ class MapProvider extends ChangeNotifier {
       }
 
       try {
-        mapStyle =
-        await rootBundle.loadString(
+        mapStyle = await rootBundle.loadString(
           'assets/map_style/map_style.json',
         );
       } catch (e) {
@@ -77,15 +76,13 @@ class MapProvider extends ChangeNotifier {
       final response = await eventsService.getAllEvents();
 
       if (response.data['success'] == true) {
-        final List<dynamic> eventsJson =
-            response.data['message']['data'] ?? [];
+        final List<dynamic> eventsJson = response.data['message']['data'] ?? [];
 
         debugPrint("Events Count: ${eventsJson.length}");
 
-        _allEvents =
-            eventsJson.map((json) {
-              return EventModel.fromJson(json);
-            }).toList();
+        _allEvents = eventsJson.map((json) {
+          return EventModel.fromJson(json);
+        }).toList();
 
         _loadEventsMarkers();
 
@@ -106,19 +103,16 @@ class MapProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      currentLocation =
-      await _service.getCurrentLocation();
+      currentLocation = await _service.getCurrentLocation();
 
       if (currentLocation == null) {
-        _errorMessage =
-        "Could not refresh location";
+        _errorMessage = "Could not refresh location";
       } else {
         _isLocationFetched = true;
 
         _loadEventsMarkers();
 
-        if (controller != null &&
-            currentLocation != null) {
+        if (controller != null && currentLocation != null) {
           controller?.animateCamera(
             CameraUpdate.newLatLngZoom(
               currentLocation!,
@@ -144,15 +138,12 @@ class MapProvider extends ChangeNotifier {
     await refreshLocation();
   }
 
-  bool get hasLocation =>
-      currentLocation != null;
+  bool get hasLocation => currentLocation != null;
 
   void _loadEventsMarkers() {
     markers = _allEvents
         .where(
-          (event) =>
-      event.latitude != null &&
-          event.longitude != null,
+      (event) => event.latitude != null && event.longitude != null,
     )
         .map((event) {
       debugPrint(
@@ -160,14 +151,12 @@ class MapProvider extends ChangeNotifier {
       );
 
       return Marker(
-        markerId:
-        MarkerId(event.id.toString()),
+        markerId: MarkerId(event.id.toString()),
         position: LatLng(
           event.latitude!,
           event.longitude!,
         ),
-        icon:
-        BitmapDescriptor.defaultMarkerWithHue(
+        icon: BitmapDescriptor.defaultMarkerWithHue(
           BitmapDescriptor.hueOrange,
         ),
         infoWindow: InfoWindow(
@@ -188,6 +177,7 @@ class MapProvider extends ChangeNotifier {
 
   void moveToFirstEventIfReady() {
     if (markers.isEmpty ||
+        // ignore: curly_braces_in_flow_control_structures
         controller == null) return;
 
     controller!.animateCamera(
@@ -202,42 +192,21 @@ class MapProvider extends ChangeNotifier {
     if (query.isEmpty) {
       searchResults = [];
     } else {
-      final lowerQuery =
-      query.toLowerCase();
+      final lowerQuery = query.toLowerCase();
 
-      final startMatches =
-      _allEvents.where((e) {
-        return e.title
-            .toLowerCase()
-            .startsWith(lowerQuery) ||
-            (e.category ?? '')
-                .toLowerCase()
-                .startsWith(lowerQuery) ||
-            e.location
-                .toLowerCase()
-                .startsWith(lowerQuery);
+      final startMatches = _allEvents.where((e) {
+        return e.title.toLowerCase().startsWith(lowerQuery) ||
+            (e.category ?? '').toLowerCase().startsWith(lowerQuery) ||
+            e.location.toLowerCase().startsWith(lowerQuery);
       }).toList();
 
-      final containsMatches =
-      _allEvents.where((e) {
-        return (e.title
-            .toLowerCase()
-            .contains(lowerQuery) ||
-            (e.category ?? '')
-                .toLowerCase()
-                .contains(lowerQuery) ||
-            e.location
-                .toLowerCase()
-                .contains(lowerQuery)) &&
-            !(e.title
-                .toLowerCase()
-                .startsWith(lowerQuery) ||
-                (e.category ?? '')
-                    .toLowerCase()
-                    .startsWith(lowerQuery) ||
-                e.location
-                    .toLowerCase()
-                    .startsWith(lowerQuery));
+      final containsMatches = _allEvents.where((e) {
+        return (e.title.toLowerCase().contains(lowerQuery) ||
+                (e.category ?? '').toLowerCase().contains(lowerQuery) ||
+                e.location.toLowerCase().contains(lowerQuery)) &&
+            !(e.title.toLowerCase().startsWith(lowerQuery) ||
+                (e.category ?? '').toLowerCase().startsWith(lowerQuery) ||
+                e.location.toLowerCase().startsWith(lowerQuery));
       }).toList();
 
       searchResults = [
@@ -281,15 +250,14 @@ class MapProvider extends ChangeNotifier {
   }
 
   void _drawRoute(
-      LatLng start,
-      LatLng end,
-      ) {
+    LatLng start,
+    LatLng end,
+  ) {
     polylines.clear();
 
     polylines.add(
       Polyline(
-        polylineId:
-        const PolylineId(
+        polylineId: const PolylineId(
           "path_to_event",
         ),
         points: [start, end],
@@ -305,8 +273,8 @@ class MapProvider extends ChangeNotifier {
   }
 
   void moveToLocation(
-      LatLng position,
-      ) {
+    LatLng position,
+  ) {
     selectedEvent = null;
 
     controller?.animateCamera(
