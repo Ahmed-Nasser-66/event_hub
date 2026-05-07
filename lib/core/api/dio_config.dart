@@ -14,7 +14,7 @@ class DioConfig {
 
           // 🔥 TOKEN
           'Authorization':
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50aHViLmh1bWEtdm9sdmUuY29tL2FwaS92MS9hdXRoL3JlZ2lzdGVyIiwiaWF0IjoxNzc4MTQwMzU1LCJleHAiOjE3NzgxNDM5NTUsIm5iZiI6MTc3ODE0MDM1NSwianRpIjoiZnpBRVR2UFc1VVdDTE5iMiIsInN1YiI6IjgyIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tjtUol6tPAzAT_Q9pvLczvxgru1WsphscdthGVqmiFA',
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V2ZW50aHViLmh1bWEtdm9sdmUuY29tL2FwaS92MS9hdXRoL3JlZ2lzdGVyIiwiaWF0IjoxNzc4MTU3NDM0LCJleHAiOjE3NzgxNjEwMzQsIm5iZiI6MTc3ODE1NzQzNCwianRpIjoiZThtbkZ2Q0lWR0dic0JCOCIsInN1YiI6Ijg4IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.iJuWXr6i-c2viEgh34z4oiv_wy7s8rp4JNLJVk6F7ZE',
         },
       ),
     );
