@@ -83,13 +83,11 @@ class Category extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (isAll) {
-                      eventProvider.selectCategory(
-                        CategoryItem(id: 0, name: 'All', slug: 'all'),
-                      );
+                      await eventProvider.refreshEvents();
                     } else {
-                      eventProvider.selectCategory(category!);
+                      await eventProvider.selectCategory(category!);
                     }
                   },
                   child: Column(

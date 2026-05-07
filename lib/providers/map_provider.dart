@@ -1,4 +1,3 @@
-import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/api/events_service.dart';
 import 'package:event_hub/features/home/presentation/location/location_service.dart';
 import 'package:event_hub/model/event_model.dart';
@@ -34,16 +33,21 @@ class MapProvider extends ChangeNotifier {
 
   // ✅ تحميل الفعاليات من الـ API
   Future<void> loadEventsFromApi() async {
+    if (_isLoading) return;
+
     try {
-      final apiService = ApiService();
-      final eventsService = EventsService(apiService.dio);
+      final eventsService = EventsService();
+
       final response = await eventsService.getAllEvents();
 
       if (response.data['success'] == true) {
         final List<dynamic> eventsJson = response.data['message']['data'];
+
         _allEvents =
             eventsJson.map((json) => EventModel.fromJson(json)).toList();
+
         _loadEventsMarkers();
+
         notifyListeners();
       }
     } catch (e) {
@@ -52,7 +56,6 @@ class MapProvider extends ChangeNotifier {
   }
 
   Future<void> initializeMap() async {
-    // ✅ منع الطلبات المتكررة: لو الموقع جابته قبل كده، متجيبوش تاني
     if (_isLocationFetched && currentLocation != null) {
       debugPrint("📍 Location already fetched, skipping...");
       return;
@@ -62,15 +65,17 @@ class MapProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      // 🔥 1. جيب location بس
       currentLocation = await _service.getCurrentLocation();
 
       if (currentLocation == null) {
         _errorMessage = "Could not get current location";
       } else {
         _errorMessage = null;
-        _isLocationFetched = true; // ✅ علامة ان الموقع جابته
+        _isLocationFetched = true;
       }
 
+      // 🔥 2. load map style
       try {
         mapStyle =
             await rootBundle.loadString('assets/map_style/map_style.json');
@@ -78,8 +83,8 @@ class MapProvider extends ChangeNotifier {
         debugPrint("Map style error: $e");
       }
 
-      // ✅ تحميل الفعاليات من الـ API الأول، وبعدين العلامات
-      await loadEventsFromApi();
+      // 🔥 3. شغل API في الخلفية (بدون await)
+      loadEventsFromApi();
     } catch (e) {
       _errorMessage = e.toString();
       debugPrint("Initialize map error: $e");

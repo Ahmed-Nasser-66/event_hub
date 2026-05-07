@@ -1,27 +1,45 @@
 import 'package:dio/dio.dart';
 import 'package:event_hub/model/event_details_model.dart';
 
-class EventsService {
-  final Dio dio;
+import 'dio_config.dart';
 
-  EventsService(this.dio) {
-    dio.options.baseUrl = "https://eventhub.huma-volve.com/api/v1/";
-  }
+class EventsService {
+  final Dio dio = DioConfig.createDio();
 
   // 🟢 تجيب كل الفعاليات
-  Future<Response> getAllEvents() async {
-    return await dio.get("events");
+  Future<Response> getAllEvents({
+    int page = 1,
+  }) async {
+    try {
+      return await dio.get(
+        "events",
+        queryParameters: {
+          "page": page,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to load events",
+      );
+    }
   }
 
-  // 🟢 تجيب بيانات الصفحة الرئيسية
+  // 🟢 بيانات الصفحة الرئيسية
   Future<Response> getAppHome() async {
-    return await dio.get("app/home");
+    try {
+      return await dio.get("app/home");
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to load home data",
+      );
+    }
   }
 
-  // 🔥 تجيب تفاصيل Event (المهم عندك)
+  // 🔥 تفاصيل Event
   Future<EventDetailsModel> getEventDetails(int id) async {
     try {
       final response = await dio.get("events/$id");
+
       return EventDetailsModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(
@@ -30,8 +48,77 @@ class EventsService {
     }
   }
 
-  // 🆕 🔥 تجيب events حسب category (tech / education / sport)
-  Future<Response> getEventsByCategory(String slug) async {
-    return await dio.get("events?slug=$slug");
+  // 🟣 Category Events
+  Future<Response> getEventsByCategory(
+    String slug,
+  ) async {
+    try {
+      return await dio.get(
+        "events",
+        queryParameters: {
+          "slug": slug,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to load category events",
+      );
+    }
+  }
+
+  // 🔍 Search Events
+  Future<Response> searchEvents(
+    String keyword,
+  ) async {
+    try {
+      return await dio.get(
+        "events",
+        queryParameters: {
+          "keyword": keyword,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to search events",
+      );
+    }
+  }
+
+  // 📍 Nearby Events
+  Future<Response> getNearbyEvents({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      return await dio.get(
+        "events",
+        queryParameters: {
+          "latitude": latitude,
+          "longitude": longitude,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to load nearby events",
+      );
+    }
+  }
+
+  // 🟠 Filter Events
+  Future<Response> filterEvents(
+    String sort,
+  ) async {
+    try {
+      return await dio.get(
+        "events",
+        queryParameters: {
+          "sort": sort,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to filter events",
+      );
+    }
   }
 }

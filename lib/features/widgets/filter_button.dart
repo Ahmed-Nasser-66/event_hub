@@ -10,7 +10,7 @@ class Filterbutton extends StatelessWidget {
   void _tapSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent, 
+      backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (_) => _buildBottomSheetContent(context),
     );
@@ -18,110 +18,127 @@ class Filterbutton extends StatelessWidget {
 
   Widget _buildBottomSheetContent(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(35),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(26),
-                blurRadius: 20,
-                offset: const Offset(0, -5),
+      child: Container(
+        margin: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 22,
+          vertical: 24,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(35),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(20),
+              blurRadius: 25,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 45,
+              height: 5,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(20),
               ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.grey.withAlpha(77),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+            ),
+            const SizedBox(height: 25),
+            Text(
+              AppLocalizations.of(context)!.refineEvents,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w900,
+                color: AppColors.secondary,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "Choose the best way to explore events",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            const SizedBox(height: 30),
+            _buildLuxuryOption(
+              context,
+              icon: Icons.auto_awesome_rounded,
+              title: AppLocalizations.of(context)!.combiningTheTwo,
+              subtitle: AppLocalizations.of(context)!
+                  .earliestdateswiththelowestprices,
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xffFF9F43),
+                  Color(0xffFF6B00),
+                ],
+              ),
+              onTap: () {
+                context.read<EventProvider>().sortBySmartChoice();
+                Navigator.pop(context);
+              },
+            ),
+            _buildLuxuryOption(
+              context,
+              icon: Icons.calendar_month_rounded,
+              title: AppLocalizations.of(context)!.earliestdates,
+              subtitle: AppLocalizations.of(context)!.seeEventshappeningsoonest,
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xff6C63FF),
+                  Color(0xff5A54D1),
+                ],
+              ),
+              onTap: () {
+                context.read<EventProvider>().sortByDate();
+                Navigator.pop(context);
+              },
+            ),
+            _buildLuxuryOption(
+              context,
+              icon: Icons.attach_money_rounded,
+              title: AppLocalizations.of(context)!.lowestprices,
+              subtitle:
+                  AppLocalizations.of(context)!.sortbypricefromlowesttohighest,
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xff00B894),
+                  Color(0xff009970),
+                ],
+              ),
+              onTap: () {
+                context.read<EventProvider>().sortByPriceLowToHigh();
+                Navigator.pop(context);
+              },
+            ),
+            const SizedBox(height: 10),
+            Divider(
+              color: Colors.grey.shade300,
+              thickness: 1,
+            ),
+            const SizedBox(height: 8),
+            TextButton.icon(
+              onPressed: () {
+                context.read<EventProvider>().resetSort();
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.refresh_rounded,
+                color: AppColors.secondary,
+              ),
+              label: Text(
+                AppLocalizations.of(context)!.resetToDefault,
+                style: const TextStyle(
+                  color: AppColors.secondary,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 30),
-
-              Center(
-                child: Text(
-                  AppLocalizations.of(context)!.refineEvents,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.secondary,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 35),
-
-              _buildLuxuryOption(
-                context,
-                icon: Icons.auto_awesome_rounded,
-                title: AppLocalizations.of(context)!.combiningTheTwo,
-                subtitle: AppLocalizations.of(context)!
-                    .earliestdateswiththelowestprices,
-                onTap: () {
-                  context.read<EventProvider>().sortBySmartChoice();
-                  Navigator.pop(context);
-                },
-              ),
-
-              _buildLuxuryOption(
-                context,
-                icon: Icons.calendar_today_rounded,
-                title: AppLocalizations.of(context)!.earliestdates,
-                subtitle:
-                    AppLocalizations.of(context)!.seeEventshappeningsoonest,
-                onTap: () {
-                  context.read<EventProvider>().sortByDate();
-                  Navigator.pop(context);
-                },
-              ),
-
-              _buildLuxuryOption(
-                context,
-                icon: Icons.confirmation_number_outlined,
-                title: AppLocalizations.of(context)!.lowestprices,
-                subtitle: AppLocalizations.of(context)!
-                    .sortbypricefromlowesttohighest,
-                onTap: () {
-                  context.read<EventProvider>().sortByPriceLowToHigh();
-                  Navigator.pop(context);
-                },
-              ),
-
-              const SizedBox(height: 15),
-              const Divider(color: AppColors.grey, thickness: 0.5),
-              const SizedBox(height: 15),
-
-              Center(
-                child: TextButton.icon(
-                  onPressed: () {
-                    context.read<EventProvider>().resetSort();
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.refresh_rounded,
-                      color: AppColors.secondary, size: 20),
-                  label: Text(
-                    AppLocalizations.of(context)!.resetToDefault,
-                    style: const TextStyle(
-                        color: AppColors.secondary,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-          ),
+            ),
+            const SizedBox(height: 5),
+          ],
         ),
       ),
     );
@@ -132,40 +149,47 @@ class Filterbutton extends StatelessWidget {
     required IconData icon,
     required String title,
     required String subtitle,
+    required Gradient gradient,
     required VoidCallback onTap,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 18),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(28),
         child: Container(
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: AppColors.grey.withAlpha(51), width: 1),
+            borderRadius: BorderRadius.circular(28),
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.grey.shade200,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withAlpha(5),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+                color: Colors.black.withAlpha(8),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
               ),
             ],
           ),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                width: 58,
+                height: 58,
                 decoration: BoxDecoration(
-                  color: AppColors.orange.withAlpha(26),
+                  gradient: gradient,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: AppColors.orange, size: 24),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 28,
+                ),
               ),
               const SizedBox(width: 18),
               Expanded(
-                
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -173,24 +197,26 @@ class Filterbutton extends StatelessWidget {
                       title,
                       style: const TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
                         color: AppColors.black,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 5),
                     Text(
                       subtitle,
-                      style:
-                          TextStyle(fontSize: 13, color: Colors.grey.shade500),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey.shade600,
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              Icon(Icons.arrow_forward_ios_rounded,
-                  size: 14, color: Colors.grey.shade400),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+                color: Colors.grey.shade400,
+              ),
             ],
           ),
         ),
@@ -202,25 +228,28 @@ class Filterbutton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: Colors.black
-                .withAlpha(30), 
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: Colors.black.withAlpha(20),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: Material(
-          color: Colors.white,
-          child: InkWell(
-            onTap: () => _tapSheet(context),
-            child: const SizedBox(
-              width: 48,
-              height: 48,
-              child: Icon(Icons.tune_rounded, color: AppColors.black, size: 22),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: () => _tapSheet(context),
+          child: const SizedBox(
+            width: 50,
+            height: 50,
+            child: Icon(
+              Icons.tune_rounded,
+              color: AppColors.black,
+              size: 24,
             ),
           ),
         ),

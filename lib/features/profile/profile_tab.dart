@@ -7,6 +7,7 @@ import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'presentation/tabs/support_screen.dart';
 import 'presentation/widget/profile_header.dart';
 import 'presentation/widget/profile_option_item.dart';
@@ -124,11 +125,13 @@ class ProfileTab extends StatelessWidget {
 
                     if (!context.mounted) return;
 
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      "login",
-                      (route) => false,
-                    );
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        "login",
+                        (route) => false,
+                      );
+                    });
                   }),
             ),
           ),

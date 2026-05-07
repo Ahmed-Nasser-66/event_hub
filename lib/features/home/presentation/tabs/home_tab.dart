@@ -35,7 +35,13 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
+
     _initializeLocationOnce();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<EventProvider>().refreshEvents();
+    });
   }
 
   @override
@@ -65,17 +71,24 @@ class _HomeTabState extends State<HomeTab> {
   void _initializeLocationOnce() {
     if (_isLocationInitialized) return;
 
-    final mapProvider = context.read<MapProvider>();
-    final eventProvider = context.read<EventProvider>();
-
     _isLocationInitialized = true;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await mapProvider.initializeMap();
-      if (mapProvider.currentLocation != null) {
+      if (!mounted) return;
+
+      final mapProvider = context.read<MapProvider>();
+      final eventProvider = context.read<EventProvider>();
+
+      mapProvider.initializeMap();
+
+      if (!mounted) return;
+
+      final location = mapProvider.currentLocation;
+
+      if (location != null) {
         eventProvider.setUserLocation(
-          mapProvider.currentLocation!.latitude,
-          mapProvider.currentLocation!.longitude,
+          location.latitude,
+          location.longitude,
         );
       }
     });
@@ -190,7 +203,9 @@ class _HomeTabState extends State<HomeTab> {
                       Text(locale.upcomingEvents),
                       TextButton(
                         onPressed: () => goToAllEvents(
-                            upcomingEvents, locale.upcomingEvents),
+                          eventProvider.allEvents,
+                          locale.upcomingEvents,
+                        ),
                         child: Text(locale.seeAll),
                       ),
                     ],
@@ -206,9 +221,7 @@ class _HomeTabState extends State<HomeTab> {
                             ? const Center(child: Text("No Events Found"))
                             : ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: upcomingEvents.length > 5
-                                    ? 5
-                                    : upcomingEvents.length,
+                                itemCount: upcomingEvents.length,
                                 itemBuilder: (context, index) {
                                   return UpcomingEventCard(
                                     event: upcomingEvents[index],
@@ -225,8 +238,10 @@ class _HomeTabState extends State<HomeTab> {
                     children: [
                       Text(locale.nearbyEvents),
                       TextButton(
-                        onPressed: () =>
-                            goToAllEvents(nearbyEvents, locale.nearbyEvents),
+                        onPressed: () => goToAllEvents(
+                          eventProvider.allEvents,
+                          locale.nearbyEvents,
+                        ),
                         child: Text(locale.seeAll),
                       ),
                     ],
@@ -243,8 +258,7 @@ class _HomeTabState extends State<HomeTab> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount:
-                          nearbyEvents.length > 5 ? 5 : nearbyEvents.length,
+                      itemCount: nearbyEvents.length,
                       itemBuilder: (context, index) {
                         return NearbyEventCard(
                           event: nearbyEvents[index],

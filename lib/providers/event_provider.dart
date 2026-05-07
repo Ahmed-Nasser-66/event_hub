@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:event_hub/core/api/events_service.dart';
 import 'package:event_hub/model/event_details_model.dart';
 import 'package:event_hub/model/event_model.dart';
@@ -10,10 +9,16 @@ class CategoryItem {
   final String name;
   final String slug;
 
-  CategoryItem({required this.id, required this.name, required this.slug});
+  CategoryItem({
+    required this.id,
+    required this.name,
+    required this.slug,
+  });
 }
 
 class EventProvider extends ChangeNotifier {
+  final EventsService _eventsService = EventsService();
+
   int? _selectedCategoryId;
   String _searchQuery = "";
 
@@ -26,45 +31,55 @@ class EventProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   String? _errorMessage;
+
   EventsState _state = EventsState.initial;
 
   List<EventModel> _allEvents = [];
 
-  final List<CategoryItem> _categories = [
-    CategoryItem(id: 1, name: 'Art', slug: 'art'),
-    CategoryItem(id: 2, name: 'Tech', slug: 'tech'),
-    CategoryItem(id: 3, name: 'Gaming', slug: 'gaming'),
-    CategoryItem(id: 4, name: 'Business', slug: 'business'),
-    CategoryItem(id: 5, name: 'Fashion', slug: 'fashion'),
-    CategoryItem(id: 7, name: 'Education', slug: 'education'),
-    CategoryItem(id: 8, name: 'Sport', slug: 'sport'),
-  ];
+  List<EventModel> _upcomingEvents = [];
+  List<EventModel> _nearbyEvents = [];
 
-  final Dio _dio = Dio(BaseOptions(
-    headers: {"Content-Type": "application/json"},
-  ));
+  List<CategoryItem> _categories = [];
+
+  // ================= GETTERS =================
 
   int? get selectedCategoryId => _selectedCategoryId;
+
   List<CategoryItem> get categories => _categories;
 
   bool get isLoading => _isLoading;
+
   bool get hasError => _state == EventsState.error;
+
   String? get errorMessage => _errorMessage;
+
   EventsState get state => _state;
 
-  // ================== CATEGORY NAME ==================
+  List<EventModel> get allEvents => _allEvents;
+
+  List<EventModel> get upcomingEvents => _upcomingEvents;
+
+  List<EventModel> get nearbyEvents => _nearbyEvents;
+
+  // ================= CATEGORY NAME =================
+
   String categoryName(int? id) {
     if (id == null) return "Unknown";
 
     final category = _categories.firstWhere(
       (c) => c.id == id,
-      orElse: () => CategoryItem(id: 0, name: "Unknown", slug: ""),
+      orElse: () => CategoryItem(
+        id: 0,
+        name: "Unknown",
+        slug: "",
+      ),
     );
 
     return category.name;
   }
 
-  // ================== FILTER ==================
+  // ================= FILTERED EVENTS =================
+
   List<EventModel> get filteredEvents {
     final eventsByCategory = _allEvents.where((event) {
       return _selectedCategoryId == null ||
@@ -77,21 +92,31 @@ class EventProvider extends ChangeNotifier {
       result = List.from(eventsByCategory);
     } else {
       final startMatches = eventsByCategory.where((event) {
-        return event.title.toLowerCase().startsWith(_searchQuery.toLowerCase());
+        return event.title.toLowerCase().startsWith(
+              _searchQuery.toLowerCase(),
+            );
       }).toList();
 
       final containsMatches = eventsByCategory.where((event) {
-        return event.title.toLowerCase().contains(_searchQuery.toLowerCase()) &&
-            !event.title.toLowerCase().startsWith(_searchQuery.toLowerCase());
+        return event.title.toLowerCase().contains(
+                  _searchQuery.toLowerCase(),
+                ) &&
+            !event.title.toLowerCase().startsWith(
+                  _searchQuery.toLowerCase(),
+                );
       }).toList();
 
-      result = [...startMatches, ...containsMatches];
+      result = [
+        ...startMatches,
+        ...containsMatches,
+      ];
     }
 
     if (_isSortedBySmartChoice) {
       result.sort((a, b) {
-        int dateCompare =
-            (a.date ?? DateTime.now()).compareTo(b.date ?? DateTime.now());
+        int dateCompare = (a.date ?? DateTime.now()).compareTo(
+          b.date ?? DateTime.now(),
+        );
         if (dateCompare == 0) {
           return (a.price ?? 0).compareTo(b.price ?? 0);
         }
@@ -107,46 +132,74 @@ class EventProvider extends ChangeNotifier {
     return result;
   }
 
-  // ================== UPCOMING ==================
+  // ================= UPCOMING =================
+
   List<EventModel> get filteredUpcomingEvents {
-    final now = DateTime.now();
-
-    return filteredEvents.where((event) {
-      if (event.date == null) return false;
-      return event.date!.isAfter(now);
+    List<EventModel> events = _upcomingEvents.where((event) {
+      return _selectedCategoryId == null ||
+          event.categoryId == _selectedCategoryId;
     }).toList();
-  }
 
-  // ================== 🌐 ONLINE EVENTS ==================
-  List<EventModel> get onlineEvents {
-    return filteredEvents
-        .where((e) => e.latitude == null || e.longitude == null)
-        .toList();
-  }
-
-  // ================== 📍 NEARBY ==================
-  List<EventModel> get filteredNearbyEvents {
-    if (_userLat == null || _userLng == null) return [];
-
-    final list = filteredEvents
-        .where((e) => e.latitude != null && e.longitude != null)
-        .toList();
-
-    for (var e in list) {
-      e.distance ??= Geolocator.distanceBetween(
-        _userLat!,
-        _userLng!,
-        e.latitude!,
-        e.longitude!,
-      );
+    if (_searchQuery.isNotEmpty) {
+      events = events.where((event) {
+        return event.title.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
     }
 
-    list.sort((a, b) => a.distance!.compareTo(b.distance!));
+    if (_isSortedBySmartChoice) {
+      events.sort((a, b) {
+        int dateCompare =
+            (a.date ?? DateTime.now()).compareTo(b.date ?? DateTime.now());
+        if (dateCompare == 0) {
+          return (a.price ?? 0).compareTo(b.price ?? 0);
+        }
+        return dateCompare;
+      });
+    } else if (_isSortedByPrice) {
+      events.sort((a, b) => (a.price ?? 0).compareTo(b.price ?? 0));
+    } else if (_isSortedByDate) {
+      events.sort((a, b) =>
+          (a.date ?? DateTime.now()).compareTo(b.date ?? DateTime.now()));
+    }
 
-    return list;
+    return events;
   }
 
-  // ================== DISTANCE ==================
+  // ================= NEARBY =================
+
+  List<EventModel> get filteredNearbyEvents {
+    List<EventModel> events = _nearbyEvents.where((event) {
+      return _selectedCategoryId == null ||
+          event.categoryId == _selectedCategoryId;
+    }).toList();
+
+    if (_searchQuery.isNotEmpty) {
+      events = events.where((event) {
+        return event.title.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
+    }
+
+    if (_isSortedBySmartChoice) {
+      events.sort((a, b) {
+        int dateCompare =
+            (a.date ?? DateTime.now()).compareTo(b.date ?? DateTime.now());
+        if (dateCompare == 0) {
+          return (a.price ?? 0).compareTo(b.price ?? 0);
+        }
+        return dateCompare;
+      });
+    } else if (_isSortedByPrice) {
+      events.sort((a, b) => (a.price ?? 0).compareTo(b.price ?? 0));
+    } else if (_isSortedByDate) {
+      events.sort((a, b) =>
+          (a.date ?? DateTime.now()).compareTo(b.date ?? DateTime.now()));
+    }
+
+    return events;
+  }
+
+  // ================= DISTANCE =================
+
   void _calculateDistances() {
     if (_userLat == null || _userLng == null) return;
 
@@ -165,30 +218,18 @@ class EventProvider extends ChangeNotifier {
   void setUserLocation(double lat, double lng) {
     _userLat = lat;
     _userLng = lng;
-
     _calculateDistances();
     notifyListeners();
   }
 
-  // ================== ACTIONS ==================
-
-  Future<void> selectCategory(CategoryItem category) async {
-    if (_selectedCategoryId == category.id) {
-      _selectedCategoryId = null;
-      await refreshEvents();
-    } else {
-      _selectedCategoryId = category.id;
-      await fetchEventsByCategory(category.slug);
-    }
-    notifyListeners();
-  }
+  // ================= SEARCH =================
 
   void setSearchQuery(String query) {
     _searchQuery = query;
     notifyListeners();
   }
 
-  // ================== SORT ==================
+  // ================= SORT =================
 
   void sortBySmartChoice() {
     _isSortedBySmartChoice = true;
@@ -218,23 +259,31 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ================== CATEGORY API ==================
+  // ================= CATEGORY =================
+
+  Future<void> selectCategory(CategoryItem category) async {
+    if (_selectedCategoryId == category.id) {
+      _selectedCategoryId = null;
+      await refreshEvents();
+    } else {
+      _selectedCategoryId = category.id;
+      await fetchEventsByCategory(category.slug);
+    }
+    notifyListeners();
+  }
 
   Future<void> fetchEventsByCategory(String slug) async {
+    if (_isLoading) return;
     _isLoading = true;
     notifyListeners();
 
     try {
-      final eventsService = EventsService(_dio);
-      final response = await eventsService.getEventsByCategory(slug);
-
+      final response = await _eventsService.getEventsByCategory(slug);
       if (response.data['success'] == true) {
         final List eventsJson = response.data['message']['data'] ?? [];
         _allEvents = eventsJson.map((e) => EventModel.fromJson(e)).toList();
-
         _calculateDistances();
       }
-
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -244,36 +293,54 @@ class EventProvider extends ChangeNotifier {
     }
   }
 
-  // ================== DETAILS ==================
+  // ================= EVENT DETAILS =================
 
   Future<EventDetailsModel?> fetchEventDetails(int eventId) async {
     try {
-      final eventsService = EventsService(_dio);
-      final details = await eventsService.getEventDetails(eventId);
-      return details;
+      return await _eventsService.getEventDetails(eventId);
     } catch (e) {
       debugPrint("❌ Error fetching event details: $e");
       return null;
     }
   }
 
-  // ================== ALL EVENTS ==================
+  // ================= HOME API =================
 
   Future<void> refreshEvents() async {
+    if (_isLoading) return;
     _isLoading = true;
     _state = EventsState.loading;
     notifyListeners();
 
     try {
-      final eventsService = EventsService(_dio);
-      final response = await eventsService.getAllEvents();
+      final response = await _eventsService.getAppHome();
 
       if (response.data['success'] == true) {
-        final List eventsJson = response.data['message']['data'] ?? [];
-        _allEvents = eventsJson.map((e) => EventModel.fromJson(e)).toList();
+        final data = response.data['message'];
+
+        final List categoriesJson = data['categories'] ?? [];
+        final List upcomingJson = data['upcoming_events'] ?? [];
+        final List nearbyJson = data['nearby_events'] ?? [];
+
+        _categories = categoriesJson.map((e) {
+          return CategoryItem(id: e['id'], name: e['name'], slug: e['slug']);
+        }).toList();
+
+        _upcomingEvents =
+            upcomingJson.map((e) => EventModel.fromJson(e)).toList();
+        _nearbyEvents = nearbyJson.map((e) => EventModel.fromJson(e)).toList();
+
+        final allEventsResponse = await _eventsService.getAllEvents();
+
+        if (allEventsResponse.data['success'] == true) {
+          final List allEventsJson =
+              allEventsResponse.data['message']['data'] ?? [];
+
+          _allEvents =
+              allEventsJson.map((e) => EventModel.fromJson(e)).toList();
+        }
 
         _calculateDistances();
-
         _state = EventsState.loaded;
         _errorMessage = null;
       } else {
@@ -293,4 +360,9 @@ class EventProvider extends ChangeNotifier {
   }
 }
 
-enum EventsState { initial, loading, loaded, error }
+enum EventsState {
+  initial,
+  loading,
+  loaded,
+  error,
+}

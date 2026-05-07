@@ -7,15 +7,20 @@ class EventModel {
   final int? categoryId;
 
   final int capacity;
+
   final String location;
   final String type;
 
   final String? startTime;
   final String? endTime;
+
   final String? venueName;
   final String? address;
+
   final String? priceType;
+
   final double? price;
+
   final double? latitude;
   final double? longitude;
 
@@ -24,6 +29,7 @@ class EventModel {
   final String? imageUrl;
 
   double? distance;
+
   bool isFavorite;
 
   EventModel({
@@ -49,57 +55,52 @@ class EventModel {
     this.isFavorite = false,
   });
 
-  factory EventModel.fromJson(Map<String, dynamic> json) {
+  factory EventModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return EventModel(
       id: json['id'] is int
           ? json['id']
-          : int.tryParse(json['id'].toString()) ?? 0,
-
+          : int.tryParse(
+                json['id'].toString(),
+              ) ??
+              0,
       title: json['title'] ?? '',
       description: json['description'] ?? '',
-
-      // ✅ FIX هنا
       category: json['category'] != null ? json['category']['name'] : null,
-
-      // ✅ FIX هنا
       categoryId: json['category_id'] ??
           (json['category'] != null ? json['category']['id'] : null),
-
       capacity: json['capacity'] is int
           ? json['capacity']
-          : int.tryParse(json['capacity'].toString()) ?? 0,
-
+          : int.tryParse(
+                json['capacity'].toString(),
+              ) ??
+              0,
       location: json['location'] ?? '',
       type: json['type'] ?? '',
-
       startTime: json['start_time'],
       endTime: json['end_time'],
       venueName: json['venue_name'],
       address: json['address'],
       priceType: json['price_type'],
-
       price: json['price'] != null
-          ? double.tryParse(json['price'].toString())
+          ? double.tryParse(
+              json['price'].toString(),
+            )
           : null,
-
-      latitude: json['latitude'] != null
-          ? double.tryParse(json['latitude'].toString())
-          : null,
-
-      longitude: json['longitude'] != null
-          ? double.tryParse(json['longitude'].toString())
-          : null,
-
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
       date: json['start_time'] != null
-          ? DateTime.tryParse(json['start_time'])
+          ? DateTime.tryParse(
+              json['start_time'],
+            )
           : null,
-
-      imageUrl: json['image_url'] != null ? json['image_url'] as String : null,
-
+      imageUrl: json['image_url']?.toString(),
       distance: json['distance'] != null
-          ? double.tryParse(json['distance'].toString())
+          ? double.tryParse(
+              json['distance'].toString(),
+            )
           : null,
-
       isFavorite: json['is_favorite'] ?? false,
     );
   }
@@ -126,5 +127,33 @@ class EventModel {
       'distance': distance,
       'is_favorite': isFavorite,
     };
+  }
+
+  EventModel copyWith({
+    bool? isFavorite,
+    double? distance,
+  }) {
+    return EventModel(
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+      categoryId: categoryId,
+      capacity: capacity,
+      location: location,
+      type: type,
+      startTime: startTime,
+      endTime: endTime,
+      venueName: venueName,
+      address: address,
+      priceType: priceType,
+      price: price,
+      latitude: latitude,
+      longitude: longitude,
+      date: date,
+      imageUrl: imageUrl,
+      distance: distance ?? this.distance,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
   }
 }

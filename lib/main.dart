@@ -38,7 +38,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => TicketProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => MapProvider()..initializeMap()),
-        ChangeNotifierProvider(create: (_) => EventProvider()..refreshEvents()),
       ],
       child: MyApp(),
     ),

@@ -84,11 +84,18 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 Stack(
                   children: [
                     Image.network(
-                      event.imageUrl ??
-                          'https://eventhub.huma-volve.com/storage/events/default.png',
+                      event.imageUrl ?? '',
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.35,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          AppAssets.event,
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.35,
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                     Positioned(
                       top: 40,
