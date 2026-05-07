@@ -1,8 +1,8 @@
 <div align="center">
-  <img width="800" height="516" alt="splash_screen" src="https://github.com/user-attachments/assets/be06e7fd-826f-4169-abb1-f46f018dc4db" />
+  <img width="800" height="516" alt="splash_screen" src="https://github.com/user-attachments/assets/be06e7fd-826f-4169-abb1-f46f018dc4db" width="250" />
 
 # 🎟️ EventHub
-### Smart Event Management Mobile Application
+### Event Management Mobile Application
 
 A modern mobile platform that simplifies event management by connecting organizers, sponsors, speakers, and attendees in one unified system.
 
@@ -107,7 +107,7 @@ flutter run
 
 <div align="center">
 
-**Graduation Project — Management Information Systems**
+**Graduation Project — Business Information Systems**
 Made with ❤️ using Flutter
 
 </div>
