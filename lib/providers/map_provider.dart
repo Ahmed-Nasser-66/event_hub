@@ -18,54 +18,26 @@ class MapProvider extends ChangeNotifier {
 
   EventModel? selectedEvent;
 
-  // ✅ المتغيرات الجديدة
-  bool _isLoading = false;
+  bool _isMapInitializing = false;
+  bool _isEventsLoading = false;
+
+  bool get isLoading => _isMapInitializing || _isEventsLoading;
+
   String? _errorMessage;
 
-  // ✅ أضف هذا المتغير لمنع الطلبات المتكررة
   bool _isLocationFetched = false;
 
-  // ✅ قائمة الفعاليات من الـ API
   List<EventModel> _allEvents = [];
 
-  bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  // ✅ تحميل الفعاليات من الـ API
-  Future<void> loadEventsFromApi() async {
-    if (_isLoading) return;
-
-    try {
-      final eventsService = EventsService();
-
-      final response = await eventsService.getAllEvents();
-
-      if (response.data['success'] == true) {
-        final List<dynamic> eventsJson = response.data['message']['data'];
-
-        _allEvents =
-            eventsJson.map((json) => EventModel.fromJson(json)).toList();
-
-        _loadEventsMarkers();
-
-        notifyListeners();
-      }
-    } catch (e) {
-      debugPrint("Load events error: $e");
-    }
-  }
-
   Future<void> initializeMap() async {
-    if (_isLocationFetched && currentLocation != null) {
-      debugPrint("📍 Location already fetched, skipping...");
-      return;
-    }
+    if (_isLocationFetched && currentLocation != null) return;
 
-    _isLoading = true;
+    _isMapInitializing = true;
     notifyListeners();
 
     try {
-      // 🔥 1. جيب location بس
       currentLocation = await _service.getCurrentLocation();
 
       if (currentLocation == null) {
@@ -75,100 +47,203 @@ class MapProvider extends ChangeNotifier {
         _isLocationFetched = true;
       }
 
-      // 🔥 2. load map style
       try {
         mapStyle =
-            await rootBundle.loadString('assets/map_style/map_style.json');
+        await rootBundle.loadString(
+          'assets/map_style/map_style.json',
+        );
       } catch (e) {
         debugPrint("Map style error: $e");
       }
 
-      // 🔥 3. شغل API في الخلفية (بدون await)
-      loadEventsFromApi();
+      await loadEventsFromApi();
     } catch (e) {
       _errorMessage = e.toString();
       debugPrint("Initialize map error: $e");
     } finally {
-      _isLoading = false;
+      _isMapInitializing = false;
       notifyListeners();
     }
   }
 
-  // ✅ دالة refreshLocation
+  Future<void> loadEventsFromApi() async {
+    if (_isEventsLoading) return;
+
+    _isEventsLoading = true;
+
+    try {
+      final eventsService = EventsService();
+
+      final response = await eventsService.getAllEvents();
+
+      if (response.data['success'] == true) {
+        final List<dynamic> eventsJson =
+            response.data['message']['data'] ?? [];
+
+        debugPrint("Events Count: ${eventsJson.length}");
+
+        _allEvents =
+            eventsJson.map((json) {
+              return EventModel.fromJson(json);
+            }).toList();
+
+        _loadEventsMarkers();
+
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Load events error: $e");
+    } finally {
+      _isEventsLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> refreshLocation() async {
-    _isLoading = true;
+    _isMapInitializing = true;
     _errorMessage = null;
+
     notifyListeners();
 
     try {
-      currentLocation = await _service.getCurrentLocation();
+      currentLocation =
+      await _service.getCurrentLocation();
 
       if (currentLocation == null) {
-        _errorMessage = "Could not refresh location";
+        _errorMessage =
+        "Could not refresh location";
       } else {
-        _isLocationFetched = true; // ✅ تحديث العلامة
+        _isLocationFetched = true;
+
         _loadEventsMarkers();
 
-        if (controller != null && currentLocation != null) {
+        if (controller != null &&
+            currentLocation != null) {
           controller?.animateCamera(
-            CameraUpdate.newLatLngZoom(currentLocation!, 14),
+            CameraUpdate.newLatLngZoom(
+              currentLocation!,
+              14,
+            ),
           );
         }
       }
     } catch (e) {
       _errorMessage = e.toString();
-      debugPrint("Refresh location error: $e");
+
+      debugPrint(
+        "Refresh location error: $e",
+      );
     } finally {
-      _isLoading = false;
+      _isMapInitializing = false;
+
       notifyListeners();
     }
   }
 
-  // ✅ دالة retryLocation
   Future<void> retryLocation() async {
     await refreshLocation();
   }
 
-  // ✅ دالة للتحقق من صحة الموقع
-  bool get hasLocation => currentLocation != null;
+  bool get hasLocation =>
+      currentLocation != null;
 
-  // ✅ تحميل الـ markers من القائمة الداخلية
   void _loadEventsMarkers() {
-    markers = _allEvents.map((event) {
+    markers = _allEvents
+        .where(
+          (event) =>
+      event.latitude != null &&
+          event.longitude != null,
+    )
+        .map((event) {
+      debugPrint(
+        "Event => ${event.title} | ${event.latitude} | ${event.longitude}",
+      );
+
       return Marker(
-        markerId: MarkerId(event.id.toString()),
-        position: LatLng(event.latitude ?? 0.0, event.longitude ?? 0.0),
-        infoWindow: InfoWindow(title: event.title),
+        markerId:
+        MarkerId(event.id.toString()),
+        position: LatLng(
+          event.latitude!,
+          event.longitude!,
+        ),
+        icon:
+        BitmapDescriptor.defaultMarkerWithHue(
+          BitmapDescriptor.hueOrange,
+        ),
+        infoWindow: InfoWindow(
+          title: event.title,
+        ),
         onTap: () {
           selectEvent(event);
         },
       );
     }).toSet();
+
+    debugPrint(
+      "Markers Count: ${markers.length}",
+    );
+
+    notifyListeners();
   }
 
-  // ✅ Search
+  void moveToFirstEventIfReady() {
+    if (markers.isEmpty ||
+        controller == null) return;
+
+    controller!.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        markers.first.position,
+        10,
+      ),
+    );
+  }
+
   void searchEvents(String query) {
     if (query.isEmpty) {
       searchResults = [];
     } else {
-      final lowerQuery = query.toLowerCase();
+      final lowerQuery =
+      query.toLowerCase();
 
-      final startMatches = _allEvents.where((e) {
-        return e.title.toLowerCase().startsWith(lowerQuery) ||
-            (e.category ?? '').toLowerCase().startsWith(lowerQuery) ||
-            e.location.toLowerCase().startsWith(lowerQuery);
+      final startMatches =
+      _allEvents.where((e) {
+        return e.title
+            .toLowerCase()
+            .startsWith(lowerQuery) ||
+            (e.category ?? '')
+                .toLowerCase()
+                .startsWith(lowerQuery) ||
+            e.location
+                .toLowerCase()
+                .startsWith(lowerQuery);
       }).toList();
 
-      final containsMatches = _allEvents.where((e) {
-        return (e.title.toLowerCase().contains(lowerQuery) ||
-                (e.category ?? '').toLowerCase().contains(lowerQuery) ||
-                e.location.toLowerCase().contains(lowerQuery)) &&
-            !(e.title.toLowerCase().startsWith(lowerQuery) ||
-                (e.category ?? '').toLowerCase().startsWith(lowerQuery) ||
-                e.location.toLowerCase().startsWith(lowerQuery));
+      final containsMatches =
+      _allEvents.where((e) {
+        return (e.title
+            .toLowerCase()
+            .contains(lowerQuery) ||
+            (e.category ?? '')
+                .toLowerCase()
+                .contains(lowerQuery) ||
+            e.location
+                .toLowerCase()
+                .contains(lowerQuery)) &&
+            !(e.title
+                .toLowerCase()
+                .startsWith(lowerQuery) ||
+                (e.category ?? '')
+                    .toLowerCase()
+                    .startsWith(lowerQuery) ||
+                e.location
+                    .toLowerCase()
+                    .startsWith(lowerQuery));
       }).toList();
 
-      searchResults = [...startMatches, ...containsMatches];
+      searchResults = [
+        ...startMatches,
+        ...containsMatches,
+      ];
     }
 
     notifyListeners();
@@ -177,10 +252,16 @@ class MapProvider extends ChangeNotifier {
   void selectEvent(EventModel event) {
     selectedEvent = event;
 
-    final destination = LatLng(event.latitude ?? 0.0, event.longitude ?? 0.0);
+    final destination = LatLng(
+      event.latitude ?? 0.0,
+      event.longitude ?? 0.0,
+    );
 
     controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(destination, 14),
+      CameraUpdate.newLatLngZoom(
+        destination,
+        14,
+      ),
     );
 
     controller?.showMarkerInfoWindow(
@@ -188,19 +269,29 @@ class MapProvider extends ChangeNotifier {
     );
 
     if (currentLocation != null) {
-      _drawRoute(currentLocation!, destination);
+      _drawRoute(
+        currentLocation!,
+        destination,
+      );
     }
 
     searchResults = [];
+
     notifyListeners();
   }
 
-  void _drawRoute(LatLng start, LatLng end) {
+  void _drawRoute(
+      LatLng start,
+      LatLng end,
+      ) {
     polylines.clear();
 
     polylines.add(
       Polyline(
-        polylineId: const PolylineId("path_to_event"),
+        polylineId:
+        const PolylineId(
+          "path_to_event",
+        ),
         points: [start, end],
         color: Colors.orange,
         width: 5,
@@ -213,20 +304,26 @@ class MapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void moveToLocation(LatLng position) {
+  void moveToLocation(
+      LatLng position,
+      ) {
     selectedEvent = null;
 
     controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(position, 15),
+      CameraUpdate.newLatLngZoom(
+        position,
+        15,
+      ),
     );
 
     polylines.clear();
+
     notifyListeners();
   }
 
-  // ✅ دالة لتنظيف الموارد
   void disposeMap() {
     controller?.dispose();
+
     polylines.clear();
     markers.clear();
     searchResults.clear();

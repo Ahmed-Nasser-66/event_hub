@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:event_hub/model/event_details_model.dart';
-
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'dio_config.dart';
 
 class EventsService {
-  final Dio dio = DioConfig.createDio();
-
+  final Dio dio = ApiService().dio;
   // 🟢 تجيب كل الفعاليات
   Future<Response> getAllEvents({
     int page = 1,

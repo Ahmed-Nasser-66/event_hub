@@ -17,7 +17,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   late TextEditingController _searchController;
-  bool _isShowingBottomSheet = false; // ✅ التعديل 1
+  bool _isShowingBottomSheet = false;
 
   @override
   void initState() {
@@ -28,10 +28,11 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   void dispose() {
     _searchController.dispose();
-    // ✅ التعديل 7: تنظيف البيانات
+
     final mapProvider = context.read<MapProvider>();
     mapProvider.searchResults = [];
     mapProvider.selectedEvent = null;
+
     super.dispose();
   }
 
@@ -82,7 +83,7 @@ class _LocationScreenState extends State<LocationScreen> {
             ),
             const SizedBox(height: 5),
             Text(
-              "${event.location} • ${event.category ?? ''}", // ✅ تعديل
+              "${event.location} • ${event.category ?? ''}",
               style: const TextStyle(
                 color: AppColors.lightGrey,
                 fontSize: 14,
@@ -113,10 +114,12 @@ class _LocationScreenState extends State<LocationScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EventBookingScreen(event: event),
+                      builder: (context) =>
+                          EventBookingScreen(event: event),
                     ),
                   );
                 },
@@ -148,11 +151,20 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget build(BuildContext context) {
     return Consumer<MapProvider>(
       builder: (context, mapProvider, child) {
-        // ✅ التعديل 4: منع ظهور الـ BottomSheet مرتين
-        if (mapProvider.selectedEvent != null && !_isShowingBottomSheet) {
+        debugPrint(
+          "Markers On Screen: ${mapProvider.markers.length}",
+        );
+
+        if (mapProvider.selectedEvent != null &&
+            !_isShowingBottomSheet) {
           _isShowingBottomSheet = true;
+
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            _showEventDetails(context, mapProvider.selectedEvent!);
+            _showEventDetails(
+              context,
+              mapProvider.selectedEvent!,
+            );
+
             mapProvider.selectedEvent = null;
             _isShowingBottomSheet = false;
           });
@@ -160,21 +172,29 @@ class _LocationScreenState extends State<LocationScreen> {
 
         if (mapProvider.currentLocation == null) {
           return const Scaffold(
-              body: Center(
-                  child: CircularProgressIndicator(color: AppColors.orange)));
+            body: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.orange,
+              ),
+            ),
+          );
         }
 
         return Scaffold(
-          resizeToAvoidBottomInset: true, // ✅ التعديل 2
+          resizeToAvoidBottomInset: true,
           body: Stack(
             children: [
-              // ✅ التعديل 3: إضافة ClipRRect
               ClipRRect(
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
-                      target: mapProvider.currentLocation!, zoom: 12),
-                  onMapCreated: (controller) =>
-                      mapProvider.controller = controller,
+                    target: mapProvider.currentLocation!,
+                    zoom: 12,
+                  ),
+                  onMapCreated: (controller) {
+                    mapProvider.controller = controller;
+
+                    mapProvider.moveToFirstEventIfReady();
+                  },
                   style: mapProvider.mapStyle,
                   markers: mapProvider.markers,
                   polylines: mapProvider.polylines,
@@ -183,7 +203,10 @@ class _LocationScreenState extends State<LocationScreen> {
                   zoomControlsEnabled: false,
                 ),
               ),
-              _buildSearchArea(context, mapProvider),
+              _buildSearchArea(
+                context,
+                mapProvider,
+              ),
               _buildButtons(mapProvider),
             ],
           ),
@@ -192,7 +215,10 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 
-  Widget _buildSearchArea(BuildContext context, MapProvider mapProvider) {
+  Widget _buildSearchArea(
+      BuildContext context,
+      MapProvider mapProvider,
+      ) {
     return Positioned(
       top: 60,
       left: 20,
@@ -201,22 +227,24 @@ class _LocationScreenState extends State<LocationScreen> {
         children: [
           Searchbarwidget(
             controller: _searchController,
-            onChanged: (value) => mapProvider.searchEvents(value),
+            onChanged: (value) =>
+                mapProvider.searchEvents(value),
           ),
-
-          // ✅ نتائج البحث
           if (mapProvider.searchResults.isNotEmpty)
             Container(
               margin: const EdgeInsets.only(top: 8),
-              constraints: const BoxConstraints(maxHeight: 300),
+              constraints: const BoxConstraints(
+                maxHeight: 300,
+              ),
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                      color: AppColors.black.withAlpha(26),
-                      blurRadius: 15,
-                      offset: const Offset(0, 5))
+                    color: AppColors.black.withAlpha(26),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  )
                 ],
               ),
               child: ClipRRect(
@@ -224,33 +252,49 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
-                  itemCount: mapProvider.searchResults.length,
+                  itemCount:
+                  mapProvider.searchResults.length,
                   separatorBuilder: (context, index) =>
-                      const Divider(height: 1, color: AppColors.grey),
+                  const Divider(
+                    height: 1,
+                    color: AppColors.grey,
+                  ),
                   itemBuilder: (context, index) {
-                    final event = mapProvider.searchResults[index];
+                    final event =
+                    mapProvider.searchResults[index];
+
                     return ListTile(
-                      leading: const Icon(Icons.location_on,
-                          color: AppColors.orange),
-                      title: Text(event.title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.black)),
-                      subtitle: Text(event.category ?? '', // ✅ تعديل
-                          style: const TextStyle(color: AppColors.lightGrey)),
+                      leading: const Icon(
+                        Icons.location_on,
+                        color: AppColors.orange,
+                      ),
+                      title: Text(
+                        event.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                      subtitle: Text(
+                        event.category ?? '',
+                        style: const TextStyle(
+                          color: AppColors.lightGrey,
+                        ),
+                      ),
                       onTap: () {
                         mapProvider.selectEvent(event);
+
                         _searchController.clear();
+
                         FocusScope.of(context).unfocus();
-                        setState(() {}); // ✅ التعديل 6
+
+                        setState(() {});
                       },
                     );
                   },
                 ),
               ),
             )
-
-          // ✅ التعديل 5: رسالة "لا توجد نتائج"
           else if (_searchController.text.isNotEmpty)
             Container(
               margin: const EdgeInsets.only(top: 8),
@@ -262,7 +306,9 @@ class _LocationScreenState extends State<LocationScreen> {
               child: Center(
                 child: Text(
                   'No events found for "${_searchController.text}"',
-                  style: const TextStyle(color: AppColors.lightGrey),
+                  style: const TextStyle(
+                    color: AppColors.lightGrey,
+                  ),
                 ),
               ),
             ),
@@ -281,10 +327,17 @@ class _LocationScreenState extends State<LocationScreen> {
         elevation: 6,
         shape: const CircleBorder(),
         onPressed: () {
-          provider.moveToLocation(provider.currentLocation!);
+          provider.moveToLocation(
+            provider.currentLocation!,
+          );
+
           _searchController.clear();
         },
-        child: const Icon(Icons.my_location, color: AppColors.orange, size: 28),
+        child: const Icon(
+          Icons.my_location,
+          color: AppColors.orange,
+          size: 28,
+        ),
       ),
     );
   }
