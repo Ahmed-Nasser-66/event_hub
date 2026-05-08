@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/user_provider.dart';
+
 class NearbyEventCard extends StatelessWidget {
   final EventModel event;
 
@@ -15,6 +17,7 @@ class NearbyEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = context.read<FavoriteProvider>();
+    final userProvider = context.read<UserProvider>();
     final eventProvider = context.read<EventProvider>();
     final bool isFavorite = context.watch<FavoriteProvider>().isExist(event);
 
@@ -78,7 +81,10 @@ class NearbyEventCard extends StatelessWidget {
                   left: 5,
                   child: GestureDetector(
                     onTap: () {
-                      favoriteProvider.toggleFavorite(event);
+                      favoriteProvider.toggleFavorite(
+                        event,
+                        userProvider.email,
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(4),

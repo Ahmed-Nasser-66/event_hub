@@ -13,6 +13,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../providers/user_provider.dart';
+
 class EventDetailsScreen extends StatefulWidget {
   final EventModel event;
 
@@ -60,7 +62,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
     final eventProvider = context.read<EventProvider>();
-
+    final userProvider = context.read<UserProvider>();
     final event = _details?.event ?? widget.event;
 
     final String category = widget.event.category ??
@@ -119,7 +121,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
                           return GestureDetector(
                             onTap: () {
-                              favProvider.toggleFavorite(widget.event);
+                              favProvider.toggleFavorite(
+                                widget.event,
+                                userProvider.email,
+                              );
                             },
                             child: CircleAvatar(
                               backgroundColor: AppColors.white.withAlpha(230),
@@ -256,8 +261,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   child: _isLoadingDetails
                       ? const EventDetailsSkeleton()
                       : (_details?.speakers.isEmpty ?? true)
-                          ? Text(
-                              locale.eventDetailsDescription) 
+                          ? Text(locale.eventDetailsDescription)
                           : Column(
                               children: _details!.speakers.map((speaker) {
                                 return Padding(

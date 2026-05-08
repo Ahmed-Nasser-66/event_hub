@@ -4,6 +4,7 @@ import 'package:event_hub/features/home/presentation/tabs/event_details_screen.d
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class UpcomingEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = context.watch<FavoriteProvider>();
+    final userProvider = context.read<UserProvider>();
     final eventProvider = context.read<EventProvider>();
     final bool isFavorite = favoriteProvider.isExist(event);
 
@@ -91,7 +93,10 @@ class UpcomingEventCard extends StatelessWidget {
                   right: 20,
                   child: GestureDetector(
                     onTap: () {
-                      favoriteProvider.toggleFavorite(event);
+                      favoriteProvider.toggleFavorite(
+                        event,
+                        userProvider.email,
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5),

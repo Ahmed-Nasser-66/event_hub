@@ -13,6 +13,7 @@ import 'package:event_hub/features/widgets/upcoming_event_card.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/event_provider.dart';
+import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/map_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,17 @@ class _HomeTabState extends State<HomeTab> {
 
     _initializeLocationOnce();
 
+    // ✅ تعديل: استخدام الـ providers الحقيقية من الـ widget tree
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<EventProvider>().refreshEvents();
+      final eventProvider = context.read<EventProvider>();
+      final favoriteProvider = context.read<FavoriteProvider>();
+      final userEmail = context.read<UserProvider>().email;
+
+      eventProvider.refreshEvents(
+        favoriteProvider: favoriteProvider,
+        userEmail: userEmail,
+      );
     });
   }
 
@@ -109,7 +118,14 @@ class _HomeTabState extends State<HomeTab> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            await eventProvider.refreshEvents();
+            // ✅ تعديل: استخدام الـ providers الحقيقية في الـ refresh
+            final favoriteProvider = context.read<FavoriteProvider>();
+            final userEmail = context.read<UserProvider>().email;
+
+            await eventProvider.refreshEvents(
+              favoriteProvider: favoriteProvider,
+              userEmail: userEmail,
+            );
             await mapProvider.refreshLocation();
           },
           child: SingleChildScrollView(

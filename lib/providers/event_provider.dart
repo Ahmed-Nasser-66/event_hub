@@ -4,6 +4,8 @@ import 'package:event_hub/model/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'favorite_provider.dart';
+
 class CategoryItem {
   final int id;
   final String name;
@@ -306,7 +308,10 @@ class EventProvider extends ChangeNotifier {
 
   // ================= HOME API =================
 
-  Future<void> refreshEvents() async {
+  Future<void> refreshEvents({
+    FavoriteProvider? favoriteProvider,
+    String? userEmail,
+  }) async {
     if (_isLoading) return;
     _isLoading = true;
     _state = EventsState.loading;
@@ -338,6 +343,11 @@ class EventProvider extends ChangeNotifier {
 
           _allEvents =
               allEventsJson.map((e) => EventModel.fromJson(e)).toList();
+        }
+
+        // ✅ استخدام الـ instance الحقيقي بدل إنشاء واحد جديد فاضي
+        if (favoriteProvider != null && userEmail != null) {
+          await favoriteProvider.loadFavorites(_allEvents, userEmail);
         }
 
         _calculateDistances();
