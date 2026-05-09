@@ -1,6 +1,6 @@
 class AppAssets {
   AppAssets._();
-  //image
+  
   static const String event = 'assets/image/event.png';
   static const String eventTitle = 'assets/image/event_title.png';
   static const String events = 'assets/image/events.png';
@@ -23,7 +23,7 @@ class AppAssets {
   static const String ellipse3 = 'assets/image/ellipse3.png';
   static const String ellipse4 = 'assets/image/ellipse4.png';
 
-  //icon
+  
   static const String apple = 'assets/icon/apple.svg';
   static const String arts = 'assets/icon/arts.svg';
   static const String bell = 'assets/icon/bell.svg';

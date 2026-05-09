@@ -1,8 +1,10 @@
 class Speaker {
   final int id;
   final String name;
-  final String? profilePicture; // 🔥 بدل image
-  final String? sessionTitle; // 🔥 بدل topic
+  final String? profilePicture;
+
+  final String? sessionTitle;
+
   final String? summary;
 
   Speaker({
@@ -17,8 +19,8 @@ class Speaker {
     return Speaker(
       id: json['id'],
       name: json['name'] ?? '',
-      profilePicture: json['profile_picture'], // 🔥 mapping صح
-      sessionTitle: json['session_title'], // 🔥 mapping صح
+      profilePicture: json['profile_picture'],
+      sessionTitle: json['session_title'],
       summary: json['summary'],
     );
   }

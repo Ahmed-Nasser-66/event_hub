@@ -6,14 +6,14 @@ class AppLanguageProvider extends ChangeNotifier {
 
   String appLanguage = 'en';
 
-  /// تحميل اللغة من التخزين
+  
   Future<void> loadLanguage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     appLanguage = prefs.getString(languageKey) ?? 'en';
     notifyListeners();
   }
 
-  /// تغيير اللغة
+  
   Future<void> changeLanguage(String newLanguage) async {
     if (appLanguage == newLanguage) return;
 

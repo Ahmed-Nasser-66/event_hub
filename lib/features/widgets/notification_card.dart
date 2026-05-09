@@ -17,7 +17,7 @@ class NotificationCard extends StatelessWidget {
     this.isHighlighted = false,
   });
 
-  // 🔥 حل ذكي للصورة
+  
   ImageProvider _getImageProvider(String image) {
     if (image.startsWith('http')) {
       return NetworkImage(image);
@@ -43,7 +43,7 @@ class NotificationCard extends StatelessWidget {
                 isHighlighted ? AppColors.orange : AppColors.secondary,
             child: CircleAvatar(
               radius: 22,
-              backgroundImage: _getImageProvider(image), // 🔥 هنا الحل
+              backgroundImage: _getImageProvider(image), 
             ),
           ),
           const SizedBox(width: 12),
@@ -52,18 +52,22 @@ class NotificationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: isHighlighted
-                            ? AppColors.orange
-                            : AppColors.secondary,
-                        fontSize: 16,
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: isHighlighted
+                              ? AppColors.orange
+                              : AppColors.secondary,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Text(
                       time,
                       style: const TextStyle(
@@ -77,6 +81,8 @@ class NotificationCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 12,

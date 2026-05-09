@@ -21,7 +21,7 @@ class NearbyEventCard extends StatelessWidget {
     final eventProvider = context.read<EventProvider>();
     final bool isFavorite = context.watch<FavoriteProvider>().isExist(event);
 
-    // 🔥 Format time
+    
     String formatTime(String? time) {
       if (time == null) return '';
       try {
@@ -104,12 +104,12 @@ class NearbyEventCard extends StatelessWidget {
             ),
             const SizedBox(width: 12),
 
-            // 🔥 INFO
+            
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Category
+                  
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
@@ -120,7 +120,7 @@ class NearbyEventCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      eventProvider.categoryName(event.categoryId), // ✅ FIX
+                      eventProvider.categoryName(event.categoryId), 
                       style: const TextStyle(
                         fontSize: 10,
                         color: AppColors.secondary,
@@ -130,7 +130,7 @@ class NearbyEventCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  // Title
+                  
                   Text(
                     event.title,
                     style: const TextStyle(
@@ -144,7 +144,7 @@ class NearbyEventCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  // Location
+                  
                   Row(
                     children: [
                       const Icon(
@@ -168,7 +168,7 @@ class NearbyEventCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  // Date
+                  
                   Row(
                     children: [
                       const Icon(
@@ -190,7 +190,7 @@ class NearbyEventCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  // 🔥 Time Range
+                  
                   Row(
                     children: [
                       const Icon(
@@ -211,7 +211,7 @@ class NearbyEventCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  // 🔥 Event Type
+                  
                   Text(
                     event.type == 'online' ? 'Online' : 'In Person',
                     style: const TextStyle(
@@ -222,7 +222,7 @@ class NearbyEventCard extends StatelessWidget {
 
                   const SizedBox(height: 8),
 
-                  // 🔥 Price
+                  
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(

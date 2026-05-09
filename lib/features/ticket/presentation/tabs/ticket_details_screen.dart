@@ -202,14 +202,17 @@ class TicketDetailsScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 4),
-                            Text(
-                              "$formattedStartTime - $formattedEndTime",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                color: AppColors.black,
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "$formattedStartTime - $formattedEndTime",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: AppColors.black,
+                                ),
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),

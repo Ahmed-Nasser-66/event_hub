@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/home/presentation/location/location_screen.dart';
 import 'package:event_hub/features/home/presentation/notification/notification_screen.dart';
@@ -39,7 +38,6 @@ class _HomeTabState extends State<HomeTab> {
 
     _initializeLocationOnce();
 
-    // ✅ تعديل: استخدام الـ providers الحقيقية من الـ widget tree
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final eventProvider = context.read<EventProvider>();
@@ -110,15 +108,16 @@ class _HomeTabState extends State<HomeTab> {
     final eventProvider = context.watch<EventProvider>();
     final mapProvider = context.watch<MapProvider>();
 
-    final upcomingEvents = eventProvider.filteredUpcomingEvents;
-    final nearbyEvents = eventProvider.filteredNearbyEvents;
+    final upcomingEvents =
+        eventProvider.filteredUpcomingEvents.take(5).toList();
+
+    final nearbyEvents = eventProvider.filteredNearbyEvents.take(5).toList();
 
     return Scaffold(
       backgroundColor: AppColors.grey,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            // ✅ تعديل: استخدام الـ providers الحقيقية في الـ refresh
             final favoriteProvider = context.read<FavoriteProvider>();
             final userEmail = context.read<UserProvider>().email;
 

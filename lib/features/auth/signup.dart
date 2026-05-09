@@ -283,7 +283,16 @@ class _SignupState extends State<Signup> {
               onPressed: () async {
                 if (!value) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.agreePrivacyPolicy)),
+                    SnackBar(
+                      content: Text(
+                        l10n.agreePrivacyPolicy,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: AppColors.green,
+                    ),
                   );
                   return;
                 }
@@ -310,7 +319,16 @@ class _SignupState extends State<Signup> {
                     }
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Signup failed")),
+                      SnackBar(
+                        content: Text(
+                          "Signup failed",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        backgroundColor: AppColors.red,
+                      ),
                     );
                   }
                 }

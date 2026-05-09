@@ -13,7 +13,7 @@ class EventSkeleton extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
 
-        // 🔥 الحل الأساسي للمشكلة
+        
         shrinkWrap: !isHorizontal,
         physics: isHorizontal
             ? const BouncingScrollPhysics()
@@ -39,7 +39,7 @@ class EventSkeleton extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 🔹 image placeholder
+                    
                     Container(
                       height: 120,
                       width: double.infinity,
@@ -51,7 +51,7 @@ class EventSkeleton extends StatelessWidget {
 
                     const SizedBox(height: 10),
 
-                    // 🔹 title
+                    
                     Container(
                       height: 12,
                       width: 120,
@@ -63,7 +63,7 @@ class EventSkeleton extends StatelessWidget {
 
                     const SizedBox(height: 8),
 
-                    // 🔹 subtitle
+                    
                     Container(
                       height: 10,
                       width: 80,

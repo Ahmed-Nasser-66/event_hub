@@ -176,9 +176,7 @@ class MapProvider extends ChangeNotifier {
   }
 
   void moveToFirstEventIfReady() {
-    if (markers.isEmpty ||
-        // ignore: curly_braces_in_flow_control_structures
-        controller == null) return;
+    if (markers.isEmpty || controller == null) return;
 
     controller!.animateCamera(
       CameraUpdate.newLatLngZoom(

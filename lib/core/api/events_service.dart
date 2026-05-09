@@ -4,7 +4,7 @@ import 'package:event_hub/core/api/auth_api_service.dart';
 
 class EventsService {
   final Dio dio = ApiService().dio;
-  // 🟢 تجيب كل الفعاليات
+
   Future<Response> getAllEvents({
     int page = 1,
   }) async {
@@ -22,7 +22,6 @@ class EventsService {
     }
   }
 
-  // 🟢 بيانات الصفحة الرئيسية
   Future<Response> getAppHome() async {
     try {
       return await dio.get("app/home");
@@ -33,7 +32,6 @@ class EventsService {
     }
   }
 
-  // 🔥 تفاصيل Event
   Future<EventDetailsModel> getEventDetails(int id) async {
     try {
       final response = await dio.get("events/$id");
@@ -46,7 +44,6 @@ class EventsService {
     }
   }
 
-  // 🟣 Category Events
   Future<Response> getEventsByCategory(
     String slug,
   ) async {
@@ -64,7 +61,6 @@ class EventsService {
     }
   }
 
-  // 🔍 Search Events
   Future<Response> searchEvents(
     String keyword,
   ) async {
@@ -82,7 +78,6 @@ class EventsService {
     }
   }
 
-  // 📍 Nearby Events
   Future<Response> getNearbyEvents({
     required double latitude,
     required double longitude,
@@ -102,7 +97,6 @@ class EventsService {
     }
   }
 
-  // 🟠 Filter Events
   Future<Response> filterEvents(
     String sort,
   ) async {

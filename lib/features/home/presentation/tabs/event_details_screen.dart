@@ -334,7 +334,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             ),
                 ),
                 const SizedBox(height: 20),
-                // Sponsors Section
                 const Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Text(
@@ -353,7 +352,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       ? const EventDetailsSkeleton()
                       : (_details?.sponsors.isEmpty ?? true)
                           ? Text(
-                              locale.eventDetailsDescription) // fallback text
+                              locale.eventDetailsDescription) 
                           : SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
@@ -489,22 +488,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       onPressed: () {
                         int count = int.tryParse(ticketController.text) ?? 1;
 
-                        // 🟢 1- إضافة التذكرة
                         context.read<TicketProvider>().addTicketFromEvent(
                               widget.event,
                               count,
                             );
 
-                        // 🔥 2- إضافة Notification (Fake)
                         context
                             .read<NotificationProvider>()
                             .addLocalNotification(
                               "Booking Confirmed",
                               "You booked ${widget.event.title} ($count tickets)",
-                              image: widget.event.imageUrl, // 🔥 ده أهم سطر
+                              image: widget.event.imageUrl, 
                             );
 
-                        // 🟢 3- Snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("${locale.bookNow} $count"),

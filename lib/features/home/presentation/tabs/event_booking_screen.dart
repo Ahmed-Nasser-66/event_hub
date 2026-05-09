@@ -56,7 +56,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
 
-              // ✅ التعديل الوحيد (fix crash)
+              
               child: Image.network(
                 widget.event.imageUrl ?? '',
                 height: 200,

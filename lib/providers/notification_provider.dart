@@ -9,19 +9,16 @@ class NotificationProvider extends ChangeNotifier {
     headers: {"Content-Type": "application/json"},
   ));
 
-  // ================= API DATA =================
   List<NotificationModel> _notifications = [];
   bool _isLoading = false;
 
   List<NotificationModel> get notifications => _notifications;
   bool get isLoading => _isLoading;
 
-  // ================= SERVER STATE =================
   bool _status = false;
 
   bool get status => _status;
 
-  // ================= FETCH NOTIFICATIONS =================
   Future<void> fetchNotifications() async {
     _isLoading = true;
     notifyListeners();
@@ -41,7 +38,6 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ================= GET STATUS FROM API =================
   Future<void> fetchNotificationStatus() async {
     try {
       final service = NotificationService(_dio);
@@ -55,10 +51,8 @@ class NotificationProvider extends ChangeNotifier {
     }
   }
 
-  // ================= UPDATE STATUS =================
   Future<void> setNotification(bool value) async {
     try {
-      // 🔥 Optimistic UI
       _status = value;
       notifyListeners();
 
@@ -69,18 +63,17 @@ class NotificationProvider extends ChangeNotifier {
     }
   }
 
-  // ================= LOCAL (FAKE) NOTIFICATIONS =================
   void addLocalNotification(
     String title,
     String body, {
-    String? image, // 🔥 الجديد
+    String? image,
   }) {
     final newNotification = NotificationModel(
       id: DateTime.now().millisecondsSinceEpoch,
       title: title,
       body: body,
       time: DateTime.now().toIso8601String(),
-      image: image, // 🔥 هنا
+      image: image,
     );
 
     _notifications.insert(0, newNotification);

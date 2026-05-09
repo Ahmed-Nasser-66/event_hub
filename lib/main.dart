@@ -32,7 +32,6 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AppLanguageProvider()),
         ChangeNotifierProvider(create: (_) => userProvider),
-        // ✅ تعديل: بدون استدعاء refreshEvents هنا — بيتم في HomeTab
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),

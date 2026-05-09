@@ -76,7 +76,7 @@ class ApiService {
       options: Options(
         headers: {
           "Content-Type": "application/json",
-          "Authorization": null, // 🔥 مهم
+          "Authorization": null,
         },
       ),
     );
@@ -88,13 +88,13 @@ class ApiService {
       "/auth/reset-password",
       data: {
         "email": email,
-        "code": code, // لازم String
+        "code": code,
         "password": password,
         "password_confirmation": password,
       },
       options: Options(
         headers: {
-          "Authorization": null, // 🔥 مهم جدا
+          "Authorization": null,
         },
       ),
     );

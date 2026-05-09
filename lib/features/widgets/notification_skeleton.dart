@@ -16,7 +16,7 @@ class NotificationSkeleton extends StatelessWidget {
             highlightColor: Colors.grey[100]!,
             child: Row(
               children: [
-                // 🔵 Circle image
+                
                 Container(
                   width: 50,
                   height: 50,
@@ -28,7 +28,7 @@ class NotificationSkeleton extends StatelessWidget {
 
                 const SizedBox(width: 12),
 
-                // 🔵 Text placeholders
+                
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

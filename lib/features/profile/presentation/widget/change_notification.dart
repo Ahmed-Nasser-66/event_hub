@@ -20,7 +20,7 @@ class _NotificationSheetState extends State<NotificationSheet> {
 
     final status = context.read<NotificationProvider>().status;
 
-    // 🔥 تحويل bool → String
+    
     selected = status ? "on" : "off";
   }
 
@@ -51,7 +51,7 @@ class _NotificationSheetState extends State<NotificationSheet> {
 
             const SizedBox(height: 20),
 
-            // ================= OPTIONS =================
+            
             Column(
               children: [
                 buildOption(l10n.on, "on"),
@@ -62,10 +62,10 @@ class _NotificationSheetState extends State<NotificationSheet> {
 
             const SizedBox(height: 20),
 
-            // ================= BUTTON =================
+            
             ElevatedButton(
               onPressed: () {
-                // 🔥 تحويل String → bool
+                
                 final bool value = selected == "on";
 
                 context.read<NotificationProvider>().setNotification(value);
@@ -87,7 +87,7 @@ class _NotificationSheetState extends State<NotificationSheet> {
     );
   }
 
-  // ================= OPTION WIDGET =================
+  
   Widget buildOption(String title, String value) {
     return InkWell(
       onTap: () {

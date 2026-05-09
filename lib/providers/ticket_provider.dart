@@ -70,7 +70,7 @@ class TicketProvider extends ChangeNotifier {
 
   List<TicketModel> get comingSoonEvents {
     final upcoming = _tickets.where((event) {
-      // ✅ تعديل يمنع crash
+      
       DateTime date = DateTime.tryParse(event.date) ?? DateTime.now();
       return date.isAfter(DateTime.now());
     }).toList();
@@ -101,7 +101,7 @@ class TicketProvider extends ChangeNotifier {
 
   List<TicketModel> get historyEvents {
     final history = _tickets.where((event) {
-      // ✅ تعديل يمنع crash
+      
       DateTime date = DateTime.tryParse(event.date) ?? DateTime.now();
       return date.isBefore(DateTime.now());
     }).toList();

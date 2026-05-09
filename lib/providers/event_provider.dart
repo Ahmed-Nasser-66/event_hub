@@ -43,7 +43,7 @@ class EventProvider extends ChangeNotifier {
 
   List<CategoryItem> _categories = [];
 
-  // ================= GETTERS =================
+  
 
   int? get selectedCategoryId => _selectedCategoryId;
 
@@ -63,7 +63,7 @@ class EventProvider extends ChangeNotifier {
 
   List<EventModel> get nearbyEvents => _nearbyEvents;
 
-  // ================= CATEGORY NAME =================
+  
 
   String categoryName(int? id) {
     if (id == null) return "Unknown";
@@ -80,7 +80,7 @@ class EventProvider extends ChangeNotifier {
     return category.name;
   }
 
-  // ================= FILTERED EVENTS =================
+  
 
   List<EventModel> get filteredEvents {
     final eventsByCategory = _allEvents.where((event) {
@@ -134,7 +134,7 @@ class EventProvider extends ChangeNotifier {
     return result;
   }
 
-  // ================= UPCOMING =================
+  
 
   List<EventModel> get filteredUpcomingEvents {
     List<EventModel> events = _upcomingEvents.where((event) {
@@ -167,7 +167,7 @@ class EventProvider extends ChangeNotifier {
     return events;
   }
 
-  // ================= NEARBY =================
+  
 
   List<EventModel> get filteredNearbyEvents {
     List<EventModel> events = _nearbyEvents.where((event) {
@@ -200,7 +200,7 @@ class EventProvider extends ChangeNotifier {
     return events;
   }
 
-  // ================= DISTANCE =================
+  
 
   void _calculateDistances() {
     if (_userLat == null || _userLng == null) return;
@@ -224,14 +224,14 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ================= SEARCH =================
+  
 
   void setSearchQuery(String query) {
     _searchQuery = query;
     notifyListeners();
   }
 
-  // ================= SORT =================
+  
 
   void sortBySmartChoice() {
     _isSortedBySmartChoice = true;
@@ -261,7 +261,7 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ================= CATEGORY =================
+  
 
   Future<void> selectCategory(CategoryItem category) async {
     if (_selectedCategoryId == category.id) {
@@ -295,7 +295,7 @@ class EventProvider extends ChangeNotifier {
     }
   }
 
-  // ================= EVENT DETAILS =================
+  
 
   Future<EventDetailsModel?> fetchEventDetails(int eventId) async {
     try {
@@ -306,7 +306,7 @@ class EventProvider extends ChangeNotifier {
     }
   }
 
-  // ================= HOME API =================
+  
 
   Future<void> refreshEvents({
     FavoriteProvider? favoriteProvider,
@@ -345,7 +345,7 @@ class EventProvider extends ChangeNotifier {
               allEventsJson.map((e) => EventModel.fromJson(e)).toList();
         }
 
-        // ✅ استخدام الـ instance الحقيقي بدل إنشاء واحد جديد فاضي
+        
         if (favoriteProvider != null && userEmail != null) {
           await favoriteProvider.loadFavorites(_allEvents, userEmail);
         }
