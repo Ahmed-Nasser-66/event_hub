@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:event_hub/core/api/notification_service.dart';
 import 'package:event_hub/model/notification_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationProvider extends ChangeNotifier {
   final Dio _dio = Dio(BaseOptions(
@@ -13,6 +16,7 @@ class NotificationProvider extends ChangeNotifier {
   bool _isLoading = false;
 
   List<NotificationModel> get notifications => _notifications;
+
   bool get isLoading => _isLoading;
 
   bool _status = false;
@@ -77,6 +81,51 @@ class NotificationProvider extends ChangeNotifier {
     );
 
     _notifications.insert(0, newNotification);
+
+    notifyListeners();
+  }
+
+  Future<void> saveNotifications() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final notificationJson = _notifications.map((notification) {
+      return {
+        'id': notification.id,
+        'title': notification.title,
+        'body': notification.body,
+        'time': notification.time,
+        'image': notification.image,
+      };
+    }).toList();
+
+    await prefs.setString(
+      "notifications",
+      jsonEncode(notificationJson),
+    );
+  }
+
+  Future<void> loadNotifications() async {
+    final prefs = await SharedPreferences.getInstance();
+    final notificationsJson = prefs.getString("notifications");
+
+    if (notificationsJson != null && notificationsJson.isNotEmpty) {
+      try {
+        final List decoded = jsonDecode(notificationsJson);
+        _notifications.clear();
+
+        for (var item in decoded) {
+          _notifications.add(NotificationModel(
+            id: item['id'] ?? 0,
+            title: item['title'] ?? '',
+            body: item['body'] ?? '',
+            time: item['time'] ?? '',
+            image: item['image'],
+          ));
+        }
+      } catch (e) {
+        debugPrint("❌ Error loading notifications: $e");
+      }
+    }
 
     notifyListeners();
   }

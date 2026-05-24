@@ -5,6 +5,7 @@ import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,23 @@ class TicketTab extends StatefulWidget {
 
 class _TicketTabState extends State<TicketTab> {
   final TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final userEmail = context.read<UserProvider>().email;
+      context.read<TicketProvider>().loadTickets(userEmail);
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

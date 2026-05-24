@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:math';
+
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/model/ticket_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TicketProvider extends ChangeNotifier {
   int _selectedTab = 0;
@@ -21,6 +24,67 @@ class TicketProvider extends ChangeNotifier {
   }
 
   final List<TicketModel> _tickets = [];
+
+  Future<void> saveTickets(String userEmail) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final ticketJson = _tickets.map((ticket) {
+      return {
+        'title': ticket.title,
+        'date': ticket.date,
+        'category': ticket.category,
+        'isUpcoming': ticket.isUpcoming,
+        'bookingId': ticket.bookingId,
+        'location': ticket.location,
+        'image': ticket.image,
+        'section': ticket.section,
+        'row': ticket.row,
+        'startTime': ticket.startTime,
+        'endTime': ticket.endTime,
+        'price': ticket.price,
+        'ticketsCount': ticket.ticketsCount,
+      };
+    }).toList();
+
+    await prefs.setString(
+      "tickets_$userEmail",
+      jsonEncode(ticketJson),
+    );
+  }
+
+  Future<void> loadTickets(String userEmail) async {
+    final prefs = await SharedPreferences.getInstance();
+    final ticketsJson = prefs.getString("tickets_$userEmail");
+
+    if (ticketsJson != null && ticketsJson.isNotEmpty) {
+      try {
+        final List decoded = jsonDecode(ticketsJson);
+        _tickets.clear();
+
+        for (var item in decoded) {
+          _tickets.add(TicketModel(
+            title: item['title'] ?? '',
+            date: item['date'] ?? '',
+            category: item['category'] ?? '',
+            isUpcoming: item['isUpcoming'] ?? true,
+            bookingId: item['bookingId'] ?? '',
+            location: item['location'] ?? '',
+            image: item['image'] ?? '',
+            section: item['section'] ?? '',
+            row: item['row'] ?? '',
+            startTime: item['startTime'] ?? '',
+            endTime: item['endTime'] ?? '',
+            price: item['price'] ?? '',
+            ticketsCount: item['ticketsCount'] ?? 1,
+          ));
+        }
+      } catch (e) {
+        debugPrint("❌ Error loading tickets: $e");
+      }
+    }
+
+    notifyListeners();
+  }
 
   void addTicketFromEvent(EventModel event, int count) {
     int index = _tickets.indexWhere((t) => t.title == event.title);
@@ -70,7 +134,6 @@ class TicketProvider extends ChangeNotifier {
 
   List<TicketModel> get comingSoonEvents {
     final upcoming = _tickets.where((event) {
-      
       DateTime date = DateTime.tryParse(event.date) ?? DateTime.now();
       return date.isAfter(DateTime.now());
     }).toList();
@@ -101,7 +164,6 @@ class TicketProvider extends ChangeNotifier {
 
   List<TicketModel> get historyEvents {
     final history = _tickets.where((event) {
-      
       DateTime date = DateTime.tryParse(event.date) ?? DateTime.now();
       return date.isBefore(DateTime.now());
     }).toList();

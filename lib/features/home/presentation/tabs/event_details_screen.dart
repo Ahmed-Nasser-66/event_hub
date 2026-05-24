@@ -351,8 +351,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   child: _isLoadingDetails
                       ? const EventDetailsSkeleton()
                       : (_details?.sponsors.isEmpty ?? true)
-                          ? Text(
-                              locale.eventDetailsDescription) 
+                          ? Text(locale.eventDetailsDescription)
                           : SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
@@ -485,7 +484,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   child: SizedBox(
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         int count = int.tryParse(ticketController.text) ?? 1;
 
                         context.read<TicketProvider>().addTicketFromEvent(
@@ -493,13 +492,24 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                               count,
                             );
 
+                        final userEmail = userProvider.email;
+                        await context
+                            .read<TicketProvider>()
+                            .saveTickets(userEmail);
+
                         context
                             .read<NotificationProvider>()
                             .addLocalNotification(
                               "Booking Confirmed",
                               "You booked ${widget.event.title} ($count tickets)",
-                              image: widget.event.imageUrl, 
+                              image: widget.event.imageUrl,
                             );
+
+                        await context
+                            .read<NotificationProvider>()
+                            .saveNotifications();
+
+                        if (!mounted) return;
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -507,6 +517,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             backgroundColor: AppColors.green,
                           ),
                         );
+
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.orange,

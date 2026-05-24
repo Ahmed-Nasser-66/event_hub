@@ -21,8 +21,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      context.read<NotificationProvider>().loadNotifications();
 
       context.read<NotificationProvider>().fetchNotifications();
     });
