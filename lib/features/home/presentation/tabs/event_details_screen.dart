@@ -487,15 +487,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       onPressed: () async {
                         int count = int.tryParse(ticketController.text) ?? 1;
 
-                        context.read<TicketProvider>().addTicketFromEvent(
+                        // التعديل هنا: مررنا الـ userProvider.email كباراميتر ثالث مع إضافة await
+                        await context.read<TicketProvider>().addTicketFromEvent(
                               widget.event,
                               count,
+                              userProvider.email,
                             );
-
-                        final userEmail = userProvider.email;
-                        await context
-                            .read<TicketProvider>()
-                            .saveTickets(userEmail);
 
                         context
                             .read<NotificationProvider>()
@@ -507,7 +504,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
                         await context
                             .read<NotificationProvider>()
-                            .saveNotifications();
+                            .saveNotifications(userProvider.email);
 
                         if (!mounted) return;
 

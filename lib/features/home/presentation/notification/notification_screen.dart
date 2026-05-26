@@ -1,9 +1,10 @@
-import 'package:event_hub/core/theme/app_assets.dart';
+import 'package:event_hub/core/theme/app_assets.dart'; // أعدنا إضافة الـ Import ده عشان الـ الصور
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/notification_card.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/providers/notification_provider.dart';
+import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<NotificationProvider>().loadNotifications();
+
+      final userEmail = context.read<UserProvider>().email;
+      context.read<NotificationProvider>().loadNotifications(userEmail);
 
       context.read<NotificationProvider>().fetchNotifications();
     });
@@ -137,7 +140,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                             ],
                           ),
-                        )
+                        ) // هنا تم إصلاح القوس المكسور لتكملة الشرط بشكل سليم
                       : ListView.builder(
                           itemCount: provider.notifications.length,
                           itemBuilder: (context, index) {

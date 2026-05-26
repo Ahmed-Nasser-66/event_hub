@@ -56,10 +56,12 @@ class TicketProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final ticketsJson = prefs.getString("tickets_$userEmail");
 
+    // 1. التعديل الأول: نقلنا الـ clear هنا برا الشرط تماماً
+    _tickets.clear();
+
     if (ticketsJson != null && ticketsJson.isNotEmpty) {
       try {
         final List decoded = jsonDecode(ticketsJson);
-        _tickets.clear();
 
         for (var item in decoded) {
           _tickets.add(TicketModel(
@@ -86,7 +88,9 @@ class TicketProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTicketFromEvent(EventModel event, int count) {
+  // 2. التعديل الثاني: استقبال الـ userEmail وجعل الميثود Future لعمل حفظ تلقائي
+  Future<void> addTicketFromEvent(
+      EventModel event, int count, String userEmail) async {
     int index = _tickets.indexWhere((t) => t.title == event.title);
 
     String dateString = (event.date ?? DateTime.now()).toIso8601String();
@@ -129,6 +133,15 @@ class TicketProvider extends ChangeNotifier {
       _tickets.insert(0, newTicket);
     }
 
+    // استدعاء ميثود الحفظ فوراً بعد الإضافة أو التعديل
+    await saveTickets(userEmail);
+
+    notifyListeners();
+  }
+
+  // 3. التعديل الثالث: ميثود إضافية لتصفير الـ UI تماماً عند تسجيل الخروج
+  void clearTicketsOnLogout() {
+    _tickets.clear();
     notifyListeners();
   }
 

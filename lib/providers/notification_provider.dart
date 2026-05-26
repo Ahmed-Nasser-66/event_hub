@@ -85,7 +85,8 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveNotifications() async {
+  // 1. التعديل الأول: استقبال الـ userEmail لجعل الـ Key ديناميكي لكل حساب
+  Future<void> saveNotifications(String userEmail) async {
     final prefs = await SharedPreferences.getInstance();
 
     final notificationJson = _notifications.map((notification) {
@@ -99,19 +100,21 @@ class NotificationProvider extends ChangeNotifier {
     }).toList();
 
     await prefs.setString(
-      "notifications",
+      "notifications_$userEmail",
       jsonEncode(notificationJson),
     );
   }
 
-  Future<void> loadNotifications() async {
+  // 2. التعديل الثاني: استقبال الـ userEmail ونقل الـ clear خارج الشرط لتصفير الـ RAM
+  Future<void> loadNotifications(String userEmail) async {
     final prefs = await SharedPreferences.getInstance();
-    final notificationsJson = prefs.getString("notifications");
+    final notificationsJson = prefs.getString("notifications_$userEmail");
+
+    _notifications.clear(); // مسح القائمة فوراً لتجهيزها للمستخدم الجديد
 
     if (notificationsJson != null && notificationsJson.isNotEmpty) {
       try {
         final List decoded = jsonDecode(notificationsJson);
-        _notifications.clear();
 
         for (var item in decoded) {
           _notifications.add(NotificationModel(
@@ -127,6 +130,12 @@ class NotificationProvider extends ChangeNotifier {
       }
     }
 
+    notifyListeners();
+  }
+
+  // 3. التعديل الثالث: ميثود لتنظيف الذاكرة المؤقتة فوراً عند الـ Logout
+  void clearNotificationsOnLogout() {
+    _notifications.clear();
     notifyListeners();
   }
 }

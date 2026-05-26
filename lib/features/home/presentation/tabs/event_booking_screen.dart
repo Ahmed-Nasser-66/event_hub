@@ -3,6 +3,8 @@ import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
+import 'package:event_hub/providers/user_provider.dart';
+import 'package:event_hub/providers/notification_provider.dart'; // 1. أضفنا استيراد الـ NotificationProvider هنا
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -35,6 +37,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final userProvider = context.read<UserProvider>();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -55,8 +58,6 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-
-              
               child: Image.network(
                 widget.event.imageUrl ?? '',
                 height: 200,
@@ -223,11 +224,29 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                 width: double.infinity,
                 height: 55,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     int count = int.tryParse(ticketController.text) ?? 1;
 
-                    Provider.of<TicketProvider>(context, listen: false)
-                        .addTicketFromEvent(widget.event, count);
+                    // حجز التذكرة
+                    await Provider.of<TicketProvider>(context, listen: false)
+                        .addTicketFromEvent(
+                            widget.event, count, userProvider.email);
+
+                    // 2. التعديل هنا: إضافة الإشعار محلياً فور الحجز الناجح
+                    if (!mounted) return;
+                    Provider.of<NotificationProvider>(context, listen: false)
+                        .addLocalNotification(
+                      "Booking Confirmed",
+                      "You booked ${widget.event.title} ($count tickets)",
+                      image: widget.event.imageUrl,
+                    );
+
+                    // 3. التعديل هنا: حفظ الإشعار في ملف الحساب الديناميكي لمنع بقائه عند التبديل
+                    await Provider.of<NotificationProvider>(context,
+                            listen: false)
+                        .saveNotifications(userProvider.email);
+
+                    if (!mounted) return;
 
                     Navigator.pushReplacement(
                       context,
