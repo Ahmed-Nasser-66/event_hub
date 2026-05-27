@@ -294,4 +294,15 @@ class MapProvider extends ChangeNotifier {
     markers.clear();
     searchResults.clear();
   }
+
+  void clearMapOnLogout() {
+    selectedEvent = null;
+    searchResults.clear();
+    polylines.clear();
+    markers.clear();
+    _allEvents.clear();
+    currentLocation = null;
+    _isLocationFetched = false;
+    notifyListeners();
+  }
 }

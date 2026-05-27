@@ -18,6 +18,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   late TextEditingController _searchController;
   bool _isShowingBottomSheet = false;
+  late MapProvider _mapProvider; // 1. متغير محلي للاحتفاظ بالـ Provider بأمان
 
   @override
   void initState() {
@@ -26,12 +27,19 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 2. بنخطف نسخة من الـ Provider هنا والـ context لسه عايش ومستقر تماماً
+    _mapProvider = context.read<MapProvider>();
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
 
-    final mapProvider = context.read<MapProvider>();
-    mapProvider.searchResults = [];
-    mapProvider.selectedEvent = null;
+    // 3. التعديل الذهبي: نستخدم الـ _mapProvider المحلي مباشرة لمنع الكراش نهائياً
+    _mapProvider.searchResults = [];
+    _mapProvider.selectedEvent = null;
 
     super.dispose();
   }
