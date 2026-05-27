@@ -97,11 +97,10 @@ flutter run
 
 ### 👨‍💻 Team Members
 
-| Name | Role | GitHub |
+| Name | Role | LinkedIn |
 | :--- | :--- | :--- |
-| **Ahmed Nasser** | Flutter Developer | [🔗 Profile](https://github.com/Ahmed-Nasser-66) |
-| **Eslam Ahmed** | Flutter Developer | [🔗 Profile](https://github.com/Eslam-Ahmed-66) |
-| **Leen** | UI/UX Designer | - |
+| **Ahmed Nasser** | Flutter Developer | [🔗 Profile](https://www.linkedin.com/in/ahmed-nasser66) |
+| **Eslam Ahmed** | Flutter Developer | [🔗 Profile](https://www.linkedin.com/in/eslam-ahmed2003) |
 
 ---
 
