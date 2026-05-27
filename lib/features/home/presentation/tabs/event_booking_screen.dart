@@ -2,9 +2,9 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/notification_provider.dart'; // 1. أضفنا استيراد الـ NotificationProvider هنا
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
-import 'package:event_hub/providers/notification_provider.dart'; // 1. أضفنا استيراد الـ NotificationProvider هنا
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
