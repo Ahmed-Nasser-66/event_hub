@@ -146,7 +146,7 @@ class _RestPasswordState extends State<RestPassword> {
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Password updated successfully"),
+                              content: Text(l10n.passwordUpdatedSuccessfully),
                               backgroundColor: Colors.green,
                             ),
                           );
@@ -158,7 +158,7 @@ class _RestPasswordState extends State<RestPassword> {
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("OTP غلط أو منتهي"),
+                            content: Text(l10n.invalidOtp),
                             backgroundColor: Colors.red,
                           ),
                         );

@@ -303,6 +303,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get sponsors => 'Sponsors';
+
+  @override
   String get eventReminderDescription =>
       'Your concert starts in 2 hours at City Stadium! Get your tickets ready.';
 
@@ -457,7 +460,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topic => 'Topic:';
 
   @override
+  String get signupFailed => 'Signup failed';
+
+  @override
   String get science => 'Science';
+
+  @override
+  String get all => 'All';
 
   @override
   String get gaming => 'Gaming';
@@ -479,6 +488,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get support => 'Support';
+
+  @override
+  String get yourreservationhasbeenconfirmed =>
+      'Your reservation has been confirmed';
 
   @override
   String get bookNow => 'Book Now';

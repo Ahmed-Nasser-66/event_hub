@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/l10n/app_localizations.dart';

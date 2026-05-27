@@ -656,6 +656,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @sponsors.
+  ///
+  /// In en, this message translates to:
+  /// **'Sponsors'**
+  String get sponsors;
+
   /// No description provided for @eventReminderDescription.
   ///
   /// In en, this message translates to:
@@ -956,11 +962,23 @@ abstract class AppLocalizations {
   /// **'Topic:'**
   String get topic;
 
+  /// No description provided for @signupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Signup failed'**
+  String get signupFailed;
+
   /// No description provided for @science.
   ///
   /// In en, this message translates to:
   /// **'Science'**
   String get science;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
 
   /// No description provided for @gaming.
   ///
@@ -1003,6 +1021,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support'**
   String get support;
+
+  /// No description provided for @yourreservationhasbeenconfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reservation has been confirmed'**
+  String get yourreservationhasbeenconfirmed;
 
   /// No description provided for @bookNow.
   ///

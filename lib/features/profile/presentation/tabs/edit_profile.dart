@@ -303,7 +303,9 @@ class _EditProfileState extends State<EditProfile> {
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content: Text("Update failed")),
+                                    content: Text("Update failed"),
+                                    backgroundColor: AppColors.red,
+                                  ),
                                 );
                               }
                             }

@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../providers/user_provider.dart';
 
 class EventDetailsScreen extends StatefulWidget {
@@ -334,11 +333,13 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             ),
                 ),
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    'Sponsors',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    locale.sponsors,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
                 Container(
@@ -487,12 +488,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       onPressed: () async {
                         int count = int.tryParse(ticketController.text) ?? 1;
 
-                        // التعديل هنا: مررنا الـ userProvider.email كباراميتر ثالث مع إضافة await
                         await context.read<TicketProvider>().addTicketFromEvent(
                               widget.event,
                               count,
                               userProvider.email,
                             );
+                        if (!context.mounted) return;
 
                         context
                             .read<NotificationProvider>()
@@ -506,14 +507,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             .read<NotificationProvider>()
                             .saveNotifications(userProvider.email);
 
-                        if (!mounted) return;
+                        if (!context.mounted) return;
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("${locale.bookNow} $count"),
+                            content: Text(
+                                "${locale.yourreservationhasbeenconfirmed} $count"),
                             backgroundColor: AppColors.green,
                           ),
                         );
+                        if (!context.mounted) return;
 
                         Navigator.pop(context);
                       },

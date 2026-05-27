@@ -27,7 +27,7 @@ class Category extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     switch (name.toLowerCase()) {
       case 'all':
-        return "All";
+        return l10n.all;
       case 'gaming':
         return l10n.gaming;
       case 'art':
@@ -111,7 +111,9 @@ class Category extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        isAll ? "All" : _getCategoryName(context, categoryName),
+                        isAll
+                            ? AppLocalizations.of(context)!.all
+                            : _getCategoryName(context, categoryName),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight:

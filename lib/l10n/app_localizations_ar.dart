@@ -303,6 +303,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cancel => 'إلغاء';
 
   @override
+  String get sponsors => 'الرعاة';
+
+  @override
   String get eventReminderDescription =>
       'سيبدأ الحفل بعد ساعتين في ملعب المدينة! جهّز تذاكرك.';
 
@@ -456,7 +459,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get topic => 'الموضوع:';
 
   @override
+  String get signupFailed => 'فشل إنشاء الحساب';
+
+  @override
   String get science => 'العلوم';
+
+  @override
+  String get all => 'الكل';
 
   @override
   String get gaming => 'الألعاب';
@@ -478,6 +487,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get support => 'الدعم';
+
+  @override
+  String get yourreservationhasbeenconfirmed => 'تم تاكيد الحجز ';
 
   @override
   String get bookNow => 'احجز الآن';

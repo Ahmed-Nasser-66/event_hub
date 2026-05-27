@@ -43,8 +43,6 @@ class EventProvider extends ChangeNotifier {
 
   List<CategoryItem> _categories = [];
 
-  
-
   int? get selectedCategoryId => _selectedCategoryId;
 
   List<CategoryItem> get categories => _categories;
@@ -63,8 +61,6 @@ class EventProvider extends ChangeNotifier {
 
   List<EventModel> get nearbyEvents => _nearbyEvents;
 
-  
-
   String categoryName(int? id) {
     if (id == null) return "Unknown";
 
@@ -79,8 +75,6 @@ class EventProvider extends ChangeNotifier {
 
     return category.name;
   }
-
-  
 
   List<EventModel> get filteredEvents {
     final eventsByCategory = _allEvents.where((event) {
@@ -134,8 +128,6 @@ class EventProvider extends ChangeNotifier {
     return result;
   }
 
-  
-
   List<EventModel> get filteredUpcomingEvents {
     List<EventModel> events = _upcomingEvents.where((event) {
       return _selectedCategoryId == null ||
@@ -166,8 +158,6 @@ class EventProvider extends ChangeNotifier {
 
     return events;
   }
-
-  
 
   List<EventModel> get filteredNearbyEvents {
     List<EventModel> events = _nearbyEvents.where((event) {
@@ -200,8 +190,6 @@ class EventProvider extends ChangeNotifier {
     return events;
   }
 
-  
-
   void _calculateDistances() {
     if (_userLat == null || _userLng == null) return;
 
@@ -224,14 +212,10 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  
-
   void setSearchQuery(String query) {
     _searchQuery = query;
     notifyListeners();
   }
-
-  
 
   void sortBySmartChoice() {
     _isSortedBySmartChoice = true;
@@ -260,8 +244,6 @@ class EventProvider extends ChangeNotifier {
     _isSortedBySmartChoice = false;
     notifyListeners();
   }
-
-  
 
   Future<void> selectCategory(CategoryItem category) async {
     if (_selectedCategoryId == category.id) {
@@ -295,8 +277,6 @@ class EventProvider extends ChangeNotifier {
     }
   }
 
-  
-
   Future<EventDetailsModel?> fetchEventDetails(int eventId) async {
     try {
       return await _eventsService.getEventDetails(eventId);
@@ -306,13 +286,14 @@ class EventProvider extends ChangeNotifier {
     }
   }
 
-  
-
   Future<void> refreshEvents({
     FavoriteProvider? favoriteProvider,
     String? userEmail,
   }) async {
+    _selectedCategoryId = null;
+
     if (_isLoading) return;
+
     _isLoading = true;
     _state = EventsState.loading;
     notifyListeners();
@@ -345,7 +326,6 @@ class EventProvider extends ChangeNotifier {
               allEventsJson.map((e) => EventModel.fromJson(e)).toList();
         }
 
-        
         if (favoriteProvider != null && userEmail != null) {
           await favoriteProvider.loadFavorites(_allEvents, userEmail);
         }

@@ -321,7 +321,7 @@ class _SignupState extends State<Signup> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          "Signup failed",
+                          l10n.signupFailed,
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
