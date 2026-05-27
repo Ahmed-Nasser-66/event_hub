@@ -4,6 +4,8 @@ import 'package:event_hub/features/profile/presentation/widget/change_language.d
 import 'package:event_hub/features/profile/presentation/widget/change_notification.dart';
 import 'package:event_hub/features/widgets/custom_button_auth.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
+import 'package:event_hub/providers/map_provider.dart';
+import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -118,21 +120,25 @@ class ProfileTab extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Center(
               child: CustomButtonAuth(
-                  title: l10n.logout,
-                  color: AppColors.orange,
-                  onPressed: () async {
-                    await context.read<UserProvider>().logout();
+                title: l10n.logout,
+                color: AppColors.orange,
+                onPressed: () async {
+                  // 💡 التعديل الحاسم: تصفير وتطهير الـ RAM قبل مسح الـ User والـ Navigation
+                  context.read<MapProvider>().clearMapOnLogout();
+                  context.read<TicketProvider>().clearTicketsOnLogout();
 
-                    if (!context.mounted) return;
+                  await context.read<UserProvider>().logout(context);
+                  if (!context.mounted) return;
 
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        "login",
-                        (route) => false,
-                      );
-                    });
-                  }),
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      "login",
+                      (route) => false,
+                    );
+                  });
+                },
+              ),
             ),
           ),
         ],

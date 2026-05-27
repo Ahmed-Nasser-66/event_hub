@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:event_hub/core/api/auth_api_service.dart';
+import 'package:event_hub/providers/map_provider.dart';
+import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -29,6 +32,7 @@ class UserProvider extends ChangeNotifier {
   String? _token;
 
   String? get token => _token;
+
   Future<bool> login(String email, String password) async {
     try {
       final response = await ApiService().login(email, password);
@@ -93,7 +97,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout() async {
+  // التعديل هنا: استلام الـ context لتصفير باقي الـ Providers
+  Future<void> logout(BuildContext context) async {
+    // تصفير بيانات الخريطة والتذاكر في الـ RAM فوراً
+    context.read<MapProvider>().clearMapOnLogout();
+    context.read<TicketProvider>().clearTicketsOnLogout();
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.remove("token");
