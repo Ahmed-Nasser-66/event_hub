@@ -1,5 +1,6 @@
 <div align="center">
-  <img width="800" height="516" alt="splash_screen" src="https://github.com/user-attachments/assets/be06e7fd-826f-4169-abb1-f46f018dc4db" width="250" />
+<img width="500" height="300" alt="1 Splash Screen" src="https://github.com/user-attachments/assets/142eecb0-e459-40f7-b49b-a3d2cc015ce2" />
+
 
 # 🎟️ EventHub
 ### Event Management Mobile Application
