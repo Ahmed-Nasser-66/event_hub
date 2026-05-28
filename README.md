@@ -1,5 +1,5 @@
 <div align="center">
-<img width="500" height="300" alt="1 Splash Screen" src="https://github.com/user-attachments/assets/142eecb0-e459-40f7-b49b-a3d2cc015ce2" />
+<img width="500" height="300" alt="111 Splash Screen" src="https://github.com/user-attachments/assets/a77f50be-c687-4a5c-8ba5-738662d7511c" />
 
 
 # 🎟️ EventHub
