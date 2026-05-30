@@ -1,3 +1,4 @@
+import 'package:event_hub/core/api/local_notification_service.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/auth/forgot_password.dart';
 import 'package:event_hub/features/auth/login.dart';
@@ -18,12 +19,14 @@ import 'package:event_hub/providers/map_provider.dart';
 import 'package:event_hub/providers/notification_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp();
+  await LocalNotificationService.init();
   final userProvider = UserProvider();
   await userProvider.loadUser();
 

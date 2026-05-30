@@ -1,9 +1,9 @@
 import 'package:event_hub/core/api/events_service.dart';
+import 'package:event_hub/core/api/local_notification_service.dart';
 import 'package:event_hub/model/event_details_model.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'favorite_provider.dart';
 
 class CategoryItem {
@@ -346,6 +346,25 @@ class EventProvider extends ChangeNotifier {
       _errorMessage = e.toString();
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<bool> bookEvent(int eventId) async {
+    try {
+      final response = await _eventsService.bookEvent(eventId);
+
+      if (response.data['success'] == true) {
+        await LocalNotificationService.showNotification(
+          id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          title: 'Booking Confirmed! 🎉',
+          body: 'Your spot is secured. Get ready for an amazing experience!',
+        );
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint("❌ Error booking event: $e");
+      return false;
     }
   }
 }

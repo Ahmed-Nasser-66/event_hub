@@ -1,4 +1,4 @@
-import 'package:event_hub/core/theme/app_assets.dart'; // أعدنا إضافة الـ Import ده عشان الـ الصور
+import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/widgets/custom_back_button.dart';
 import 'package:event_hub/features/widgets/notification_card.dart';
@@ -36,7 +36,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
     if (time == null || time.isEmpty) return "";
 
     try {
-      final date = DateTime.parse(time);
+      String timeToParse = time;
+      
+      if (!timeToParse.endsWith('Z') && !timeToParse.contains('+')) {
+        timeToParse = '${timeToParse}Z';
+      }
+
+      final date = DateTime.parse(timeToParse).toLocal();
       return DateFormat('dd MMM, hh:mm a').format(date);
     } catch (_) {
       return time;
@@ -140,7 +146,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                             ],
                           ),
-                        ) // هنا تم إصلاح القوس المكسور لتكملة الشرط بشكل سليم
+                        )
                       : ListView.builder(
                           itemCount: provider.notifications.length,
                           itemBuilder: (context, index) {

@@ -89,7 +89,6 @@ class TicketProvider extends ChangeNotifier {
 
   Future<void> addTicketFromEvent(
       EventModel event, int count, String userEmail) async {
-    // 💡 التعديل الذهبي: التزامن الفوري قبل الإضافة لمنع الـ Overwrite
     if (_tickets.isEmpty) {
       final prefs = await SharedPreferences.getInstance();
       final ticketsJson = prefs.getString("tickets_$userEmail");

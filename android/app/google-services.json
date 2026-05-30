@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "883056214810",
+    "project_id": "event-hub-a0055",
+    "storage_bucket": "event-hub-a0055.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883056214810:android:5d26f0412d70e2494f22a3",
+        "android_client_info": {
+          "package_name": "com.example.event_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABMCH2kQ7L3giCiCWWHyucZpmgMVanb1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

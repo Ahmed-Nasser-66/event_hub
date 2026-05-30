@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../providers/user_provider.dart';
 
 class EventDetailsScreen extends StatefulWidget {
@@ -487,6 +488,23 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     child: ElevatedButton(
                       onPressed: () async {
                         int count = int.tryParse(ticketController.text) ?? 1;
+
+                        final success = await context
+                            .read<EventProvider>()
+                            .bookEvent(widget.event.id);
+
+                        if (!success) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("فشلت عملية الحجز، حاول مرة أخرى!"),
+                              backgroundColor: AppColors.red,
+                            ),
+                          );
+                          return;
+                        }
+
+                        if (!context.mounted) return;
 
                         await context.read<TicketProvider>().addTicketFromEvent(
                               widget.event,

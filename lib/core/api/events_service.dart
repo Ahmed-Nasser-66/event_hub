@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:event_hub/model/event_details_model.dart';
 import 'package:event_hub/core/api/auth_api_service.dart';
+import 'package:event_hub/model/event_details_model.dart';
 
 class EventsService {
   final Dio dio = ApiService().dio;
@@ -110,6 +110,21 @@ class EventsService {
     } on DioException catch (e) {
       throw Exception(
         e.response?.data ?? "Failed to filter events",
+      );
+    }
+  }
+
+  Future<Response> bookEvent(int id) async {
+    try {
+      return await dio.post(
+        "bookings", 
+        data: {
+          "event_id": id,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data ?? "Failed to book event",
       );
     }
   }

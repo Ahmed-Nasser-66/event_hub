@@ -1,16 +1,14 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/core/api/notification_service.dart';
 import 'package:event_hub/model/notification_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationProvider extends ChangeNotifier {
-  final Dio _dio = Dio(BaseOptions(
-    baseUrl: "https://eventhub.huma-volve.com/api/v1/",
-    headers: {"Content-Type": "application/json"},
-  ));
+  final Dio _dio = ApiService().dio;
 
   List<NotificationModel> _notifications = [];
   bool _isLoading = false;
@@ -85,7 +83,6 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 1. التعديل الأول: استقبال الـ userEmail لجعل الـ Key ديناميكي لكل حساب
   Future<void> saveNotifications(String userEmail) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -105,12 +102,11 @@ class NotificationProvider extends ChangeNotifier {
     );
   }
 
-  // 2. التعديل الثاني: استقبال الـ userEmail ونقل الـ clear خارج الشرط لتصفير الـ RAM
   Future<void> loadNotifications(String userEmail) async {
     final prefs = await SharedPreferences.getInstance();
     final notificationsJson = prefs.getString("notifications_$userEmail");
 
-    _notifications.clear(); // مسح القائمة فوراً لتجهيزها للمستخدم الجديد
+    _notifications.clear();
 
     if (notificationsJson != null && notificationsJson.isNotEmpty) {
       try {
@@ -133,7 +129,6 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 3. التعديل الثالث: ميثود لتنظيف الذاكرة المؤقتة فوراً عند الـ Logout
   void clearNotificationsOnLogout() {
     _notifications.clear();
     notifyListeners();

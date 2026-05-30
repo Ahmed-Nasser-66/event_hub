@@ -97,9 +97,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // التعديل هنا: استلام الـ context لتصفير باقي الـ Providers
   Future<void> logout(BuildContext context) async {
-    // تصفير بيانات الخريطة والتذاكر في الـ RAM فوراً
     context.read<MapProvider>().clearMapOnLogout();
     context.read<TicketProvider>().clearTicketsOnLogout();
 

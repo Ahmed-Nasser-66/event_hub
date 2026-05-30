@@ -2,6 +2,7 @@ import 'package:event_hub/core/theme/app_color.dart';
 import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
+import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/notification_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
@@ -226,25 +227,43 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     int count = int.tryParse(ticketController.text) ?? 1;
+                    final localContext = context;
+                    final success = await context
+                        .read<EventProvider>()
+                        .bookEvent(widget.event.id);
+
+                    if (!success) {
+                      if (!localContext.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text("Reservation failed, please try again!"),
+                          backgroundColor: AppColors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    if (!localContext.mounted) return;
 
                     await Provider.of<TicketProvider>(context, listen: false)
                         .addTicketFromEvent(
                             widget.event, count, userProvider.email);
 
-                    if (!context.mounted) return;
+                    if (!localContext.mounted) return;
                     Provider.of<NotificationProvider>(context, listen: false)
                         .addLocalNotification(
                       "Booking Confirmed",
                       "You booked ${widget.event.title} ($count tickets)",
                       image: widget.event.imageUrl,
                     );
-                    if (!context.mounted) return;
+                    if (!localContext.mounted) return;
 
                     await Provider.of<NotificationProvider>(context,
                             listen: false)
                         .saveNotifications(userProvider.email);
 
-                    if (!context.mounted) return;
+                    if (!localContext.mounted) return;
 
                     Navigator.pushReplacement(
                       context,
