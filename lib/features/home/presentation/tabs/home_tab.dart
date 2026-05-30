@@ -210,7 +210,7 @@ class _HomeTabState extends State<HomeTab> {
                       Text(locale.upcomingEvents),
                       TextButton(
                         onPressed: () => goToAllEvents(
-                          eventProvider.allEvents,
+                          eventProvider.filteredUpcomingEvents,
                           locale.upcomingEvents,
                         ),
                         child: Text(locale.seeAll),
@@ -241,7 +241,7 @@ class _HomeTabState extends State<HomeTab> {
                       Text(locale.nearbyEvents),
                       TextButton(
                         onPressed: () => goToAllEvents(
-                          eventProvider.allEvents,
+                          eventProvider.filteredNearbyEvents,
                           locale.nearbyEvents,
                         ),
                         child: Text(locale.seeAll),

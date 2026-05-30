@@ -260,12 +260,14 @@ class EventProvider extends ChangeNotifier {
     if (_isLoading) return;
     _isLoading = true;
     notifyListeners();
-
+    debugPrint("Category Events = ${_allEvents.length}");
     try {
       final response = await _eventsService.getEventsByCategory(slug);
       if (response.data['success'] == true) {
         final List eventsJson = response.data['message']['data'] ?? [];
+
         _allEvents = eventsJson.map((e) => EventModel.fromJson(e)).toList();
+
         _calculateDistances();
       }
       _isLoading = false;

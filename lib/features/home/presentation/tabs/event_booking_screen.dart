@@ -1,5 +1,5 @@
 import 'package:event_hub/core/theme/app_color.dart';
-import 'package:event_hub/features/ticket/presentation/tabs/ticket_tab.dart';
+import 'package:event_hub/features/home/presentation/home_page.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/event_provider.dart';
@@ -265,10 +265,13 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
 
                     if (!localContext.mounted) return;
 
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const TicketTab()),
+                        builder: (_) => const Homepage(
+                          initialIndex: 1,
+                        ),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(

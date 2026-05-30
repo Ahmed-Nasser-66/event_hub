@@ -7,15 +7,26 @@ import 'package:event_hub/features/profile/profile_tab.dart';
 import '../../../core/theme/app_color.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({super.key});
+  final int initialIndex;
+
+  const Homepage({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   State<Homepage> createState() => _Homepage();
 }
 
 class _Homepage extends State<Homepage> {
-  int currentIndex = 0;
-  
+  late int currentIndex;
+  bool stackCleared = false;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.initialIndex;
+  }
 
   final List<Widget> pages = [
     HomeTab(),
@@ -37,6 +48,22 @@ class _Homepage extends State<Homepage> {
         unselectedItemColor: AppColors.secondary,
         currentIndex: currentIndex,
         onTap: (index) {
+          if (!stackCleared) {
+            stackCleared = true;
+
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Homepage(
+                  initialIndex: index,
+                ),
+              ),
+              (route) => false,
+            );
+
+            return;
+          }
+
           setState(() {
             currentIndex = index;
           });
