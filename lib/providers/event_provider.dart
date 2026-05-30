@@ -267,7 +267,11 @@ class EventProvider extends ChangeNotifier {
         final List eventsJson = response.data['message']['data'] ?? [];
 
         _allEvents = eventsJson.map((e) => EventModel.fromJson(e)).toList();
-
+        _upcomingEvents = List.from(_allEvents);
+        _upcomingEvents.sort(
+          (a, b) =>
+              (a.date ?? DateTime.now()).compareTo(b.date ?? DateTime.now()),
+        );
         _calculateDistances();
       }
       _isLoading = false;
