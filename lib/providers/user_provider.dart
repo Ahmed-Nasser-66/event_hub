@@ -1,7 +1,10 @@
 import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/providers/map_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +36,22 @@ class UserProvider extends ChangeNotifier {
 
   String? get token => _token;
 
+  Future<void> _sendFcmTokenToServer() async {
+    try {
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null && _token != null) {
+        await Dio().post(
+          'https://eventhub.huma-volve.com/api/v1/save-token',
+          data: {'fcm_token': fcmToken},
+          options: Options(headers: {'Authorization': 'Bearer $_token'}),
+        );
+        debugPrint("FCM Token sent to server successfully!");
+      }
+    } catch (e) {
+      debugPrint("Failed to send FCM token to server: $e");
+    }
+  }
+
   Future<bool> login(String email, String password) async {
     try {
       final response = await ApiService().login(email, password);
@@ -55,6 +74,9 @@ class UserProvider extends ChangeNotifier {
         await prefs.setString("email", _email);
 
         notifyListeners();
+
+        await _sendFcmTokenToServer();
+
         return true;
       }
     } catch (e) {
@@ -80,6 +102,8 @@ class UserProvider extends ChangeNotifier {
 
     if (_token != null) {
       ApiService().setToken(_token!);
+
+      await _sendFcmTokenToServer();
     }
 
     notifyListeners();
