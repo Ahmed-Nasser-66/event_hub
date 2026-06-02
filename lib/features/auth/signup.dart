@@ -310,7 +310,16 @@ class _SignupState extends State<Signup> {
                         response.statusCode == 201) {
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(l10n.accountCreated)),
+                        SnackBar(
+                          content: Text(
+                            l10n.accountCreated,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                          backgroundColor: AppColors.green,
+                        ),
                       );
 
                       Navigator.of(context).pushReplacementNamed("login");
