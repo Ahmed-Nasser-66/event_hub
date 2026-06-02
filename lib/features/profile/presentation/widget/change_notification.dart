@@ -20,7 +20,6 @@ class _NotificationSheetState extends State<NotificationSheet> {
 
     final status = context.read<NotificationProvider>().status;
 
-    
     selected = status ? "on" : "off";
   }
 
@@ -48,10 +47,7 @@ class _NotificationSheetState extends State<NotificationSheet> {
                 ),
               ],
             ),
-
             const SizedBox(height: 20),
-
-            
             Column(
               children: [
                 buildOption(l10n.on, "on"),
@@ -59,13 +55,9 @@ class _NotificationSheetState extends State<NotificationSheet> {
                 buildOption(l10n.off, "off"),
               ],
             ),
-
             const SizedBox(height: 20),
-
-            
             ElevatedButton(
               onPressed: () {
-                
                 final bool value = selected == "on";
 
                 context.read<NotificationProvider>().setNotification(value);
@@ -87,7 +79,6 @@ class _NotificationSheetState extends State<NotificationSheet> {
     );
   }
 
-  
   Widget buildOption(String title, String value) {
     return InkWell(
       onTap: () {
@@ -127,6 +118,7 @@ class _NotificationSheetState extends State<NotificationSheet> {
               },
               child: Radio<String>(
                 value: value,
+                activeColor: AppColors.orange,
               ),
             )
           ],

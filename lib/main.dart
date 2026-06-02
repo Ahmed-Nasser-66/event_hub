@@ -29,6 +29,8 @@ void main() async {
   await LocalNotificationService.init();
   final userProvider = UserProvider();
   await userProvider.loadUser();
+  final notificationProvider = NotificationProvider();
+  await notificationProvider.loadNotificationStatus();
 
   runApp(
     MultiProvider(
@@ -38,7 +40,9 @@ void main() async {
         ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),
-        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(
+          create: (_) => notificationProvider,
+        ),
         ChangeNotifierProvider(create: (_) => MapProvider()..initializeMap()),
       ],
       child: MyApp(),
@@ -78,6 +82,11 @@ class _MyAppState extends State<MyApp> {
             fontWeight: FontWeight.bold,
           ),
           iconTheme: IconThemeData(color: AppColors.orange),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.orange,
+          selectionColor: AppColors.orange.withValues(alpha: 0.3),
+          selectionHandleColor: AppColors.orange,
         ),
       ),
       debugShowCheckedModeBanner: false,

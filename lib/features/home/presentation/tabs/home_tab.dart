@@ -14,6 +14,7 @@ import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/event_provider.dart';
 import 'package:event_hub/providers/favorite_provider.dart';
 import 'package:event_hub/providers/map_provider.dart';
+import 'package:event_hub/providers/notification_provider.dart';
 import 'package:event_hub/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,14 +41,17 @@ class _HomeTabState extends State<HomeTab> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+
       final eventProvider = context.read<EventProvider>();
       final favoriteProvider = context.read<FavoriteProvider>();
       final userEmail = context.read<UserProvider>().email;
 
-      eventProvider.refreshEvents(
-        favoriteProvider: favoriteProvider,
-        userEmail: userEmail,
-      );
+      if (eventProvider.allEvents.isEmpty) {
+        eventProvider.refreshEvents(
+          favoriteProvider: favoriteProvider,
+          userEmail: userEmail,
+        );
+      }
     });
   }
 
@@ -107,7 +111,7 @@ class _HomeTabState extends State<HomeTab> {
     final user = context.watch<UserProvider>();
     final eventProvider = context.watch<EventProvider>();
     final mapProvider = context.watch<MapProvider>();
-
+    final notificationProvider = context.watch<NotificationProvider>();
     final upcomingEvents =
         eventProvider.filteredUpcomingEvents.take(5).toList();
 
@@ -162,8 +166,9 @@ class _HomeTabState extends State<HomeTab> {
                           Text(
                             '${locale.helloHome} ${user.name}',
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              color: AppColors.secondary,
                             ),
                           ),
                         ],
@@ -180,9 +185,26 @@ class _HomeTabState extends State<HomeTab> {
                               ),
                             );
                           },
-                          icon: SvgPicture.asset(
-                            'assets/icon/bell.svg',
-                            width: 20,
+                          icon: Stack(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icon/bell.svg',
+                                width: 20,
+                              ),
+                              if (notificationProvider.hasUnreadNotifications)
+                                Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: Container(
+                                    width: 8,
+                                    height: 8,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.orange,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
                       ),
@@ -201,25 +223,39 @@ class _HomeTabState extends State<HomeTab> {
                       const Filterbutton(),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  const Category(),
                   const SizedBox(height: 15),
+                  const Category(),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(locale.upcomingEvents),
+                      Text(
+                        locale.upcomingEvents,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.secondary,
+                        ),
+                      ),
                       TextButton(
                         onPressed: () => goToAllEvents(
                           eventProvider.filteredUpcomingEvents,
                           locale.upcomingEvents,
                         ),
-                        child: Text(locale.seeAll),
+                        child: Text(
+                          locale.seeAll,
+                          style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
-                    height: 360,
+                    height: 330,
                     child: eventProvider.isLoading
                         ? const EventSkeleton(isHorizontal: true)
                         : upcomingEvents.isEmpty
@@ -238,13 +274,27 @@ class _HomeTabState extends State<HomeTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(locale.nearbyEvents),
+                      Text(
+                        locale.nearbyEvents,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.secondary,
+                        ),
+                      ),
                       TextButton(
                         onPressed: () => goToAllEvents(
                           eventProvider.filteredNearbyEvents,
                           locale.nearbyEvents,
                         ),
-                        child: Text(locale.seeAll),
+                        child: Text(
+                          locale.seeAll,
+                          style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ],
                   ),

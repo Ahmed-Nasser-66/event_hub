@@ -4,6 +4,7 @@ class NotificationModel {
   final String body;
   final String? time;
   final String? image;
+  bool isRead;
 
   NotificationModel({
     required this.id,
@@ -11,6 +12,7 @@ class NotificationModel {
     required this.body,
     this.time,
     this.image,
+    this.isRead = false,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {

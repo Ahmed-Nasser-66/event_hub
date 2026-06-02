@@ -19,6 +19,10 @@ class NotificationProvider extends ChangeNotifier {
 
   bool _status = false;
 
+  bool _hasUnreadNotifications = false;
+
+  bool get hasUnreadNotifications => _hasUnreadNotifications;
+
   bool get status => _status;
 
   Future<void> fetchNotifications() async {
@@ -56,6 +60,10 @@ class NotificationProvider extends ChangeNotifier {
   Future<void> setNotification(bool value) async {
     try {
       _status = value;
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('notification_status', value);
+
       notifyListeners();
 
       final service = NotificationService(_dio);
@@ -63,6 +71,14 @@ class NotificationProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint("❌ Update Status Error: $e");
     }
+  }
+
+  Future<void> loadNotificationStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    _status = prefs.getBool('notification_status') ?? true;
+
+    notifyListeners();
   }
 
   void addLocalNotification(
@@ -76,9 +92,11 @@ class NotificationProvider extends ChangeNotifier {
       body: body,
       time: DateTime.now().toIso8601String(),
       image: image,
+      isRead: false,
     );
-
     _notifications.insert(0, newNotification);
+
+    _hasUnreadNotifications = true;
 
     notifyListeners();
   }
@@ -126,6 +144,20 @@ class NotificationProvider extends ChangeNotifier {
       }
     }
 
+    notifyListeners();
+  }
+
+  void markNotificationsAsRead() {
+    for (var notification in _notifications) {
+      notification.isRead = true;
+    }
+
+    _hasUnreadNotifications = false;
+    notifyListeners();
+  }
+
+  void markAllAsRead() {
+    _hasUnreadNotifications = false;
     notifyListeners();
   }
 

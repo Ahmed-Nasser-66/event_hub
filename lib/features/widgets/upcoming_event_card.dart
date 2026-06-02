@@ -41,7 +41,8 @@ class UpcomingEventCard extends StatelessWidget {
         );
       },
       child: Container(
-        width: 280,
+        width: MediaQuery.of(context).size.width * 0.75,
+        padding: const EdgeInsets.only(bottom: 8),
         margin: const EdgeInsets.only(right: 16, bottom: 10),
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -114,140 +115,137 @@ class UpcomingEventCard extends StatelessWidget {
                 ),
               ],
             ),
-            Flexible(
-              fit: FlexFit.loose,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.secondary),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        eventProvider.categoryName(event.categoryId),
-                        style: const TextStyle(
-                          color: AppColors.secondary,
-                          fontSize: 11,
-                        ),
-                      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      event.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.secondary),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      eventProvider.categoryName(event.categoryId),
                       style: const TextStyle(
-                        fontSize: 18,
+                        color: AppColors.secondary,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    event.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            size: 14,
+                            color: AppColors.secondary,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            event.location,
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.calendar_today,
+                            size: 14,
+                            color: AppColors.secondary,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            DateFormat('dd MMM')
+                                .format(event.date ?? DateTime.now()),
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.access_time,
+                            size: 14,
+                            color: AppColors.secondary,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            "${formatTime(event.startTime)} - ${formatTime(event.endTime)}",
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.wifi,
+                            size: 14,
+                            color: AppColors.secondary,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            event.type == 'online' ? 'Online' : 'In Person',
+                            style: const TextStyle(
+                              color: AppColors.secondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      event.priceType == 'free'
+                          ? 'FREE'
+                          : "${(event.price ?? 0).toStringAsFixed(0)} EGP",
+                      style: const TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.black,
+                        color: AppColors.orange,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      alignment: WrapAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.location_on,
-                              size: 14,
-                              color: AppColors.secondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              event.location,
-                              style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.calendar_today,
-                              size: 14,
-                              color: AppColors.secondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              DateFormat('dd MMM')
-                                  .format(event.date ?? DateTime.now()),
-                              style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.access_time,
-                              size: 14,
-                              color: AppColors.secondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              "${formatTime(event.startTime)} - ${formatTime(event.endTime)}",
-                              style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 11,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.wifi,
-                              size: 14,
-                              color: AppColors.secondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              event.type == 'online' ? 'Online' : 'In Person',
-                              style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        event.priceType == 'free'
-                            ? 'FREE'
-                            : "${(event.price ?? 0).toStringAsFixed(0)} EGP",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.orange,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 4),
+                ],
               ),
             ),
           ],

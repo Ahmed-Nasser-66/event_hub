@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
                     l10n.forgotPassword,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.black,
+                      color: AppColors.secondary,
                     ),
                   ),
                 ),

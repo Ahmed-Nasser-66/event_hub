@@ -22,6 +22,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     super.initState();
 
+    Future.microtask(() {
+      if (!mounted) return;
+      context.read<NotificationProvider>().markAllAsRead();
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
 
@@ -37,7 +42,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     try {
       String timeToParse = time;
-      
+
       if (!timeToParse.endsWith('Z') && !timeToParse.contains('+')) {
         timeToParse = '${timeToParse}Z';
       }

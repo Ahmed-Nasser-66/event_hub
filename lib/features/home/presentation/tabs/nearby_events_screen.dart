@@ -25,7 +25,14 @@ class NearbyEventsScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text(title),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 20,
+            color: AppColors.secondary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: ListView.builder(

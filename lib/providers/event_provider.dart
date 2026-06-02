@@ -5,6 +5,7 @@ import 'package:event_hub/model/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'favorite_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryItem {
   final int id;
@@ -360,11 +361,18 @@ class EventProvider extends ChangeNotifier {
       final response = await _eventsService.bookEvent(eventId);
 
       if (response.data['success'] == true) {
-        await LocalNotificationService.showNotification(
-          id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-          title: 'Booking Confirmed! 🎉',
-          body: 'Your spot is secured. Get ready for an amazing experience!',
-        );
+        final prefs = await SharedPreferences.getInstance();
+
+        final enabled = prefs.getBool('notification_status') ?? true;
+
+        if (enabled) {
+          await LocalNotificationService.showNotification(
+            id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+            title: 'Booking Confirmed! 🎉',
+            body: 'Your spot is secured. Get ready for an amazing experience!',
+          );
+        }
+
         return true;
       }
       return false;
