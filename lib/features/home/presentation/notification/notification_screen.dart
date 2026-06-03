@@ -33,7 +33,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       final userEmail = context.read<UserProvider>().email;
       context.read<NotificationProvider>().loadNotifications(userEmail);
 
-      context.read<NotificationProvider>().loadNotifications(userEmail);
+      context.read<NotificationProvider>().fetchNotifications();
     });
   }
 
