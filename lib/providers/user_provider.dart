@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:event_hub/core/api/auth_api_service.dart';
 import 'package:event_hub/providers/map_provider.dart';
 import 'package:event_hub/providers/ticket_provider.dart';
