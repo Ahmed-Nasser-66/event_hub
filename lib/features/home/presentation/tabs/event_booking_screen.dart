@@ -39,7 +39,8 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final userProvider = context.read<UserProvider>();
-
+    final isBooked =
+        context.watch<TicketProvider>().hasTicket(widget.event.title);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.grey,
@@ -226,6 +227,7 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                 height: 55,
                 child: ElevatedButton(
                   onPressed: () async {
+                    if (isBooked) return;
                     int count = int.tryParse(ticketController.text) ?? 1;
                     final localContext = context;
                     final success = await context
@@ -275,14 +277,17 @@ class _EventBookingScreenState extends State<EventBookingScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.orange,
+                    backgroundColor:
+                        isBooked ? AppColors.green : AppColors.orange,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     elevation: 0,
                   ),
                   child: Text(
-                    "Confirm & Buy (${ticketCount * (widget.event.price ?? 0)} EGP)",
+                    isBooked
+                        ? "✓ Booked"
+                        : "Confirm & Buy (${ticketCount * (widget.event.price ?? 0)} EGP)",
                     style: const TextStyle(
                       fontSize: 18,
                       color: AppColors.secondary,

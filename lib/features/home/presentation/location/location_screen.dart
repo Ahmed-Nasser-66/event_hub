@@ -4,6 +4,7 @@ import 'package:event_hub/features/widgets/search_bar_widget.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_model.dart';
 import 'package:event_hub/providers/map_provider.dart';
+import 'package:event_hub/providers/ticket_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   late TextEditingController _searchController;
   bool _isShowingBottomSheet = false;
-  late MapProvider _mapProvider; // 1. متغير محلي للاحتفاظ بالـ Provider بأمان
+  late MapProvider _mapProvider;
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // 2. بنخطف نسخة من الـ Provider هنا والـ context لسه عايش ومستقر تماماً
+
     _mapProvider = context.read<MapProvider>();
   }
 
@@ -37,7 +38,6 @@ class _LocationScreenState extends State<LocationScreen> {
   void dispose() {
     _searchController.dispose();
 
-    // 3. التعديل الذهبي: نستخدم الـ _mapProvider المحلي مباشرة لمنع الكراش نهائياً
     _mapProvider.searchResults = [];
     _mapProvider.selectedEvent = null;
 
@@ -46,6 +46,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void _showEventDetails(BuildContext context, EventModel event) {
     final l10n = AppLocalizations.of(context)!;
+    final isBooked = context.read<TicketProvider>().hasTicket(event.title);
 
     showModalBottomSheet(
       context: context,
@@ -121,6 +122,8 @@ class _LocationScreenState extends State<LocationScreen> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
+                  if (isBooked) return;
+
                   Navigator.pop(context);
 
                   Navigator.push(
@@ -131,14 +134,15 @@ class _LocationScreenState extends State<LocationScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.orange,
+                  backgroundColor:
+                      isBooked ? AppColors.green : AppColors.orange,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
                 child: Text(
-                  l10n.bookNow,
+                  isBooked ? "✓ Booked" : l10n.bookNow,
                   style: const TextStyle(
                     color: AppColors.white,
                     fontSize: 18,
