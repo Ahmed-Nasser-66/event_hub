@@ -124,6 +124,144 @@ class _TicketTabState extends State<TicketTab> {
                           itemBuilder: (context, index) {
                             final event = events[index];
                             return TicketCard(
+                              onDelete: () async {
+                                final result = await showDialog<bool>(
+                                  context: context,
+                                  builder: (_) => Dialog(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(28),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            width: 80,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.red
+                                                  .withValues(alpha: 0.1),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              Icons.delete,
+                                              color: AppColors.red,
+                                              size: 32,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          const Text(
+                                            "Delete Ticket?",
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.secondary,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 15),
+                                          Text(
+                                            "Are you sure you want to delete\n${event.title}?",
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              color: AppColors.lightGrey,
+                                              height: 1.5,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          const Text(
+                                            "This action cannot be undone.",
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: AppColors.lightGrey,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: 45,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, false);
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          AppColors.cardGrey,
+                                                      foregroundColor:
+                                                          AppColors.secondary,
+                                                      elevation: 0,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(18),
+                                                      ),
+                                                    ),
+                                                    child: const Text(
+                                                      "Cancel",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: 45,
+                                                  child: ElevatedButton.icon(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, true);
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.delete),
+                                                    label: const Text("Delete"),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      foregroundColor:
+                                                          Colors.white,
+                                                      elevation: 0,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(18),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+
+                                if (result != true) return;
+                                if (!context.mounted) return;
+                                final email =
+                                    context.read<UserProvider>().email;
+
+                                await context
+                                    .read<TicketProvider>()
+                                    .deleteTicket(
+                                      event.bookingId,
+                                      email,
+                                    );
+                              },
                               title: event.title,
                               date: event.date,
                               startTime: event.startTime,

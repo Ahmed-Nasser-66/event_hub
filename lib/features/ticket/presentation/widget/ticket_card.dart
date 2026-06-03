@@ -15,7 +15,7 @@ class TicketCard extends StatelessWidget {
   final String image;
   final VoidCallback onTap;
   final String bookingId;
-
+  final VoidCallback onDelete;
   const TicketCard({
     super.key,
     required this.title,
@@ -28,6 +28,7 @@ class TicketCard extends StatelessWidget {
     required this.bookingId,
     required this.startTime,
     required this.endTime,
+    required this.onDelete,
   });
 
   @override
@@ -55,16 +56,39 @@ class TicketCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                image.startsWith('http')
-                    ? image
-                    : 'https://via.placeholder.com/300',
-                height: 160,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    image.startsWith('http')
+                        ? image
+                        : 'https://via.placeholder.com/300',
+                    height: 160,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    onTap: onDelete,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: AppColors.white.withValues(alpha: 0.9),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.delete,
+                        color: AppColors.red,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             Text(

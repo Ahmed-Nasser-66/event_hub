@@ -216,57 +216,72 @@ class _SignupState extends State<Signup> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: Text(
-                                  l10n.termsPrivacy,
-                                  style: const TextStyle(
-                                    color: AppColors.orange,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.privacy_tip_outlined,
+                                        size: 50,
+                                        color: AppColors.orange,
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Text(
+                                        l10n.termsPrivacy,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.secondary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                        "• ${l10n.policyPoint1}",
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        "• ${l10n.policyPoint2}",
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        "• ${l10n.policyPoint3}",
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                      const SizedBox(height: 25),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: AppColors.orange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            l10n.close,
+                                            style: const TextStyle(
+                                              color: AppColors.secondary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "• ${l10n.policyPoint1}",
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      "• ${l10n.policyPoint2}",
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      "• ${l10n.policyPoint3}",
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text(
-                                      l10n.close,
-                                      style: const TextStyle(
-                                        color: AppColors.secondary,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               );
                             },
                           );

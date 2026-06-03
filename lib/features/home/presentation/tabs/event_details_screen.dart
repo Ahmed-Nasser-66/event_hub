@@ -1,5 +1,6 @@
 import 'package:event_hub/core/theme/app_assets.dart';
 import 'package:event_hub/core/theme/app_color.dart';
+import 'package:event_hub/features/home/presentation/home_page.dart';
 import 'package:event_hub/features/widgets/event_details_skeleton.dart';
 import 'package:event_hub/l10n/app_localizations.dart';
 import 'package:event_hub/model/event_details_model.dart';
@@ -71,7 +72,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     double totalPrice = (event.price ?? 0) * ticketCount;
 
     final lightGreyColor = AppColors.cardGrey.withAlpha(128);
-
+    final isBooked =
+        context.watch<TicketProvider>().hasTicket(widget.event.title);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.grey,
@@ -487,6 +489,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () async {
+                        if (isBooked) return;
                         int count = int.tryParse(ticketController.text) ?? 1;
 
                         final success = await context
@@ -497,7 +500,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("فشلت عملية الحجز، حاول مرة أخرى!"),
+                              content: Text(
+                                  "The booking process failed, please try again!"),
                               backgroundColor: AppColors.red,
                             ),
                           );
@@ -536,10 +540,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         );
                         if (!context.mounted) return;
 
-                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const Homepage(
+                              initialIndex: 1,
+                            ),
+                          ),
+                          (route) => false,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.orange,
+                        backgroundColor:
+                            isBooked ? AppColors.green : AppColors.orange,
                         foregroundColor: AppColors.secondary,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -548,7 +561,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         ),
                       ),
                       child: Text(
-                        locale.bookNow,
+                        isBooked ? "✓ Booked" : locale.bookNow,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 14,

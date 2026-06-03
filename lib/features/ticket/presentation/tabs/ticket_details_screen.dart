@@ -335,6 +335,7 @@ class TicketDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(

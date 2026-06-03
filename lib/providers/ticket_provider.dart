@@ -87,6 +87,22 @@ class TicketProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool hasTicket(String eventTitle) {
+    return _tickets.any((t) => t.title == eventTitle);
+  }
+
+  Future<void> deleteTicket(
+    String bookingId,
+    String userEmail,
+  ) async {
+    _tickets.removeWhere(
+      (ticket) => ticket.bookingId == bookingId,
+    );
+
+    await saveTickets(userEmail);
+    notifyListeners();
+  }
+
   Future<void> addTicketFromEvent(
       EventModel event, int count, String userEmail) async {
     if (_tickets.isEmpty) {
