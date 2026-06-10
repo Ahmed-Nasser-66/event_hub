@@ -34,7 +34,7 @@ The application connects all event participants — including organizers, sponso
 
 ---
 
-### 🛠️ Tech Stack
+### 🛠️ Technologies Used
 | Technology | Usage |
 | :--- | :--- |
 | **Dart/Flutter** | Mobile Application |
@@ -58,6 +58,15 @@ The application connects all event participants — including organizers, sponso
 | <img src="https://github.com/user-attachments/assets/be50c7d3-fdd1-4ef3-ad79-082ceccad9f8" width="250"> | <img src="https://github.com/user-attachments/assets/339acff9-64e3-48e5-8f21-67a5fb01c421" width="250"> | <img src="https://github.com/user-attachments/assets/d911353d-96a3-45ec-be13-0389e3764e4b" width="250"> |
 
 </div>
+
+---
+
+
+### 🎥 Demo Video & APK
+
+| Demo Video | APK Download |
+| :---: | :---: |
+| 🎬 [Watch Demo Video](https://drive.google.com/drive/folders/17kq7XJe_gI9yyBaB6n36Di3iI-_7iUoV?usp=sharing) | 📱 [Download APK](https://drive.google.com/drive/folders/19zJ24s-oew_fpL2dxElyoOYg_0dBc5yl?usp=sharing) |
 
 ---
 
@@ -85,7 +94,7 @@ lib/
 
 ```bash
 # Clone repository
-git clone [https://github.com/eslam20033/event_hub](https://github.com/eslam20033/event_hub)
+git clone https://github.com/eslam20033/event_hub.git
 
 # Install dependencies
 flutter pub get
